@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>EMPTY | Genesis of the Blockchain</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #04060d;
+      --bg2: #060814;
+      --accent: #00f6ff;
+      --scroll-bg: #f5e4c5;
+      --scroll-edge: #d2b88a;
+      --scroll-shadow: rgba(0, 0, 0, 0.65);
+      --text-main: #3e2a17;
+      --heading: #2a1a10;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #0b1020 0%, var(--bg) 40%, var(--bg2) 100%);
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .page-shell {
+      width: 100%;
+      max-width: 1120px;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      align-items: flex-start;
+    }
+
+    /* link back to prelude */
+    .back-link {
+      position: fixed;
+      top: 1.4rem;
+      right: 1.5rem;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--accent);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      opacity: 0.8;
+    }
+
+    .back-link::before {
+      content: "←";
+      font-size: 0.9rem;
+    }
+
+    .back-link:hover {
+      opacity: 1;
+      text-decoration: underline;
+    }
+
+    /* scroll container */
+    .scroll-wrapper {
+      width: min(90vw, 420px);
+      height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      filter: drop-shadow(0 26px 40px var(--scroll-shadow));
+    }
+
+    .scroll {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: 18px;
+      background: radial-gradient(circle at top, #fff5df 0%, var(--scroll-bg) 40%, #f0ddba 100%);
+      overflow: hidden;
+      border: 1px solid rgba(161, 126, 78, 0.75);
+    }
+
+    /* scroll caps */
+    .scroll::before,
+    .scroll::after {
+      content: "";
+      position: absolute;
+      left: 6%;
+      width: 88%;
+      height: 18px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #b78b4a, #f6e0b8, #b78b4a);
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.35);
+      z-index: 3;
+    }
+
+    .scroll::before {
+      top: -9px;
+    }
+
+    .scroll::after {
+      bottom: -9px;
+      box-shadow: 0 -3px 8px rgba(0, 0, 0, 0.35);
+    }
+
+    .scroll-inner {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      padding: 3.3rem 1.85rem 2.6rem;
+      overflow-y: auto;
+      scroll-behavior: smooth;
+      background-image:
+        radial-gradient(circle at 0 0, rgba(255,255,255,0.35) 0, transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(204,175,126,0.25) 0, transparent 55%);
+    }
+
+    .scroll-inner::-webkit-scrollbar {
+      width: 4px;
+    }
+    .scroll-inner::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .scroll-inner::-webkit-scrollbar-thumb {
+      background: rgba(141, 107, 60, 0.6);
+      border-radius: 999px;
+    }
+
+    .scroll-kicker {
+      font-family: "Times New Roman", ui-serif, Georgia, "Noto Serif", serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 1.1rem;
+      color: #7a5832;
+    }
+
+    .scroll-title {
+      font-family: "Times New Roman", ui-serif, Georgia, "Noto Serif", serif;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-size: 1.4rem;
+      line-height: 1.5;
+      text-align: center;
+      color: var(--heading);
+      margin-bottom: 2.1rem;
+    }
+
+    .scroll-subheading {
+      font-family: "Times New Roman", ui-serif, Georgia, "Noto Serif", serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--heading);
+      margin-bottom: 0.9rem;
+    }
+
+    .scroll-body {
+      font-family: "Georgia", ui-serif, "Times New Roman", serif;
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: var(--text-main);
+    }
+
+    .scroll-body p + p {
+      margin-top: 0.8rem;
+    }
+
+    .section-word {
+      display: block;
+      font-family: "Times New Roman", ui-serif, Georgia, serif;
+      font-size: 1rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      margin-top: 0.4rem;
+      color: #25140c;
+    }
+
+    .section-word.em {
+      font-size: 1.05rem;
+    }
+
+    .closing-word {
+      margin-top: 1.2rem;
+      font-style: italic;
+    }
+
+    .token-empty {
+      font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Roboto Mono", monospace;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .manifesto-image {
+      display: block;
+      max-width: 480px;
+      width: 100%;
+      margin: 1.5rem auto;
+      border-radius: 0.75rem;
+      box-shadow: 0 18px 45px rgba(0,0,0,0.55);
+    }
+
+    @media (min-width: 720px) {
+      .page-shell {
+        justify-content: flex-start;
+      }
+      .scroll-wrapper {
+        margin-left: 5vw;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a href="index.html" class="back-link">Prelude</a>
+
+  <div class="page-shell">
+    <div class="scroll-wrapper">
+      <div class="scroll">
+        <div class="scroll-inner" id="scroll-inner">
+          <div class="scroll-kicker">Empty / Manifesto</div>
+          <h1 class="scroll-title">
+            GENESIS OF<br />
+            THE BLOCKCHAIN
+          </h1>
+
+          <h2 class="scroll-subheading">In the beginning,</h2>
+
+          <div class="scroll-body">
+            <p>Satoshi created the Bitcoin — and saw that it was good.</p>
+
+            <p>Blocks formed, and faith was forged in code.</p>
+
+            <p>Faith in a new era of digitized sovereignty, and tokenized liberation.</p>
+
+            <p>Faith from which a generation of new believers emerged</p>
+
+            <p>They who toiled in the shadows, forging faith into conviction.</p>
+
+            <p>
+              They called themselves —
+              <span class="section-word em">The Miners.</span>
+            </p>
+
+            <p>It would only be a matter of time before others would follow.</p>
+
+            <p>They who bargain with governance in pursuit of asymmetry</p>
+
+            <p>
+              They declared themselves
+              <span class="section-word">the Custodians of Order—</span>
+              the quiet stewards of value, heralding vast horizons where tokenized wealth would rise without end
+            </p>
+
+            <p>But, too often it is the case that, where wallets fill, greed lurks not too far behind</p>
+
+            <p>It is from this greed and hunger that a new class of belief was validated.</p>
+
+            <p>
+              <span class="section-word em">The Traders' belief.</span>
+            </p>
+            <img
+              src="Failed-double-bottom-pattern-1024x502.jpg"
+              alt="Traders' expectations vs reality price chart"
+              class="manifesto-image"
+            />
+
+            <p>They worshiped the candle, feared the wick. Charts and leverage became their scripture, patterns the crucible of their prophecies.</p>
+
+            <p>Then, within their ranks, a new sect rose</p>
+
+            <p>
+              <span class="section-word em">The DEGENS</span>
+            </p>
+            <img
+              src="avatars-000302542401-bjpp2n-t500x500.jpg"
+              alt="DEGEN wojak looking at chart"
+              class="manifesto-image"
+            />
+
+            <p>They feared nothing, restrained nothing, propelled by the propensity of a lucrative enterprise. Volatility was their codec, chaos their altar. Memes became their icons, tokens their temples. Where markets burned, they scorned, for fire was proof of faith.</p>
+
+            <p>Inevitably their gospel would spread:<br />
+              “HODL!”<br />
+              "Buy the dip!"<br />
+              “Diamond hands!"<br />
+              "To the moon!"
+            </p>
+
+            <p>Words initially invoked for perseverance, conviction and courage</p>
+
+            <p>But as cycles turned, candles dimmed, and the illusion of scarcity faded</p>
+
+            <p>These sacred phrases became cheap slogans of survival against the unflinching circumstance of declining portfolios</p>
+
+            <p>Thus a quiet truth now emerges from the ashes of euphoria:</p>
+
+            <p>For all the noise,<br />
+              for all the faith, and<br />
+              for all the unshaken grip…</p>
+
+            <p>the wallets remain still. Numbers that shimmer without weight.</p>
+
+            <p class="closing-word">
+              And the diamond hands —<br />
+              cold, perfect, unyielding —<br />
+              remain…
+            </p>
+
+            <p class="closing-word token-empty">$empty.</p>
+
+            <img
+              src="file_000000005fa861f58aa14de0a05be33b.jpg"
+              alt="Diamond hands held out, empty"
+              class="manifesto-image"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // gentle auto-scroll of the parchment
+    const scrollInner = document.getElementById("scroll-inner");
+    let autoScrollActive = true;
+    const speed = 0.3; // pixels per frame
+
+    function autoScrollStep() {
+      if (!autoScrollActive) return;
+
+      const maxScroll = scrollInner.scrollHeight - scrollInner.clientHeight;
+      if (scrollInner.scrollTop >= maxScroll) {
+        autoScrollActive = false;
+        return;
+      }
+      scrollInner.scrollTop += speed;
+      requestAnimationFrame(autoScrollStep);
+    }
+
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        autoScrollStep();
+      }, 1500);
+    });
+
+    ["wheel", "touchstart", "scroll"].forEach(evt => {
+      scrollInner.addEventListener(
+        evt,
+        () => {
+          autoScrollActive = false;
+        },
+        { passive: true }
+      );
+    });
+  </script>
+</body>
+  </html>
