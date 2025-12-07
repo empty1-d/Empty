@@ -139,15 +139,22 @@
         font-size: 1rem;
       }
     }
-  </style>
+  <style>
+  /* … your other CSS … */
+
+  #intro-block.fade-out {
+    animation: fadeOut 2s forwards;
+  }
+
+</style>
 </head>
 <body>
   <main>
-    <div class="pretitle">prelude</div>
-    <h1>Before the chain</h1></h1>
-
-    <p id="story"></p>
-
+    <div id="intro-block">
+  <div class="pretitle">空的</div>
+  <h1>PRELUDE</h1>
+  <p id="story"></p>
+    </div>
     <div id="cta">
       <a href="manifesto.html" class="cta-button" id="ctaText"></a>
     </div>
