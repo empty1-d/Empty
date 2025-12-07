@@ -2,691 +2,276 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>EMPTY / Manifesto</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Genesis of the Blockchain – EMPTY</title>
   <style>
-
     :root {
-      --bg-dark: #05060a;
-      --paper: #f7e7c3;
-      --paper-edge: #e0c595;
-      --ink: #1a1209;
-      --accent: #00f5ff;
+      --bg: #02030a;
+      --bg-soft: radial-gradient(circle at top, #151b2b 0, #02030a 52%, #000 100%);
+      --accent: #00d4ff;
+      --scroll-top: #d9b36c;
+      --scroll-top-highlight: #f5d89b;
+      --paper: #fbf0d3;
+      --paper-deep: #f3e0b6;
+      --ink: #3a2515;
+      --ink-soft: #5b3820;
     }
 
     * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
     }
 
     body {
       min-height: 100vh;
-      background: radial-gradient(circle at top, #10131b 0, #05060a 45%, #000 100%);
       display: flex;
       justify-content: center;
-      padding: 3rem 1rem;
-      font-family: Georgia, "Times New Roman", serif;
+      align-items: center;
+      padding: 3.5rem 1.5rem;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, sans-serif;
+      background: var(--bg-soft);
       color: var(--ink);
-    }
-
-    .scroll-wrapper {
-      width: 100%;
-      max-width: 780px;
-      position: relative;
-    }
-
-    /* Parchment scroll */
-    .scroll {
-      background: radial-gradient(circle at top, #fff8e8 0%, var(--paper) 65%, var(--paper-edge) 100%);
-      padding: 3rem 2rem 3.5rem;
-      border-radius: 14px;
-      box-shadow:
-        0 40px 60px rgba(0, 0, 0, 0.65),
-        0 0 0 1px rgba(0, 0, 0, 0.4);
-      position: relative;
-      line-height: 1.65;
-    }
-
-    /* Scroll edges */
-    .scroll::before,
-    .scroll::after {
-      content: "";
-      position: absolute;
-      left: 50%;
-      width: 92%;
-      height: 16px;
-      background: radial-gradient(
-        circle at 50% 50%,
-        #fff8dc 0,
-        #e8d4a8 45%,
-        #b79255 100%
-      );
-      border-radius: 999px;
-      transform: translateX(-50%);
-      opacity: 0.85;
-    }
-
-    .scroll::before {
-      top: -12px;
-      box-shadow: 0 6px 12px rgba(0,0,0,0.35);
-    }
-
-    .scroll::after {
-      bottom: -12px;
-      box-shadow: 0 -6px 12px rgba(0,0,0,0.35);
-    }
-
-    /* Typography inside scroll */
-    .title {
-      text-align: center;
-      font-size: 1.8rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      margin-bottom: 1.8rem;
-      color: #2b1c07;
-      font-weight: 700;
-    }
-
-    .big-line {
-      font-size: 1.45rem;
-      font-weight: bold;
-      margin-top: 1.4rem;
-      margin-bottom: 0.7rem;
-      color: #2b1c07;
-    }
-
-    p {
-      margin-bottom: 0.7rem;
-      font-size: 1rem;
-    }
-
-    strong {
-      font-weight: 700;
-    }
-
-    /* Section headers (Miners, Custodians, etc.) */
-    .section-heading {
-      margin-top: 1.8rem;
-      margin-bottom: 0.6rem;
-      font-size: 1.35rem;
-      font-weight: bold;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: #3b2710;
-    }
-
-    /* Disclaimer */
-    .disclaimer {
-      margin-top: 2rem;
-      padding-top: 0.8rem;
-      font-size: 0.85rem;
-      border-top: 1px dashed rgba(0,0,0,0.35);
-      color: #4d3b21;
-    }
-
-    .disclaimer-title {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      margin-bottom: 0.5rem;
-      color: #86592d;
-      font-weight: bold;
-    }
-
-    .back-link {
-      display: inline-block;
-      margin-top: 1.8rem;
-      text-decoration: none;
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--accent);
-    }
-
-    .back-link::before {
-      content: "← ";
-    }
-
-  </style>
-</head>
-<body>
-
-  <div class="scroll-wrapper">
-    <article class="scroll">
-
-      <h1 class="title">Genesis of the Blockchain</h1>
-
-      <!-- Manifesto starts -->
-
-      <div class="big-line">In the beginning,</div>
-
-      <p>Satoshi created the Bitcoin — and saw that it was good.</p>
-      <p>Blocks formed, and faith was forged in code.</p>
-      <p>Faith in a new era of digitized sovereignty, and tokenized liberation.</p>
-      <p>Faith from which a generation of new believers emerged.</p>
-      <p>They who toiled in the shadows, forging faith into conviction.</p>
-
-      <p>They called themselves —<br><strong>The Miners.</strong></p>
-
-      <p>It would only be a matter of time before others would follow.</p>
-
-      <p>They who bargain with governance<br>in pursuit of asymmetry.</p>
-
-      <p>
-        They declared themselves<br>
-        the <strong>Custodians of Order</strong> —<br>
-        the quiet stewards of value,<br>
-        heralding vast horizons<br>
-        where tokenized wealth would rise without end.
-      </p>
-
-      <p>
-        But too often it is the case that, where wallets fill,<br>
-        greed lurks not too far behind.
-      </p>
-
-      <p>
-        It is from this greed and hunger that a new class of belief was validated.
-      </p>
-
-      <div class="section-heading">The Traders' belief.</div>
-
-      <p>They worshiped the candle, feared the wick.</p>
-      <p>Charts and leverage became their scripture,<br>patterns the crucible of their prophecies.</p>
-
-      <div class="section-heading">The DEGENS</div>
-
-      <p>They feared nothing, restrained nothing, propelled by the propensity of a lucrative enterprise.</p>
-      <p>Volatility was their codec, chaos their altar.</p>
-      <p>Memes became their icons, tokens their temples.</p>
-      <p>Where markets burned, they scorned,<br>for fire was proof of faith.</p>
-
-      <p>Inevitably their gospel would spread:</p>
-      <p>“HODL!”<br>"Buy the dip!"<br>“Diamond hands!"<br>"To the moon!"</p>
-
-      <p>Words initially invoked for perseverance, conviction and courage.</p>
-
-      <p>But as cycles turned, candles dimmed, and the illusion of scarcity faded,</p>
-
-      <p>
-        these sacred phrases became cheap slogans of survival<br>
-        against the unflinching circumstance of declining portfolios.
-      </p>
-
-      <p>Thus a quiet truth now emerges from the ashes of euphoria:</p>
-
-      <p>For all the noise,<br>for all the faith,<br>and for all the unshaken grip…</p>
-
-      <p>the wallets remain still.<br>Numbers that shimmer without weight.</p>
-
-      <p>And the diamond hands —<br>cold, perfect, unyielding —<br>remain…</p>
-
-      <p><strong>$empty.</strong></p>
-
-      <!-- Disclaimer -->
-      <section class="disclaimer">
-        <div class="disclaimer-title">Disclaimer</div>
-        <p>Fair warning: you may feel a strong urge to HODL, buy the dip or diamond-hand <strong>$EMPTYCOIN</strong>.</p>
-        <p>Meme tokens are inherently speculative — always <strong>DYOR</strong>.</p>
-        <p>On the other hand, people do strange things when they believe “Satoshi just encoded it in code.”</p>
-        <p>So: resist the call of the emptiness… or embrace the futility.</p>
-      </section>
-
-      <a href="index.html" class="back-link">Return to Prelude</a>
-
-    </article>
-  </div>
-
-</body>
-                                                                                                             </html>
-    .noise-layer {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      opacity: 0.14;
-      background-image: repeating-linear-gradient(
-          0deg,
-          rgba(255, 255, 255, 0.08) 0px,
-          rgba(255, 255, 255, 0.08) 1px,
-          transparent 1px,
-          transparent 2px
-        );
-      mix-blend-mode: soft-light;
-      z-index: -1;
     }
 
     .frame {
       width: 100%;
-      max-width: 800px;
-      background: radial-gradient(circle at top left, #182033 0, #050712 55%)
-        border-box;
-      border-radius: 1.75rem;
-      border: 1px solid rgba(148, 163, 184, 0.25);
-      padding: 1.75rem 1.5rem 2.25rem;
-      box-shadow:
-        0 28px 80px rgba(0, 0, 0, 0.9),
-        0 0 0 1px rgba(15, 23, 42, 0.9);
+      max-width: 820px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .scroll {
       position: relative;
+      width: 100%;
+      max-width: 460px;
+      background: radial-gradient(circle at top, var(--paper) 0, var(--paper-deep) 100%);
+      border-radius: 1.75rem;
+      padding: 3.75rem 1.75rem 2.75rem;
+      box-shadow:
+        0 28px 55px rgba(0, 0, 0, 0.78),
+        0 0 0 1px rgba(0, 0, 0, 0.6),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.35);
       overflow: hidden;
     }
 
-    .frame::before {
+    /* Top scroll bar */
+    .scroll::before {
       content: "";
       position: absolute;
-      inset: -40%;
-      background:
-        radial-gradient(circle at 10% 0%, rgba(21, 255, 224, 0.12) 0, transparent 55%),
-        radial-gradient(circle at 90% 100%, rgba(59, 130, 246, 0.22) 0, transparent 55%);
-      opacity: 0.8;
-      pointer-events: none;
-      z-index: -1;
-    }
-
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 0.75rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .tag {
-      font-size: 0.75rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      display: inline-flex;
-      gap: 0.5rem;
-      align-items: center;
-    }
-
-    .tag-dot {
-      width: 6px;
-      height: 6px;
+      top: 0.85rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 68%;
+      height: 0.95rem;
       border-radius: 999px;
-      background: var(--accent);
-      box-shadow: 0 0 14px rgba(21, 255, 224, 0.9);
+      background: linear-gradient(
+        135deg,
+        #b3813c 0,
+        var(--scroll-top-highlight) 40%,
+        var(--scroll-top) 100%
+      );
+      box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.55),
+        0 0 0 1px rgba(108, 73, 30, 0.7);
     }
 
     .back-link {
-      font-size: 0.8rem;
-      color: var(--text-muted);
+      position: fixed;
+      top: 1.4rem;
+      right: 1.6rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
       text-decoration: none;
-      padding: 0.3rem 0.8rem;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.35);
+      color: var(--accent);
       display: inline-flex;
       align-items: center;
-      gap: 0.3rem;
-      background: rgba(15, 23, 42, 0.6);
+      gap: 0.35rem;
+      opacity: 0.85;
     }
 
-    .back-link span {
-      transform: translateY(-0.5px);
+    .back-link::before {
+      content: "←";
+      font-size: 0.9rem;
     }
 
-    .back-link:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-
-    h1 {
-      font-size: 1.8rem;
-      line-height: 1.1;
-      letter-spacing: 0.08em;
+    .scroll-k {
+      font-size: 0.85rem;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
+      color: rgba(0, 0, 0, 0.4);
       margin-bottom: 0.4rem;
-      color: var(--heading);
     }
 
-    .subtitle {
-      font-size: 0.8rem;
-      letter-spacing: 0.18em;
+    .scroll-title {
+      font-family: "Times New Roman", "Georgia", serif;
+      text-align: left;
+      font-size: 1.65rem;
+      line-height: 1.35;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: var(--text-muted);
+      color: var(--ink-soft);
       margin-bottom: 2rem;
     }
 
-    .body {
+    .scroll-title span {
+      display: block;
+    }
+
+    .scroll-body {
+      font-family: "Georgia", "Times New Roman", serif;
       font-size: 0.98rem;
-      line-height: 1.7;
-      color: var(--text-main);
+      line-height: 1.75;
+      color: var(--ink-soft);
     }
 
-    .block {
-      margin-bottom: 1.8rem;
+    .scroll-body p + p {
+      margin-top: 0.7rem;
     }
 
-    .manifest-line {
-      display: block;
-      margin-bottom: 0.55rem;
-    }
-
-    .manifest-line.em {
+    .big-line {
       font-size: 1.25rem;
-      letter-spacing: 0.05em;
+      font-weight: 700;
     }
 
-    .manifest-line.em-big {
+    .section-heading {
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .final-word {
       font-size: 1.4rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-
-    .manifest-line.soft {
-      color: var(--text-muted);
-    }
-
-    .section-title {
-      margin-top: 0.75rem;
-      margin-bottom: 0.7rem;
-      font-size: 1.3rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--accent);
-    }
-
-    .section-sub {
-      font-size: 0.78rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 0.75rem;
-    }
-
-    .divider {
-      height: 1px;
-      width: 100%;
-      background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(148, 163, 184, 0.4),
-        transparent
-      );
-      margin: 1.6rem 0;
-    }
-
-    .gospel {
-      margin-top: 0.6rem;
-      margin-bottom: 0.9rem;
-    }
-
-    .gospel-line {
-      display: block;
-      font-size: 0.95rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      margin-bottom: 0.35rem;
-    }
-
-    .gospel-line span {
-      padding: 0.15rem 0.55rem;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      background: rgba(15, 23, 42, 0.8);
-      font-size: 0.72rem;
-    }
-
-    .quiet {
-      font-style: italic;
-      color: var(--text-muted);
-      margin-top: 0.75rem;
-    }
-
-    .empty-mark {
-      font-family: "SF Mono", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono",
-        "Courier New", monospace;
-      color: var(--accent);
-      font-size: 1.2rem;
+      font-weight: 800;
       letter-spacing: 0.18em;
-      text-transform: uppercase;
+      text-transform: lowercase;
+      text-align: center;
+      margin-top: 1.1rem;
     }
 
-    .disclaimer {
-      margin-top: 2.3rem;
-      padding-top: 1.4rem;
-      border-top: 1px dashed rgba(148, 163, 184, 0.5);
-      font-size: 0.8rem;
-      color: var(--text-muted);
+    .final-word span {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.18);
+      padding-bottom: 0.1rem;
     }
 
-    .disclaimer-title {
-      font-size: 0.72rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      margin-bottom: 0.75rem;
-      color: var(--danger);
-    }
-
-    .disclaimer a {
-      color: var(--accent);
-      text-decoration: none;
-      border-bottom: 1px dashed rgba(21, 255, 224, 0.4);
-    }
-
-    .disclaimer a:hover {
-      border-bottom-style: solid;
-    }
-
-    @media (min-width: 640px) {
+    @media (max-width: 600px) {
       body {
-        padding: 3rem 1.5rem 4.5rem;
+        padding: 2.75rem 0.75rem 2.5rem;
       }
 
-      .frame {
-        padding: 2.25rem 2.2rem 2.75rem;
+      .scroll {
+        padding: 3.25rem 1.35rem 2.35rem;
       }
 
-      h1 {
-        font-size: 2.1rem;
+      .scroll-title {
+        font-size: 1.4rem;
       }
 
-      .body {
-        font-size: 1.02rem;
+      .big-line {
+        font-size: 1.15rem;
       }
 
-      .manifest-line.em {
-        font-size: 1.35rem;
+      .final-word {
+        font-size: 1.25rem;
       }
 
-      .manifest-line.em-big {
-        font-size: 1.55rem;
+      .back-link {
+        font-size: 0.72rem;
+        right: 1rem;
       }
     }
   </style>
 </head>
 <body>
-  <div class="noise-layer"></div>
+  <a href="index.html" class="back-link">Prelude</a>
 
-  <article class="frame">
-    <header>
-      <div class="tag">
-        <span class="tag-dot"></span>
-        EMPTY / MANIFESTO
-      </div>
-      <a href="index.html" class="back-link">
-        <span>←</span>
-        <span>Prelude</span>
-      </a>
-    </header>
+  <main class="frame">
+    <section class="scroll" aria-label="Genesis of the Blockchain manifesto">
+      <header>
+        <div class="scroll-k">空的</div>
+        <h1 class="scroll-title">
+          <span>GENESIS OF</span>
+          <span>THE</span>
+          <span>BLOCKCHAIN</span>
+        </h1>
+      </header>
 
-    <h1>Genesis of the Blockchain</h1>
-    <p class="subtitle">A brief history of faith, leverage and emptiness</p>
+      <article class="scroll-body">
+        <p class="big-line">In the beginning,</p>
+        <p>Satoshi created the Bitcoin — and saw that it was good.</p>
 
-    <div class="body">
-      <!-- GENESIS -->
-      <section class="block">
-        <span class="manifest-line em">In the beginning,</span>
-        <span class="manifest-line">
-          Satoshi created the Bitcoin — and saw that it was good.
-        </span>
-        <span class="manifest-line">
-          Blocks formed, and faith was forged in code.
-        </span>
-        <span class="manifest-line">
-          Faith in a new era of digitized sovereignty, of tokenized liberation.
-        </span>
-        <span class="manifest-line">
-          From that faith, a generation of new believers emerged —
-        </span>
-        <span class="manifest-line soft">
-          they who toiled in the shadows, turning belief into conviction.
-        </span>
-      </section>
+        <p>Blocks formed, and faith was forged in code.</p>
 
-      <div class="divider"></div>
+        <p>Faith in a new era of digitized sovereignty, and tokenized liberation.</p>
 
-      <!-- MINERS -->
-      <section class="block">
-        <div class="section-sub">the first believers</div>
-        <div class="section-title">The Miners</div>
+        <p>Faith from which a generation of new believers emerged</p>
 
-        <span class="manifest-line">
-          They stacked hashes in the dark, chasing block rewards at the edge of
-          thermodynamic sanity.
-        </span>
-        <span class="manifest-line">
-          Racks hummed, fans screamed, and electricity became tithe.
-        </span>
-        <span class="manifest-line soft">
-          In return, they received more than coins —
-          they received proof.
-        </span>
-      </section>
+        <p>They who toiled in the shadows, forging faith into conviction.</p>
 
-      <div class="divider"></div>
+        <p>They called themselves —</p>
+        <p class="section-heading">The Miners.</p>
 
-      <!-- CUSTODIANS -->
-      <section class="block">
-        <div class="section-sub">when capital noticed</div>
-        <div class="section-title">The Custodians of Order</div>
+        <p>It would only be a matter of time before others would follow.</p>
 
-        <span class="manifest-line">
-          It was only a matter of time before others arrived —
-          <span class="soft">those who bargain with governance in pursuit of asymmetry.</span>
-        </span>
-        <span class="manifest-line">
-          They declared themselves the quiet stewards of value,
-          the ones who would bring order to the chaos of keys and chains.
-        </span>
-        <span class="manifest-line">
-          Funds were raised. Vaults were built. Prospectuses were drafted.
-        </span>
-        <span class="manifest-line soft">
-          Tokenized wealth would rise without end, they said.
-        </span>
-        <span class="manifest-line">
-          But where wallets swell, greed is never far behind.
-        </span>
-      </section>
+        <p>They who bargain with governance<br />
+        in pursuit of asymmetry</p>
 
-      <div class="divider"></div>
+        <p>They declared themselves<br />
+        the Custodians of Order—<br />
+        the quiet stewards of value,<br />
+        heralding vast horizons<br />
+        where tokenized wealth would rise without end</p>
 
-      <!-- TRADERS -->
-      <section class="block">
-        <div class="section-sub">the charts became scripture</div>
-        <div class="section-title">The Traders’ Belief</div>
+        <p>But, too often it is the case that, where wallets fill, greed lurks not too far behind</p>
 
-        <span class="manifest-line">
-          From the hunger for more, a new form of faith emerged.
-        </span>
-        <span class="manifest-line">
-          They worshipped the candle, feared the wick.
-        </span>
-        <span class="manifest-line">
-          Charts and leverage became their holy texts,
-          patterns the crucible of their prophecies.
-        </span>
-        <span class="manifest-line soft">
-          Some prayed to support. Others knelt to resistance.
-        </span>
-      </section>
+        <p>It is from this greed and hunger that a new class of belief was validated.</p>
 
-      <div class="divider"></div>
+        <p class="section-heading">The Traders' belief.</p>
 
-      <!-- DEGENS -->
-      <section class="block">
-        <div class="section-sub">beyond risk, beyond reason</div>
-        <div class="section-title">The DEGENS</div>
+        <p>They worshiped the candle, feared the wick.<br />
+        Charts and leverage became their scripture,<br />
+        patterns the crucible of their prophecies.</p>
 
-        <span class="manifest-line">
-          And then, from within the traders’ ranks, a final sect arose:
-        </span>
-        <span class="manifest-line em">
-          Those who feared nothing and restrained nothing.
-        </span>
-        <span class="manifest-line">
-          Volatility was their codec, chaos their altar.
-        </span>
-        <span class="manifest-line">
-          Memes became their icons, tokens their temples.
-        </span>
-        <span class="manifest-line soft">
-          Where markets burned, they laughed —
-          for fire was proof of faith.
-        </span>
+        <p>Then, within their ranks, a new sect rose</p>
 
-        <div class="gospel">
-          <span class="gospel-line"><span>“HODL.”</span></span>
-          <span class="gospel-line"><span>“Buy the dip.”</span></span>
-          <span class="gospel-line"><span>“Diamond hands.”</span></span>
-          <span class="gospel-line"><span>“To the moon.”</span></span>
-        </div>
+        <p class="section-heading">The DEGENS</p>
 
-        <span class="manifest-line">
-          Words once invoked for perseverance, conviction, courage…
-        </span>
-        <span class="manifest-line soft">
-          As cycles turned and the illusion of scarcity thinned,
-          they eroded into slogans of survival
-          in portfolios that only knew one direction.
-        </span>
-      </section>
+        <p>They feared nothing, restrained nothing, propelled by the propensity of a lucrative enterprise.<br />
+        Volatility was their codec, chaos their altar.<br />
+        Memes became their icons, tokens their temples.<br />
+        Where markets burned, they scorned,<br />
+        for fire was proof of faith.</p>
 
-      <div class="divider"></div>
+        <p>Inevitably<br />
+        Their gospel would spread:<br />
+        “HODL!”<br />
+        "Buy the dip!"<br />
+        “Diamond hands!"<br />
+        "To the moon!"</p>
 
-      <!-- EMPTY -->
-      <section class="block">
-        <span class="manifest-line em">
-          From the ashes of euphoria, a quiet truth emerges:
-        </span>
-        <span class="manifest-line">
-          For all the noise, for all the faith, for all the unshaken grip…
-        </span>
-        <span class="manifest-line">
-          the wallets remain still —
-          <span class="soft">numbers that shimmer without weight.</span>
-        </span>
-        <span class="manifest-line quiet">
-          And the diamond hands — cold, perfect, unyielding —
-        </span>
-        <span class="manifest-line empty-mark">
-          remain&nbsp;&nbsp;$EMPTY.
-        </span>
-      </section>
+        <p>Words initially invoked for perseverance, conviction and courage</p>
 
-      <!-- DISCLAIMER -->
-      <section class="disclaimer">
-        <div class="disclaimer-title">disclaimer / not financial advice</div>
-        <p>
-          Fair warning: you may feel an urge to HODL, buy the dip, or even
-          diamond-hand <strong>$EMPTYCOIN</strong>.
-        </p>
-        <p style="margin-top:0.55rem;">
-          Our take: meme tokens are inherently speculative. It is always wise
-          to <strong>DYOR</strong>.
-        </p>
-        <p style="margin-top:0.55rem;">
-          On the other hand, people do strange things when they believe
-          <span class="soft">“Satoshi just encoded fate into code.”</span>
-        </p>
-        <p style="margin-top:0.55rem;">
-          So either resist the call of the emptiness — or consciously
-          <span class="soft">embrace the futility.</span>
-        </p>
-      </section>
-    </div>
-  </article>
+        <p>But as cycles turned, candles dimmed, and the illusion of scarcity faded</p>
+
+        <p>These sacred phrases became cheap slogans of survival against the unflinching circumstance of declining portfolios</p>
+
+        <p>Thus a quiet truth now emerges from the ashes of euphoria:</p>
+
+        <p>For all the noise,<br />
+        for all the faith, and<br />
+        for all the unshaken grip…</p>
+
+        <p>the wallets remain still.<br />
+        Numbers that shimmer without weight.</p>
+
+        <p>And the diamond hands —<br />
+        cold, perfect, unyielding —<br />
+        remain…</p>
+
+        <p class="final-word"><span>$empty.</span></p>
+      </article>
+    </section>
+  </main>
 </body>
-  </html>
+</html>
