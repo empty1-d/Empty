@@ -1,1 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>EMPTY / Manifesto</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #02040a;
+      --bg-soft: rgba(6, 10, 24, 0.92);
+      --accent: #15ffe0;
+      --accent-soft: rgba(21, 255, 224, 0.2);
+      --text-main: #f5f5ff;
+      --text-muted: #9ca3af;
+      --heading: #ffffff;
+      --danger: #ff6b81;
+    }
 
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      background:
+        radial-gradient(circle at top, #161b2f 0, #050814 50%, #01020a 100%);
+      color: var(--text-main);
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 2.5rem 1.25rem 4rem;
+    }
+
+    .noise-layer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.14;
+      background-image: repeating-linear-gradient(
+          0deg,
+          rgba(255, 255, 255, 0.08) 0px,
+          rgba(255, 255, 255, 0.08) 1px,
+          transparent 1px,
+          transparent 2px
+        );
+      mix-blend-mode: soft-light;
+      z-index: -1;
+    }
+
+    .frame {
+      width: 100%;
+      max-width: 800px;
+      background: radial-gradient(circle at top left, #182033 0, #050712 55%)
+        border-box;
+      border-radius: 1.75rem;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      padding: 1.75rem 1.5rem 2.25rem;
+      box-shadow:
+        0 28px 80px rgba(0, 0, 0, 0.9),
+        0 0 0 1px rgba(15, 23, 42, 0.9);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .frame::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(21, 255, 224, 0.12) 0, transparent 55%),
+        radial-gradient(circle at 90% 100%, rgba(59, 130, 246, 0.22) 0, transparent 55%);
+      opacity: 0.8;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .tag {
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      display: inline-flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .tag-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 14px rgba(21, 255, 224, 0.9);
+    }
+
+    .back-link {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 0.3rem 0.8rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      background: rgba(15, 23, 42, 0.6);
+    }
+
+    .back-link span {
+      transform: translateY(-0.5px);
+    }
+
+    .back-link:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      line-height: 1.1;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+      color: var(--heading);
+    }
+
+    .subtitle {
+      font-size: 0.8rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+
+    .body {
+      font-size: 0.98rem;
+      line-height: 1.7;
+      color: var(--text-main);
+    }
+
+    .block {
+      margin-bottom: 1.8rem;
+    }
+
+    .manifest-line {
+      display: block;
+      margin-bottom: 0.55rem;
+    }
+
+    .manifest-line.em {
+      font-size: 1.25rem;
+      letter-spacing: 0.05em;
+    }
+
+    .manifest-line.em-big {
+      font-size: 1.4rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .manifest-line.soft {
+      color: var(--text-muted);
+    }
+
+    .section-title {
+      margin-top: 0.75rem;
+      margin-bottom: 0.7rem;
+      font-size: 1.3rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .section-sub {
+      font-size: 0.78rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .divider {
+      height: 1px;
+      width: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(148, 163, 184, 0.4),
+        transparent
+      );
+      margin: 1.6rem 0;
+    }
+
+    .gospel {
+      margin-top: 0.6rem;
+      margin-bottom: 0.9rem;
+    }
+
+    .gospel-line {
+      display: block;
+      font-size: 0.95rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 0.35rem;
+    }
+
+    .gospel-line span {
+      padding: 0.15rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: rgba(15, 23, 42, 0.8);
+      font-size: 0.72rem;
+    }
+
+    .quiet {
+      font-style: italic;
+      color: var(--text-muted);
+      margin-top: 0.75rem;
+    }
+
+    .empty-mark {
+      font-family: "SF Mono", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono",
+        "Courier New", monospace;
+      color: var(--accent);
+      font-size: 1.2rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .disclaimer {
+      margin-top: 2.3rem;
+      padding-top: 1.4rem;
+      border-top: 1px dashed rgba(148, 163, 184, 0.5);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .disclaimer-title {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+      color: var(--danger);
+    }
+
+    .disclaimer a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px dashed rgba(21, 255, 224, 0.4);
+    }
+
+    .disclaimer a:hover {
+      border-bottom-style: solid;
+    }
+
+    @media (min-width: 640px) {
+      body {
+        padding: 3rem 1.5rem 4.5rem;
+      }
+
+      .frame {
+        padding: 2.25rem 2.2rem 2.75rem;
+      }
+
+      h1 {
+        font-size: 2.1rem;
+      }
+
+      .body {
+        font-size: 1.02rem;
+      }
+
+      .manifest-line.em {
+        font-size: 1.35rem;
+      }
+
+      .manifest-line.em-big {
+        font-size: 1.55rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="noise-layer"></div>
+
+  <article class="frame">
+    <header>
+      <div class="tag">
+        <span class="tag-dot"></span>
+        EMPTY / MANIFESTO
+      </div>
+      <a href="index.html" class="back-link">
+        <span>←</span>
+        <span>Prelude</span>
+      </a>
+    </header>
+
+    <h1>Genesis of the Blockchain</h1>
+    <p class="subtitle">A brief history of faith, leverage and emptiness</p>
+
+    <div class="body">
+      <!-- GENESIS -->
+      <section class="block">
+        <span class="manifest-line em">In the beginning,</span>
+        <span class="manifest-line">
+          Satoshi created the Bitcoin — and saw that it was good.
+        </span>
+        <span class="manifest-line">
+          Blocks formed, and faith was forged in code.
+        </span>
+        <span class="manifest-line">
+          Faith in a new era of digitized sovereignty, of tokenized liberation.
+        </span>
+        <span class="manifest-line">
+          From that faith, a generation of new believers emerged —
+        </span>
+        <span class="manifest-line soft">
+          they who toiled in the shadows, turning belief into conviction.
+        </span>
+      </section>
+
+      <div class="divider"></div>
+
+      <!-- MINERS -->
+      <section class="block">
+        <div class="section-sub">the first believers</div>
+        <div class="section-title">The Miners</div>
+
+        <span class="manifest-line">
+          They stacked hashes in the dark, chasing block rewards at the edge of
+          thermodynamic sanity.
+        </span>
+        <span class="manifest-line">
+          Racks hummed, fans screamed, and electricity became tithe.
+        </span>
+        <span class="manifest-line soft">
+          In return, they received more than coins —
+          they received proof.
+        </span>
+      </section>
+
+      <div class="divider"></div>
+
+      <!-- CUSTODIANS -->
+      <section class="block">
+        <div class="section-sub">when capital noticed</div>
+        <div class="section-title">The Custodians of Order</div>
+
+        <span class="manifest-line">
+          It was only a matter of time before others arrived —
+          <span class="soft">those who bargain with governance in pursuit of asymmetry.</span>
+        </span>
+        <span class="manifest-line">
+          They declared themselves the quiet stewards of value,
+          the ones who would bring order to the chaos of keys and chains.
+        </span>
+        <span class="manifest-line">
+          Funds were raised. Vaults were built. Prospectuses were drafted.
+        </span>
+        <span class="manifest-line soft">
+          Tokenized wealth would rise without end, they said.
+        </span>
+        <span class="manifest-line">
+          But where wallets swell, greed is never far behind.
+        </span>
+      </section>
+
+      <div class="divider"></div>
+
+      <!-- TRADERS -->
+      <section class="block">
+        <div class="section-sub">the charts became scripture</div>
+        <div class="section-title">The Traders’ Belief</div>
+
+        <span class="manifest-line">
+          From the hunger for more, a new form of faith emerged.
+        </span>
+        <span class="manifest-line">
+          They worshipped the candle, feared the wick.
+        </span>
+        <span class="manifest-line">
+          Charts and leverage became their holy texts,
+          patterns the crucible of their prophecies.
+        </span>
+        <span class="manifest-line soft">
+          Some prayed to support. Others knelt to resistance.
+        </span>
+      </section>
+
+      <div class="divider"></div>
+
+      <!-- DEGENS -->
+      <section class="block">
+        <div class="section-sub">beyond risk, beyond reason</div>
+        <div class="section-title">The DEGENS</div>
+
+        <span class="manifest-line">
+          And then, from within the traders’ ranks, a final sect arose:
+        </span>
+        <span class="manifest-line em">
+          Those who feared nothing and restrained nothing.
+        </span>
+        <span class="manifest-line">
+          Volatility was their codec, chaos their altar.
+        </span>
+        <span class="manifest-line">
+          Memes became their icons, tokens their temples.
+        </span>
+        <span class="manifest-line soft">
+          Where markets burned, they laughed —
+          for fire was proof of faith.
+        </span>
+
+        <div class="gospel">
+          <span class="gospel-line"><span>“HODL.”</span></span>
+          <span class="gospel-line"><span>“Buy the dip.”</span></span>
+          <span class="gospel-line"><span>“Diamond hands.”</span></span>
+          <span class="gospel-line"><span>“To the moon.”</span></span>
+        </div>
+
+        <span class="manifest-line">
+          Words once invoked for perseverance, conviction, courage…
+        </span>
+        <span class="manifest-line soft">
+          As cycles turned and the illusion of scarcity thinned,
+          they eroded into slogans of survival
+          in portfolios that only knew one direction.
+        </span>
+      </section>
+
+      <div class="divider"></div>
+
+      <!-- EMPTY -->
+      <section class="block">
+        <span class="manifest-line em">
+          From the ashes of euphoria, a quiet truth emerges:
+        </span>
+        <span class="manifest-line">
+          For all the noise, for all the faith, for all the unshaken grip…
+        </span>
+        <span class="manifest-line">
+          the wallets remain still —
+          <span class="soft">numbers that shimmer without weight.</span>
+        </span>
+        <span class="manifest-line quiet">
+          And the diamond hands — cold, perfect, unyielding —
+        </span>
+        <span class="manifest-line empty-mark">
+          remain&nbsp;&nbsp;$EMPTY.
+        </span>
+      </section>
+
+      <!-- DISCLAIMER -->
+      <section class="disclaimer">
+        <div class="disclaimer-title">disclaimer / not financial advice</div>
+        <p>
+          Fair warning: you may feel an urge to HODL, buy the dip, or even
+          diamond-hand <strong>$EMPTYCOIN</strong>.
+        </p>
+        <p style="margin-top:0.55rem;">
+          Our take: meme tokens are inherently speculative. It is always wise
+          to <strong>DYOR</strong>.
+        </p>
+        <p style="margin-top:0.55rem;">
+          On the other hand, people do strange things when they believe
+          <span class="soft">“Satoshi just encoded fate into code.”</span>
+        </p>
+        <p style="margin-top:0.55rem;">
+          So either resist the call of the emptiness — or consciously
+          <span class="soft">embrace the futility.</span>
+        </p>
+      </section>
+    </div>
+  </article>
+</body>
+  </html>
