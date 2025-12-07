@@ -1,10 +1,18 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <title>Empty Manifesto</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Empty | Tokenized Emptiness</title>
+
   <style>
+    :root {
+      --bg: #050509;
+      --fg: #f7f3ff;
+      --muted: #a59db8;
+      --accent: #62e5ff;
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -12,29 +20,183 @@
     }
 
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-        sans-serif;
-      background: #030712;
-      color: #e5e7eb;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Inter", "Segoe UI", sans-serif;
       min-height: 100vh;
+      padding: 2.5rem 1.5rem 4rem;
       display: flex;
-      align-items: center;
       justify-content: center;
-      padding: 2rem 1.25rem;
-      position: relative;
-      overflow: hidden;
     }
 
-    /* faint 空的 texture */
-    .bg-kanji {
-      position: fixed;
-      inset: -10%;
-      font-size: 5rem;
-      line-height: 1.1;
-      letter-spacing: 0.4em;
-      white-space: pre-wrap;
-      opacity: 0.03;
-      user-select: none;
+    main {
+      max-width: 720px;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .back {
+      font-size: 0.8rem;
+      margin-bottom: 1.5rem;
+      color: var(--muted);
+    }
+
+    h1 {
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
+    }
+
+    .kicker {
+      font-size: 0.75rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .body p {
+      font-size: 0.95rem;
+      line-height: 1.8;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      margin-top: 1.5rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--fg);
+    }
+
+    .disclaimer {
+      margin-top: 2rem;
+      padding-top: 1.4rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .disclaimer strong {
+      color: var(--fg);
+      font-weight: 600;
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <div class="back">
+      <a href="index.html">← Back to the chain</a>
+    </div>
+
+    <div class="kicker">Empty / Tokenized Emptiness</div>
+    <h1>The Empty Manifesto</h1>
+
+    <section class="body">
+      <p>In the beginning, Satoshi created the Bitcoin — and saw that it was good.</p>
+
+      <p>Blocks formed, and faith was forged in code.</p>
+
+      <p>
+        Faith in a new era of digitized sovereignty and tokenized liberation.
+        Faith from which a generation of new believers emerged — they who
+        toiled in the shadows, forging faith into conviction.
+      </p>
+
+      <p class="section-title">The Miners</p>
+      <p>
+        They called themselves the <strong>Miners</strong>.
+        It would only be a matter of time before others would follow.
+      </p>
+
+      <p class="section-title">The Custodians</p>
+      <p>
+        Then came those who bargain with governance in pursuit of asymmetry.
+        They declared themselves the <strong>Custodians of Order</strong> —
+        quiet stewards of value, heralding vast horizons where tokenized wealth
+        would rise without end.
+      </p>
+
+      <p>
+        But where wallets fill, greed rarely lags behind. From that hunger,
+        a new class of belief was validated.
+      </p>
+
+      <p class="section-title">The Traders</p>
+      <p>
+        <strong>The Traders</strong> worshiped the candle and feared the wick.
+        Charts and leverage became their scripture; patterns, the crucible of
+        their prophecies.
+      </p>
+
+      <p class="section-title">The Degens</p>
+      <p>
+        From within their ranks, another sect emerged — the
+        <strong>DEGENS</strong>.
+      </p>
+      <p>
+        They feared nothing, restrained nothing, propelled by the possibility
+        of a lucrative exit. Volatility was their codec; chaos, their altar.
+        Memes became their icons; tokens, their temples. Where markets burned,
+        they laughed — for fire was proof of faith.
+      </p>
+
+      <p>
+        Inevitably, their gospel spread:
+        “HODL.” “Buy the dip.” “Diamond hands.” “To the moon.”
+      </p>
+
+      <p>
+        Words once invoked for perseverance, conviction, and courage.
+        But as cycles turned, candles dimmed, and the illusion of scarcity
+        thinned, these phrases decayed into slogans of survival — chanted
+        against the unflinching arithmetic of declining portfolios.
+      </p>
+
+      <p>
+        Thus a quiet truth emerges from the ashes of euphoria:
+        for all the noise, for all the faith, for all the unshaken grip…
+      </p>
+
+      <p>
+        the wallets remain still — numbers that shimmer without weight.
+      </p>
+
+      <p>
+        And the diamond hands — cold, perfect, unyielding — remain…
+        <strong>$empty</strong>.
+      </p>
+    </section>
+
+    <section class="disclaimer">
+      <p>
+        <strong>Fair warning.</strong> You may feel a strong urge to HODL,
+        buy the dip, or even diamond hand <strong>$EMPTYCOIN</strong>.
+      </p>
+      <p>
+        Our take: meme tokens are inherently speculative. Always DYOR.
+      </p>
+      <p>
+        On the other hand, people do strange things when they believe
+        “Satoshi just encoded fate in code.”
+      </p>
+      <p>
+        So: resist the call of the emptiness… or embrace the futility.
+      </p>
+    </section>
+  </main>
+</body>
+</html>      user-select: none;
       pointer-events: none;
     }
 
