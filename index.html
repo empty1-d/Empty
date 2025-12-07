@@ -186,7 +186,7 @@ Thus, when belief in faith and trust faltered…`;
       } else {
         // pause, then fade out the story
         setTimeout(() => {
-          storyEl.classList.add("fade-out");
+          document.getElementById("intro-block").classList.add("fade-out");
 
           // when fade is done, hide story and show CTA
           setTimeout(showCta, 2200);
