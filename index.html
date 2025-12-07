@@ -145,6 +145,66 @@
   #intro-block.fade-out {
     animation: fadeOut 2s forwards;
   }
+    body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+    "Segoe UI", sans-serif;
+  background: radial-gradient(circle at top, #111827 0, #020617 45%, #000000 100%);
+  color: #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+  position: relative;        /* important */
+  overflow: hidden;          /* hide overflow of ghost text */
+}
+
+/* ghost 空的 pattern */
+body::before {
+  content: "空的 空的 空的 空的 空的 空的 空的 空的 空的 空的";
+  position: fixed;
+  inset: -10%;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-around;
+  justify-content: space-around;
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  letter-spacing: 1rem;
+  opacity: 0.03;            /* super faint */
+  pointer-events: none;     /* don’t block clicks */
+}
+    .cta-button {
+  /* keep your existing styles, just add the last line */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.9rem 2.8rem;
+  border-radius: 999px;
+  border: 1px solid rgba(45, 212, 191, 0.5);
+  background: radial-gradient(circle at 0% 0%, #0f172a 0, #020617 60%);
+  color: #a5f3fc;
+  font-size: 0.9rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  animation: ctaPulse 1.4s infinite;   /* <— this line */
+}
+
+@keyframes ctaPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(45, 212, 191, 0.55);
+  }
+  50% {
+    box-shadow: 0 0 22px 0 rgba(34, 211, 238, 0.8);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(45, 212, 191, 0);
+  }
+      }
 
 </style>
 </head>
