@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>EMPTY | You Resisted</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #04060d;
+      --bg2: #060814;
+      --accent: #00f6ff;
+      --accent-soft: rgba(0, 246, 255, 0.24);
+      --text-main: #e5ecff;
+      --muted: #8c93b3;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #111730 0%, var(--bg) 40%, var(--bg2) 100%);
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .shell {
+      width: 100%;
+      max-width: 720px;
+      border-radius: 1.25rem;
+      border: 1px solid rgba(0, 246, 255, 0.25);
+      background: radial-gradient(circle at top, rgba(0, 246, 255, 0.06), rgba(3, 6, 15, 0.96));
+      box-shadow:
+        0 26px 70px rgba(0, 0, 0, 0.65),
+        0 0 40px rgba(0, 246, 255, 0.08);
+      padding: 2rem 1.6rem 2.2rem;
+    }
+
+    @media (min-width: 640px) {
+      .shell {
+        padding: 2.4rem 2.4rem 2.6rem;
+      }
+    }
+
+    .tag {
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    h1 {
+      font-size: clamp(1.8rem, 2.4vw + 1.4rem, 2.6rem);
+      line-height: 1.15;
+      margin-bottom: 0.6rem;
+    }
+
+    .sub {
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-bottom: 2rem;
+      max-width: 32rem;
+    }
+
+    .typed-wrapper {
+      margin-top: 1.5rem;
+      padding: 1.1rem 1rem 1.3rem;
+      border-radius: 0.9rem;
+      border: 1px solid var(--accent-soft);
+      background: radial-gradient(circle at top left, rgba(0, 246, 255, 0.08), transparent 58%);
+      font-family: "JetBrains Mono", "SF Mono", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 1.05rem;
+      line-height: 1.7;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .typed-label {
+      position: absolute;
+      top: 0.55rem;
+      right: 0.9rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      opacity: 0.75;
+    }
+
+    .typed-line {
+      white-space: pre-wrap;
+      min-height: 3.4em;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 0.65ch;
+      margin-left: 2px;
+      animation: blink 0.9s steps(1) infinite;
+    }
+
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      50.01%, 100% { opacity: 0; }
+    }
+
+    .actions {
+      margin-top: 2.3rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+    }
+
+    a.btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.65rem 1.4rem;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      border: 1px solid rgba(229, 236, 255, 0.28);
+      color: var(--text-main);
+      background: rgba(4, 8, 18, 0.85);
+      backdrop-filter: blur(8px);
+    }
+
+    a.btn:hover {
+      border-color: var(--accent);
+    }
+
+    a.btn-secondary {
+      border-color: rgba(140, 147, 179, 0.6);
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    .brand {
+      margin-top: 1.5rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      opacity: 0.7;
+    }
+
+    .brand span {
+      color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="tag">Empty / Choice Logged</div>
+
+    <h1>Congratulations.<br />You&apos;ve successfully resisted the emptiness.</h1>
+
+    <p class="sub">
+      Your wallet remains untouched. Your faith, unspent.  
+      For now, you stand outside the gravity well of pure speculation.
+    </p>
+
+    <div class="typed-wrapper">
+      <div class="typed-label">echo</div>
+      <div id="typed-line" class="typed-line"></div><span id="cursor" class="cursor">▋</span>
+    </div>
+
+    <div class="actions">
+      <a href="index.html" class="btn">Return to Prelude</a>
+      <a href="manifesto.html" class="btn btn-secondary">Revisit the Manifesto</a>
+    </div>
+
+    <div class="brand">
+      <span>$empty</span> / The void remembers.
+    </div>
+  </div>
+
+  <script>
+    const lines = ["Pero", "El vacío persiste."];
+    const element = document.getElementById("typed-line");
+    const cursor = document.getElementById("cursor");
+
+    let lineIndex = 0;
+    let charIndex = 0;
+
+    const typeDelay = 90;       // typing speed per character
+    const linePause = 900;      // pause between "Pero" and "El vacío persiste."
+    const startDelay = 1400;    // wait a bit before starting at all
+
+    function typeNextChar() {
+      const current = lines[lineIndex];
+
+      if (charIndex < current.length) {
+        element.textContent += current.charAt(charIndex);
+        charIndex++;
+        setTimeout(typeNextChar, typeDelay);
+      } else {
+        // finished this line
+        if (lineIndex === 0 && lines.length > 1) {
+          // first line done, pause and then add a blank line + next line
+          lineIndex++;
+          charIndex = 0;
+          setTimeout(() => {
+            element.textContent += "\n\n";
+            typeNextChar();
+          }, linePause);
+        } else {
+          // done with all lines – keep cursor blinking
+          cursor.style.display = "inline-block";
+        }
+      }
+    }
+
+    // Start typing after a small initial delay
+    setTimeout(() => {
+      typeNextChar();
+    }, startDelay);
+  </script>
+</body>
+  </html>
