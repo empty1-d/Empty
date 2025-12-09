@@ -250,6 +250,43 @@
       opacity: 0.9;
       pointer-events: none;
     }
+    .disclaimer-actions {
+  margin-top: 1.6rem;
+  display: flex;
+  flex-direction: column;  /* mobile friendly */
+  gap: 0.75rem;
+}
+
+.disclaimer-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.65rem 1.3rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  border: 1px solid rgba(255, 255, 255, 0.18;
+  color: #e5f5ff;
+  background: rgba(4, 8, 18, 0.8);
+  backdrop-filter: blur(10px);
+}
+
+.disclaimer-btn:hover {
+  border-color: var(--accent);
+}
+
+.disclaimer-btn.ghost {
+  background: transparent;
+  color: #9aa0c7;
+  border-color: rgba(154, 160, 199, 0.6);
+}
+
+.disclaimer-btn.subtle {
+  opacity: 0.7;
+  font-size: 0.75rem;
+  }
 
     .disclaimer-inner {
       position: relative;
@@ -420,9 +457,46 @@
     </div>
 
     <!-- DISCLAIMER -->
-    <aside class="disclaimer">
-      <div class="disclaimer-inner">
-        <div class="disclaimer-title">Empty / Disclaimer</div>
+   <aside class="disclaimer">
+  <div class="disclaimer-inner">
+    <div class="disclaimer-title">EMPTY / DISCLAIMER</div>
+
+    <p>
+      Fair warning — you may feel a strong urge to HODL, buy the dip,  
+      or even diamond hand <span class="token">$emptycoin</span>.
+    </p>
+
+    <p>
+      Our take: meme tokens are inherently speculative in nature,  
+      so it's always wise to DYOR.
+    </p>
+
+    <p>
+      On the other hand… people do strange things when they believe in something.
+    </p>
+
+    <div class="disclaimer-actions">
+      <a href="resist.html" class="disclaimer-btn ghost">
+        Resist the call of the emptiness
+      </a>
+
+      <a href="https://x.com/Emptycoinonsol?t=GakCTtqgxtLpnps17WEcIg&s=09"
+         target="_blank"
+         rel="noopener noreferrer"
+         class="disclaimer-btn">
+        Embrace the futility
+      </a>
+
+      <a href="https://join.pump.fun/HSag/ra8148ei"
+         target="_blank"
+         rel="noopener noreferrer"
+         class="disclaimer-btn subtle">
+        Enter Pump.fun
+      </a>
+    </div>
+
+  </div>
+   </aside>
 
         <p>
           Fair warning, you may feel a strong urge to HODL, buy the dip,
