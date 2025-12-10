@@ -267,7 +267,7 @@
   text-decoration: none;
   text-transform: uppercase;
   letter-spacing: 0.18em;
-  border: 1px solid rgba(255, 255, 255, 0.18;
+  border: 1px solid rgba(255, 255, 255, 0.18);
   color: #e5f5ff;
   background: rgba(4, 8, 18, 0.8);
   backdrop-filter: blur(10px);
@@ -287,7 +287,19 @@
   opacity: 0.7;
   font-size: 0.75rem;
   }
+.disclaimer-btn.sacred {
+  background: radial-gradient(circle at 0 0,
+              rgba(0, 246, 255, 0.25),
+              rgba(4, 8, 18, 1));
+  border-color: rgba(0, 246, 255, 0.85);
+  box-shadow: 0 0 18px rgba(0, 246, 255, 0.55);
+}
 
+.disclaimer-btn.sacred::before {
+  content: "✧";
+  margin-right: 0.4rem;
+  font-size: 0.9rem;
+  }
     .disclaimer-inner {
       position: relative;
       z-index: 2;
@@ -497,31 +509,7 @@
 
   </div>
    </aside>
-
-        <p>
-          Fair warning, you may feel a strong urge to HODL, buy the dip,
-          or even diamond hand <span class="token-empty">$emptycoin</span>.
-        </p>
-
-        <p>
-          Our take: meme tokens are inherently speculative in nature,
-          so it's always wise to DYOR.
-        </p>
-
-        <p>
-          On the other hand, people do strange things when they
-          believe in something —<br />
-          <em>[“It might make sense just to get some in case it catches on.”]</em>
-        </p>
-
-        <p>So:</p>
-
-        <div class="disclaimer-cta">
-          <span class="pill muted">Resist the call of the emptiness</span>
-          <span class="pill">Or embrace the futility</span>
-        </div>
-      </div>
-    </aside>
+    
   </div>
 
   <script>
