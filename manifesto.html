@@ -482,9 +482,11 @@
             <p>Words initially invoked for perseverance, conviction and courage.</p>
 
             <p>
-              But as cycles turned, the candles dimmed, and the illusion of scarcity faded.</p>
-              
-          </p>These sacred phrases became cheap slogans of survival against the unflinching circumstance of declining portfolios.
+              But as cycles turned, the candles dimmed, and the illusion of scarcity faded.
+            </p>
+
+            <p>
+              These sacred phrases became cheap slogans of survival against the unflinching circumstance of declining portfolios.
             </p>
 
             <p>Thus a quiet truth now emerges from the ashes of euphoria:</p>
@@ -500,9 +502,11 @@
             <p class="closing-word">
               And the diamond hands —<br />
               cold, perfect, unyielding —<br />
-              relentless</p>
-            
-          </p>remain…
+              relentless
+            </p>
+
+            <p class="closing-word">
+              remain…
             </p>
 
             <p class="closing-word token-empty" id="closing-empty">$empty.</p>
@@ -537,16 +541,16 @@
     </p>
 
     <div class="disclaimer-actions">
-  <a href="resist.html" class="disclaimer-btn ghost">
-    Resist the call of the emptiness
-  </a>
+      <a href="resist.html" class="disclaimer-btn ghost">
+        Resist the call of the emptiness
+      </a>
 
-  <!-- New internal page with socials -->
-  <a href="embrace.html"
-     class="disclaimer-btn sacred">
-    Embrace the futility
-  </a>
-</div>
+      <!-- New internal page with socials -->
+      <a href="embrace.html"
+         class="disclaimer-btn sacred">
+        Embrace the futility
+      </a>
+    </div>
   </div>
    </aside>
     
@@ -603,7 +607,7 @@
     images.forEach((img) => img.classList.add("visible"));
   }
 
-  // ===== TYPEWRITER ENGINE =====
+  // ===== SAFE TYPEWRITER ENGINE (simpler, robust) =====
   function typeWriter(options) {
     const {
       element,
@@ -621,41 +625,33 @@
     let deleting = false;
     const originalText = fullText;
 
-    // create cursor
+    // create a text span and cursor once, keep them in DOM
+    element.textContent = ""; // clear any existing text
+    const textSpan = document.createElement("span");
     const cursor = document.createElement("span");
     cursor.className = "typewriter-cursor";
-    element.textContent = "";
+    element.appendChild(textSpan);
     element.appendChild(cursor);
 
     function step() {
       if (!deleting) {
         if (index <= fullText.length) {
-          if (element.firstChild) {
-            element.removeChild(element.firstChild);
-          }
-          const textNode = document.createTextNode(fullText.slice(0, index));
-          element.insertBefore(textNode, cursor);
+          textSpan.textContent = fullText.slice(0, index);
           index++;
           setTimeout(step, speed);
         } else if (deleteChars > 0 && deleteAfter > 0) {
-          // pause, then start deleting
           setTimeout(() => {
             deleting = true;
             step();
           }, deleteAfter);
         } else {
-          // finished typing
           if (onComplete) onComplete();
         }
       } else {
         // deleting last few characters
         if (index > fullText.length - deleteChars) {
           index--;
-          if (element.firstChild) {
-            element.removeChild(element.firstChild);
-          }
-          const textNode = document.createTextNode(fullText.slice(0, index));
-          element.insertBefore(textNode, cursor);
+          textSpan.textContent = fullText.slice(0, index);
           setTimeout(step, speed);
         } else {
           // done deleting, retype cleanly
@@ -680,19 +676,16 @@
     const prologue = document.getElementById("prologue-line");
     const closing = document.getElementById("closing-empty");
 
-    // all paragraphs inside the scroll body (we'll reveal them like spoken lines)
     const allParas = Array.from(
       document.querySelectorAll(".scroll-body p")
     );
 
-    // hide them first (except the closing $empty, which we type separately)
     allParas.forEach((p) => {
       if (p.id !== "closing-empty") {
         p.classList.add("tw-hidden");
       }
     });
 
-    // 1) type "In the beginning," with a tiny hesitation
     if (prologue) {
       const text = prologue.textContent.trim();
 
@@ -701,10 +694,9 @@
         fullText: text,
         speed: 60,
         startDelay: 350,
-        deleteAfter: 650, // small "uncertain" pause
-        deleteChars: 3,   // deletes last 3 chars, then rewrites fully
+        deleteAfter: 650,
+        deleteChars: 3,
         onComplete: () => {
-          // 2) reveal dramatic titles (The Miners / Custodians / etc.) with stagger
           const dram = document.querySelectorAll(".dramatic");
           dram.forEach((el, i) => {
             setTimeout(() => {
@@ -712,30 +704,27 @@
             }, 900 + i * 700);
           });
 
-          // 3) reveal paragraphs one by one like spoken lines
           let delay = 500;
           allParas.forEach((p) => {
             if (p.id === "closing-empty") return;
             setTimeout(() => {
               p.classList.add("tw-show");
             }, delay);
-            delay += 650; // spacing between "beats"
+            delay += 650;
           });
 
-          // 4) after everything, type the final $empty slowly
           if (closing) {
             const full = closing.textContent.trim();
             typeWriter({
               element: closing,
               fullText: full,
               speed: 80,
-              startDelay: delay + 1200 // let the last normal line land first
+              startDelay: delay + 1200
             });
           }
         }
       });
     } else {
-      // fallback: if prologue missing, just reveal everything
       allParas.forEach((p) => p.classList.add("tw-show"));
       document
         .querySelectorAll(".dramatic")
@@ -745,14 +734,12 @@
 
   // ===== ON LOAD =====
   window.addEventListener("load", () => {
-    // start gentle auto-scroll after a moment
     setTimeout(() => {
       autoScrollStep();
     }, 1500);
 
-    // start the dramatic narration
     initDramaticNarration();
   });
 </script>
 </body>
-    </html>
+  </html>
