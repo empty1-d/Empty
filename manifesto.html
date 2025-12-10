@@ -628,7 +628,7 @@
   await typeWriterPromise({
     element: prologue,
     fullText: text,
-    speed: 160,       // slow, tweak to taste
+    speed: 120,       // slow, tweak to taste
     startDelay: 1200  // wait before beginning
     // no deleteAfter / deleteChars here
   });
@@ -736,7 +736,7 @@
         if (typeof autoScrollStep === "function") {
           autoScrollStep();
         }
-      }, 3000);
+      }, 2300);
     }, 1800); // main intro pause before everything starts
   });
 </script>
