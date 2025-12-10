@@ -219,9 +219,9 @@
   transform: translateY(36px) scale(0.94);
   filter: brightness(0.6);
   transition:
-    opacity 5.2s ease-out,
-    transform 5.2s ease-out,
-    filter 5.2s ease-out;
+    opacity 7s ease-out,
+    transform 7s ease-out,
+    filter 7s ease-out;
 }
 
 .manifesto-image.visible {
@@ -341,6 +341,49 @@
       background: rgba(255, 255, 255, 0.04);
       color: rgba(229, 245, 255, 0.75);
     }
+    /* dramatic titles (The Miners / Custodians / etc.) */
+.dramatic {
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 0.8s ease-out,
+    transform 0.8s ease-out,
+    letter-spacing 0.8s ease-out;
+}
+
+.dramatic-visible {
+  opacity: 1;
+  transform: translateY(0);
+  letter-spacing: 0.24em;
+}
+
+/* paragraphs reveal like spoken lines */
+.tw-hidden {
+  opacity: 0;
+  transform: translateY(6px);
+}
+
+.tw-show {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 0.9s ease-out,
+    transform 0.9s ease-out;
+}
+
+/* typewriter cursor */
+.typewriter-cursor {
+  display: inline-block;
+  width: 0.55ch;
+  margin-left: 0.1ch;
+  border-right: 2px solid #7a5832;
+  animation: blink 0.8s steps(1, end) infinite;
+}
+
+@keyframes blink {
+  0%, 49% { border-color: #7a5832; }
+  50%, 100% { border-color: transparent; }
+  }
   </style>
 </head>
 <body>
@@ -381,7 +424,9 @@
             <p>
               They declared themselves
               <span class="section-word dramatic">the Custodians of Order—</span>
-              the quiet stewards of value, heralding vast horizons where tokenized wealth would rise without end.
+              the quiet stewards of value, <br />
+              heralding vast horizons <br />
+              tokenized wealth would rise without end.
             </p>
 
             <p>But, too often it is the case that, where wallets fill, greed lurks not too far behind.</p>
@@ -399,15 +444,15 @@
             />
 
             <p>
-              They worshiped the candle, feared the wick.
-              Charts and leverage became their scripture,
+              They worshiped the candle, feared the wick. <br />
+              Charts and leverage became their scripture, <br />
               patterns the crucible of their prophecies.
             </p>
 
             <p>Then, within their ranks, a new sect rose.</p>
 
             <p>
-              <span class="section-word em dramatic">The DEGENS</span>
+              <span class="section-word em dramatic">The DEGEN</span>
             </p>
 
             <img
@@ -437,9 +482,9 @@
             <p>Words initially invoked for perseverance, conviction and courage.</p>
 
             <p>
-              But as cycles turned, candles dimmed, and the illusion of scarcity faded.<br />
+              But as cycles turned, the candles dimmed, and the illusion of scarcity faded.</p>
               
-              These sacred phrases became cheap slogans of survival against the unflinching circumstance of declining portfolios.
+          </p>These sacred phrases became cheap slogans of survival against the unflinching circumstance of declining portfolios.
             </p>
 
             <p>Thus a quiet truth now emerges from the ashes of euphoria:</p>
@@ -455,7 +500,9 @@
             <p class="closing-word">
               And the diamond hands —<br />
               cold, perfect, unyielding —<br />
-              remain…
+              relentless</p>
+            
+          </p>remain…
             </p>
 
             <p class="closing-word token-empty" id="closing-empty">$empty.</p>
@@ -505,30 +552,25 @@
     
   </div>
 
-  <script>
-    // gentle auto-scroll of the parchment
-    const scrollInner = document.getElementById("scroll-inner");
-    let autoScrollActive = true;
-    const speed = 0.3; // pixels per frame
+<script>
+  // ===== AUTO SCROLL =====
+  const scrollInner = document.getElementById("scroll-inner");
+  let autoScrollActive = true;
+  const autoScrollSpeed = 0.3; // pixels per frame
 
-    function autoScrollStep() {
-      if (!autoScrollActive) return;
+  function autoScrollStep() {
+    if (!autoScrollActive || !scrollInner) return;
 
-      const maxScroll = scrollInner.scrollHeight - scrollInner.clientHeight;
-      if (scrollInner.scrollTop >= maxScroll) {
-        autoScrollActive = false;
-        return;
-      }
-      scrollInner.scrollTop += speed;
-      requestAnimationFrame(autoScrollStep);
+    const maxScroll = scrollInner.scrollHeight - scrollInner.clientHeight;
+    if (scrollInner.scrollTop >= maxScroll) {
+      autoScrollActive = false;
+      return;
     }
+    scrollInner.scrollTop += autoScrollSpeed;
+    requestAnimationFrame(autoScrollStep);
+  }
 
-    window.addEventListener("load", () => {
-      setTimeout(() => {
-        autoScrollStep();
-      }, 1500);
-    });
-
+  if (scrollInner) {
     ["wheel", "touchstart", "scroll"].forEach((evt) => {
       scrollInner.addEventListener(
         evt,
@@ -538,28 +580,179 @@
         { passive: true }
       );
     });
+  }
 
-    // fade-in images when they enter the viewport
-    const images = document.querySelectorAll(".manifesto-image");
+  // ===== IMAGE FADE-IN =====
+  const images = document.querySelectorAll(".manifesto-image");
 
-    if ("IntersectionObserver" in window) {
-      const io = new IntersectionObserver(
-        (entries, observer) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("visible");
-              observer.unobserve(entry.target);
-            }
+  if ("IntersectionObserver" in window) {
+    const io = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    images.forEach((img) => io.observe(img));
+  } else {
+    images.forEach((img) => img.classList.add("visible"));
+  }
+
+  // ===== TYPEWRITER ENGINE =====
+  function typeWriter(options) {
+    const {
+      element,
+      fullText,
+      speed = 55,
+      startDelay = 0,
+      deleteAfter = 0,
+      deleteChars = 0,
+      onComplete
+    } = options;
+
+    if (!element) return;
+
+    let index = 0;
+    let deleting = false;
+    const originalText = fullText;
+
+    // create cursor
+    const cursor = document.createElement("span");
+    cursor.className = "typewriter-cursor";
+    element.textContent = "";
+    element.appendChild(cursor);
+
+    function step() {
+      if (!deleting) {
+        if (index <= fullText.length) {
+          if (element.firstChild) {
+            element.removeChild(element.firstChild);
+          }
+          const textNode = document.createTextNode(fullText.slice(0, index));
+          element.insertBefore(textNode, cursor);
+          index++;
+          setTimeout(step, speed);
+        } else if (deleteChars > 0 && deleteAfter > 0) {
+          // pause, then start deleting
+          setTimeout(() => {
+            deleting = true;
+            step();
+          }, deleteAfter);
+        } else {
+          // finished typing
+          if (onComplete) onComplete();
+        }
+      } else {
+        // deleting last few characters
+        if (index > fullText.length - deleteChars) {
+          index--;
+          if (element.firstChild) {
+            element.removeChild(element.firstChild);
+          }
+          const textNode = document.createTextNode(fullText.slice(0, index));
+          element.insertBefore(textNode, cursor);
+          setTimeout(step, speed);
+        } else {
+          // done deleting, retype cleanly
+          deleting = false;
+          typeWriter({
+            element,
+            fullText: originalText,
+            speed,
+            startDelay: 200,
+            deleteAfter: 0,
+            deleteChars: 0,
+            onComplete
           });
-        },
-        { threshold: 0.2 }
-      );
-
-      images.forEach((img) => io.observe(img));
-    } else {
-      // fallback: just show them
-      images.forEach((img) => img.classList.add("visible"));
+        }
+      }
     }
-  </script>
+
+    setTimeout(step, startDelay);
+  }
+
+  function initDramaticNarration() {
+    const prologue = document.getElementById("prologue-line");
+    const closing = document.getElementById("closing-empty");
+
+    // all paragraphs inside the scroll body (we'll reveal them like spoken lines)
+    const allParas = Array.from(
+      document.querySelectorAll(".scroll-body p")
+    );
+
+    // hide them first (except the closing $empty, which we type separately)
+    allParas.forEach((p) => {
+      if (p.id !== "closing-empty") {
+        p.classList.add("tw-hidden");
+      }
+    });
+
+    // 1) type "In the beginning," with a tiny hesitation
+    if (prologue) {
+      const text = prologue.textContent.trim();
+
+      typeWriter({
+        element: prologue,
+        fullText: text,
+        speed: 60,
+        startDelay: 350,
+        deleteAfter: 650, // small "uncertain" pause
+        deleteChars: 3,   // deletes last 3 chars, then rewrites fully
+        onComplete: () => {
+          // 2) reveal dramatic titles (The Miners / Custodians / etc.) with stagger
+          const dram = document.querySelectorAll(".dramatic");
+          dram.forEach((el, i) => {
+            setTimeout(() => {
+              el.classList.add("dramatic-visible");
+            }, 900 + i * 700);
+          });
+
+          // 3) reveal paragraphs one by one like spoken lines
+          let delay = 500;
+          allParas.forEach((p) => {
+            if (p.id === "closing-empty") return;
+            setTimeout(() => {
+              p.classList.add("tw-show");
+            }, delay);
+            delay += 650; // spacing between "beats"
+          });
+
+          // 4) after everything, type the final $empty slowly
+          if (closing) {
+            const full = closing.textContent.trim();
+            typeWriter({
+              element: closing,
+              fullText: full,
+              speed: 80,
+              startDelay: delay + 1200 // let the last normal line land first
+            });
+          }
+        }
+      });
+    } else {
+      // fallback: if prologue missing, just reveal everything
+      allParas.forEach((p) => p.classList.add("tw-show"));
+      document
+        .querySelectorAll(".dramatic")
+        .forEach((el) => el.classList.add("dramatic-visible"));
+    }
+  }
+
+  // ===== ON LOAD =====
+  window.addEventListener("load", () => {
+    // start gentle auto-scroll after a moment
+    setTimeout(() => {
+      autoScrollStep();
+    }, 1500);
+
+    // start the dramatic narration
+    initDramaticNarration();
+  });
+</script>
 </body>
     </html>
