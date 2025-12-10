@@ -560,7 +560,7 @@
   // ===== AUTO SCROLL =====
   const scrollInner = document.getElementById("scroll-inner");
   let autoScrollActive = true;
-  const autoScrollSpeed = 0.3; // pixels per frame
+  const autoScrollSpeed = 0.05; // pixels per frame
 
   function autoScrollStep() {
     if (!autoScrollActive || !scrollInner) return;
@@ -736,7 +736,7 @@
   window.addEventListener("load", () => {
     setTimeout(() => {
       autoScrollStep();
-    }, 1500);
+    }, 4000);
 
     initDramaticNarration();
   });
