@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>EMPTY | Embrace the Futility</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #04060d;
+      --bg2: #060814;
+      --accent: #00f6ff;
+      --card-bg: rgba(4, 8, 18, 0.9);
+      --text-main: #e5f5ff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      background: radial-gradient(circle at top, #0b1020 0%, var(--bg) 40%, var(--bg2) 100%);
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .page-shell {
+      width: 100%;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      gap: 1rem;
+    }
+
+    .logo-mark {
+      font-size: 0.8rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      opacity: 0.75;
+    }
+
+    .back-link {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--accent);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      opacity: 0.85;
+    }
+
+    .back-link::before {
+      content: "←";
+      font-size: 0.9rem;
+    }
+
+    .back-link:hover {
+      opacity: 1;
+      text-decoration: underline;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-kicker {
+      font-size: 0.75rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(229, 245, 255, 0.75);
+      margin-bottom: 0.8rem;
+    }
+
+    .hero-title {
+      font-family: "Times New Roman", ui-serif, Georgia, "Noto Serif", serif;
+      font-size: 1.9rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
+    }
+
+    .hero-subtitle {
+      font-size: 0.95rem;
+      max-width: 520px;
+      margin: 0.5rem auto 0;
+      opacity: 0.8;
+      line-height: 1.5;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (min-width: 720px) {
+      .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    .card {
+      background: radial-gradient(circle at top left, #071624 0%, #02040a 60%, #010307 100%);
+      border-radius: 1.25rem;
+      border: 1px solid rgba(0, 246, 255, 0.22);
+      padding: 1.4rem 1.4rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background: radial-gradient(circle at 0 0, rgba(0,246,255,0.16), transparent 60%);
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    .card-inner {
+      position: relative;
+      z-index: 2;
+    }
+
+    .card-label {
+      font-size: 0.8rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.6rem;
+    }
+
+    .card-title {
+      font-size: 1.05rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .card-desc {
+      font-size: 0.85rem;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+      opacity: 0.9;
+    }
+
+    .social-img {
+      display: block;
+      width: 100%;
+      max-width: 260px;
+      border-radius: 0.9rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.55);
+    }
+
+    .card-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.55rem 1.3rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.2);
+      color: var(--text-main);
+      background: rgba(4, 8, 18, 0.9);
+      backdrop-filter: blur(10px);
+    }
+
+    .card-link:hover {
+      border-color: var(--accent);
+    }
+
+    .subtle-note {
+      margin-top: 1.9rem;
+      font-size: 0.8rem;
+      text-align: center;
+      opacity: 0.7;
+      max-width: 520px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="top-bar">
+      <div class="logo-mark">Empty / Embrace</div>
+      <a href="manifesto.html" class="back-link">Back to Manifesto</a>
+    </header>
+
+    <section class="hero">
+      <div class="hero-kicker">Embrace the futility</div>
+      <h1 class="hero-title">Choose Your Emptiness</h1>
+      <p class="hero-subtitle">
+        You made it past the disclaimer. Below are the only two doors that matter:
+        where the memes echo, and where the liquidity pretends to be real.
+      </p>
+    </section>
+
+    <section class="grid">
+      <!-- X / Twitter -->
+      <article class="card">
+        <div class="card-inner">
+          <div class="card-label">Social / Signal</div>
+          <h2 class="card-title">$EMPTY on X</h2>
+          <p class="card-desc">
+            Enter the timeline where conviction, cope, and cosmic emptiness
+            are compressed into posts, replies, and unhinged engagement.
+          </p>
+
+          <!-- Replace x-account.png with your downloaded X image -->
+          <img
+            src="x-account.png"
+            alt="$EMPTY X account"
+            class="social-img"
+          />
+
+          <a
+            href="https://x.com/Emptycoinonsol?t=GakCTtqgxtLpnps17WEcIg&s=09"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="card-link"
+          >
+            Open X / Twitter
+          </a>
+        </div>
+      </article>
+
+      <!-- Pump.fun -->
+      <article class="card">
+        <div class="card-inner">
+          <div class="card-label">Market / Mirage</div>
+          <h2 class="card-title">$EMPTY on Pump.fun</h2>
+          <p class="card-desc">
+            Step into the arena where candles pump, bags dump,
+            and every click whispers: "What if this one is different?"
+          </p>
+
+          <!-- Replace pumpfun.png with your downloaded Pump.fun image -->
+          <img
+            src="pumpfun.png"
+            alt="$EMPTY on Pump.fun"
+            class="social-img"
+          />
+
+          <a
+            href="https://join.pump.fun/HSag/ra8148ei"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="card-link"
+          >
+            Open Pump.fun
+          </a>
+        </div>
+      </article>
+    </section>
+
+    <p class="subtle-note">
+      None of this is financial advice. It is, at best, spiritual cardio for
+      those who insist on running toward the void.
+    </p>
+  </div>
+</body>
+  </html>
