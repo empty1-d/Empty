@@ -624,16 +624,14 @@
 
     // 1) Type the prologue slowly (if present)
     if (prologue) {
-      const text = prologue.textContent.trim();
-      // keep the prologue element styled as before but type into it:
-      await typeWriterPromise({
-        element: prologue,
-        fullText: text,
-        speed: 160,       // slow, tweak to taste
-        startDelay: 1200, // wait before beginning
-        deleteAfter: 700,
-        deleteChars: 3
-      });
+  const text = prologue.textContent.trim();
+  await typeWriterPromise({
+    element: prologue,
+    fullText: text,
+    speed: 160,       // slow, tweak to taste
+    startDelay: 1200  // wait before beginning
+    // no deleteAfter / deleteChars here
+  });
     }
 
     // 2) reveal dramatic titles (The Miners / Custodians / etc.)
