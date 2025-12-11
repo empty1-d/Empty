@@ -566,16 +566,15 @@
     });
 
     ["wheel", "touchstart", "scroll"].forEach((evt) => {
-      scrollInner.addEventListener(
-        evt,
-        () => {
-          autoScrollActive = false;
-          // also reveal all typing immediately on user interaction
-          revealAllRemaining();
-        },
-        { passive: true }
-      );
-    });
+  scrollInner.addEventListener(
+    evt,
+    () => {
+      autoScrollActive = false;
+      if (typingStarted) revealAllRemaining();
+    },
+    { passive: true }
+  );
+});
 
     // fade-in images when they enter the viewport
     const images = document.querySelectorAll(".manifesto-image");
@@ -610,13 +609,14 @@
 
     const TYPE_SELECTOR = "[data-type-target]";
     // Configuration
-    const baseCharDelay = 28; // ms per character (lower = faster)
-    const variance = 18; // random +/- ms
+    const baseCharDelay = 60; // ms per character (lower = faster)
+    const variance = 28; // random +/- ms
     const elementStagger = 350; // ms between starting different elements
     const caretForElements = false; // set true to show blinking caret after each element while typing
 
     // state
     let typingActive = true;
+    let typingStarted = false;
     let typingQueue = []; // array of {el, text, resolve}
 
     // helper: safe text to display (converts line breaks)
@@ -772,6 +772,7 @@
 
     // main runner: types all elements in sequence with stagger
     async function runTypingSequence() {
+      typingStarted = true;
       buildTypingQueue();
 
       // store original texts on elements so revealAllRemaining can access them
@@ -803,11 +804,10 @@
     // Also allow click/touch anywhere to reveal instantly
     ["click", "touchstart"].forEach(evt => {
       document.addEventListener(evt, () => {
-        if (typingActive) {
-          revealAllRemaining();
-        }
-      }, { passive: true });
-    });
+  if (typingActive && typingStarted) {
+    revealAllRemaining();
+  }
+});
 
     // ensure that if user scrolls or interacts before typing finishes we reveal text
     // already hooked into scrollInner events above which call revealAllRemaining()
