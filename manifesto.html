@@ -1,408 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Genesis of the Blockchain</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    :root {
-      --bg: #04060d;
-      --bg2: #060814;
-      --accent: #00f6ff;
-      --scroll-bg: #f5e4c5;
-      --scroll-shadow: rgba(0, 0, 0, 0.65);
-      --text-main: #3e2a17;
-      --heading: #2a1a10;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      min-height: 100vh;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-        sans-serif;
-      background: radial-gradient(circle at top, #0b1020 0%, var(--bg) 40%, var(--bg2) 100%);
-      color: var(--text-main);
-      display: flex;
-      justify-content: center;
-      padding: 1.5rem;
-    }
-
-    .page-shell {
-      width: 100%;
-      max-width: 1120px;
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-      align-items: center;
-    }
-
-    @media (min-width: 880px) {
-      .page-shell {
-        flex-direction: row;
-        align-items: flex-start;
-      }
-    }
-
-    /* link back to prelude */
-    .back-link {
-      position: fixed;
-      top: 1.4rem;
-      right: 1.5rem;
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      color: var(--accent);
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      opacity: 0.8;
-      z-index: 20;
-    }
-
-    .back-link::before {
-      content: "←";
-      font-size: 0.9rem;
-    }
-
-    .back-link:hover {
-      opacity: 1;
-      text-decoration: underline;
-    }
-
-    /* scroll container */
-    .scroll-wrapper {
-      width: min(90vw, 420px);
-      height: 80vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      filter: drop-shadow(0 26px 40px var(--scroll-shadow));
-    }
-
-    .scroll {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      border-radius: 18px;
-      background: radial-gradient(circle at top, #fff5df 0%, var(--scroll-bg) 40%, #f0ddba 100%);
-      overflow: hidden;
-      border: 1px solid rgba(161, 126, 78, 0.75);
-    }
-
-    /* scroll caps */
-    .scroll::before,
-    .scroll::after {
-      content: "";
-      position: absolute;
-      left: 6%;
-      width: 88%;
-      height: 18px;
-      border-radius: 999px;
-      background: linear-gradient(90deg, #b78b4a, #f6e0b8, #b78b4a);
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.35);
-      z-index: 3;
-    }
-
-    .scroll::before {
-      top: -9px;
-    }
-
-    .scroll::after {
-      bottom: -9px;
-      box-shadow: 0 -3px 8px rgba(0, 0, 0, 0.35);
-    }
-
-    .scroll-inner {
-      position: relative;
-      z-index: 2;
-      height: 100%;
-      padding: 3.3rem 1.85rem 2.6rem;
-      overflow-y: auto;
-      scroll-behavior: smooth;
-      background-image:
-        radial-gradient(circle at 0 0, rgba(255,255,255,0.35) 0, transparent 55%),
-        radial-gradient(circle at 100% 100%, rgba(204,175,126,0.25) 0, transparent 55%);
-    }
-
-    .scroll-inner::-webkit-scrollbar {
-      width: 4px;
-    }
-    .scroll-inner::-webkit-scrollbar-track {
-      background: transparent;
-    }
-    .scroll-inner::-webkit-scrollbar-thumb {
-      background: rgba(141, 107, 60, 0.6);
-      border-radius: 999px;
-    }
-
-    .scroll-kicker {
-      font-family: "Times New Roman", ui-serif, Georgia, "Noto Serif", serif;
-      font-size: 0.8rem;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      margin-bottom: 1.1rem;
-      color: #7a5832;
-    }
-
-    .scroll-title {
-      font-family: "Times New Roman", ui-serif, Georgia, "Noto Serif", serif;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      font-size: 1.4rem;
-      line-height: 1.5;
-      text-align: center;
-      color: var(--heading);
-      margin-bottom: 2.1rem;
-      min-height: 3.6rem;
-    }
-
-    .scroll-subheading {
-      font-family: "Times New Roman", ui-serif, Georgia, "Noto Serif", serif;
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--heading);
-      margin-bottom: 0.9rem;
-      min-height: 1.4rem;
-    }
-
-    .scroll-body {
-      font-family: "Georgia", ui-serif, "Times New Roman", serif;
-      font-size: 0.9rem;
-      line-height: 1.7;
-      color: var(--text-main);
-    }
-
-    .scroll-body p + p {
-      margin-top: 0.8rem;
-    }
-
-    .section-word {
-      display: inline-block;
-      font-family: "Times New Roman", ui-serif, Georgia, serif;
-      font-size: 1rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      margin-top: 0.4rem;
-      color: #25140c;
-    }
-
-    .section-word.em {
-      font-size: 1.05rem;
-    }
-
-    .closing-word {
-      margin-top: 1.2rem;
-      font-style: italic;
-    }
-
-    .token-empty {
-      font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, Monaco,
-        Consolas, "Liberation Mono", "Roboto Mono", monospace;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-    }
-
-    /* manifesto images + fade-in */
-    .manifesto-image {
-      display: block;
-      max-width: 480px;
-      width: 100%;
-      margin: 1.5rem auto;
-      border-radius: 0.75rem;
-      box-shadow: 0 18px 45px rgba(0,0,0,0.55);
-
-      opacity: 0;
-      transform: translateY(36px) scale(0.94);
-      filter: brightness(0.6);
-      transition:
-        opacity 3.2s ease-out,
-        transform 3.2s ease-out,
-        filter 3.2s ease-out;
-    }
-
-    .manifesto-image.visible {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-      filter: brightness(1);
-    }
-
-    /* disclaimer block */
-    .disclaimer {
-      width: 100%;
-      max-width: 420px;
-      background: radial-gradient(circle at top left, #071624 0%, #02040a 60%, #010307 100%);
-      border-radius: 1.25rem;
-      padding: 1.5rem 1.4rem 1.6rem;
-      border: 1px solid rgba(0, 246, 255, 0.2);
-      color: #e5f5ff;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .disclaimer::before {
-      content: "";
-      position: absolute;
-      inset: -40%;
-      background: radial-gradient(circle at 0 0, rgba(0,246,255,0.15), transparent 55%);
-      opacity: 0.9;
-      pointer-events: none;
-    }
-    .disclaimer-actions {
-      margin-top: 1.6rem;
-      display: flex;
-      flex-direction: column;  /* mobile friendly */
-      gap: 0.75rem;
-    }
-
-    .disclaimer-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0.65rem 1.3rem;
-      border-radius: 999px;
-      font-size: 0.8rem;
-      text-decoration: none;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      color: #e5f5ff;
-      background: rgba(4, 8, 18, 0.8);
-      backdrop-filter: blur(10px);
-    }
-
-    .disclaimer-btn:hover {
-      border-color: var(--accent);
-    }
-
-    .disclaimer-btn.ghost {
-      background: transparent;
-      color: #9aa0c7;
-      border-color: rgba(154, 160, 199, 0.6);
-    }
-
-    .disclaimer-btn.subtle {
-      opacity: 0.7;
-      font-size: 0.75rem;
-    }
-    .disclaimer-btn.sacred {
-      background: radial-gradient(circle at 0 0,
-                  rgba(0, 246, 255, 0.25),
-                  rgba(4, 8, 18, 1));
-      border-color: rgba(0, 246, 255, 0.85);
-      box-shadow: 0 0 18px rgba(0, 246, 255, 0.55);
-    }
-
-    .disclaimer-btn.sacred::before {
-      content: "✧";
-      margin-right: 0.4rem;
-      font-size: 0.9rem;
-    }
-    .disclaimer-inner {
-      position: relative;
-      z-index: 2;
-    }
-
-    .disclaimer-title {
-      font-size: 0.85rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 0.75rem;
-    }
-
-    .disclaimer p {
-      font-size: 0.85rem;
-      line-height: 1.6;
-      margin-bottom: 0.7rem;
-    }
-
-    .disclaimer-cta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
-      margin-top: 0.8rem;
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-    }
-
-    .pill {
-      padding: 0.4rem 0.9rem;
-      border-radius: 999px;
-      border: 1px solid rgba(0, 246, 255, 0.45);
-      background: rgba(0, 246, 255, 0.06);
-    }
-
-    .pill.muted {
-      border-color: rgba(255, 255, 255, 0.16);
-      background: rgba(255, 255, 255, 0.04);
-      color: rgba(229, 245, 255, 0.75);
-    }
-
-    /* TYPEWRITER CHAR STYLES */
-    .typing-char {
-      display: inline-block;
-      opacity: 0;
-      transform: translateY(2px);
-      white-space: pre-wrap;
-    }
-
-    .typing-char.visible {
-      opacity: 1;
-      transform: translateY(0);
-      transition: opacity 120ms linear, transform 140ms ease-out;
-    }
-
-    /* caret for certain elements (optional) */
-    .typing-caret {
-      display: inline-block;
-      width: 7px;
-      height: 1.2em;
-      background: var(--heading);
-      margin-left: 2px;
-      opacity: 1;
-      animation: blink 1s steps(2, start) infinite;
-      vertical-align: text-bottom;
-    }
-
-    @keyframes blink {
-      50% { opacity: 0; }
-    }
-
-  </style>
-</head>
-<body>
-  <a href="index.html" class="back-link">Prelude</a>
-
-  <div class="page-shell">
-    <!-- SCROLL -->
-    <div class="scroll-wrapper">
-      <div class="scroll">
-        <div class="scroll-inner" id="scroll-inner">
-          <div class="scroll-kicker">空的</div>
-          <h1 class="scroll-title" data-type-target>GENESIS OF<br />THE BLOCKCHAIN</h1>
-
-          <h2 class="scroll-subheading" data-type-target>In the beginning,</h2>
-
-          <div class="scroll-body">
-            <p data-type-target>Satoshi created the Bitcoin — and saw that it was good.</p>
-
-            <p data-type-target>Blocks formed, and faith was forged in code.</p>
-
-            <p data-type-target>Faith in a new era of digitized sovereignty, and tokenized liberation.</p>
-
-            <p data-type-target>Faith from which a generation of new believers emerged.</p>
-
-            <p data-type-target>They who toiled in the shadows, forging faith into conviction.</p>
-
-            <p data-type-target>
-              They called themselves —
+<!DOCTYPE html>They called themselves —
               <span class="section-word em" data-type-target>The Miners.</span>
             </p>
 
@@ -541,14 +137,13 @@
   </div>
 
   <script>
-  // gentle auto-scroll of the parchment
+  // gentle auto-scroll of the parchment (robust start)
   const scrollInner = document.getElementById("scroll-inner");
   let autoScrollActive = true;
   const speed = 0.3; // pixels per frame
 
   function autoScrollStep() {
     if (!autoScrollActive) return;
-
     const maxScroll = scrollInner.scrollHeight - scrollInner.clientHeight;
     if (scrollInner.scrollTop >= maxScroll) {
       autoScrollActive = false;
@@ -558,19 +153,32 @@
     requestAnimationFrame(autoScrollStep);
   }
 
-  window.addEventListener("load", () => {
-    // start auto-scroll after a small delay so typewriting begins first
+  function startAutoScrollWithDelay(delay = 2500) {
+    // only start if it's possible to scroll
+    if (scrollInner.scrollHeight <= scrollInner.clientHeight) return;
     setTimeout(() => {
-      autoScrollStep();
-    }, 2500);
-  });
+      // guard: don't start if user already interacted and canceled auto-scroll
+      if (!autoScrollActive) return;
+      requestAnimationFrame(autoScrollStep);
+    }, delay);
+  }
 
+  // Robustly start auto-scroll when page finishes loading
+  if (document.readyState === "complete") {
+    startAutoScrollWithDelay(2500);
+  } else {
+    window.addEventListener("load", () => startAutoScrollWithDelay(2500));
+  }
+
+  // If the user starts interacting with the scroll container, stop auto-scroll
+  // but DO NOT reveal the typing on touch/drag — that allows native scrolling.
   ["wheel", "touchstart", "scroll"].forEach((evt) => {
     scrollInner.addEventListener(
       evt,
       () => {
         autoScrollActive = false;
-        if (typingStarted) revealAllRemaining();
+        // Only reveal text on scroll if typing already finished — keep touch from revealing.
+        // If you want touch to reveal, call revealAllRemaining() here intentionally.
       },
       { passive: true }
     );
@@ -580,7 +188,6 @@
   const images = document.querySelectorAll(".manifesto-image");
 
   if ("IntersectionObserver" in window) {
-    // IMPORTANT: use the scrollable container as the root so visibility is relative to the parchment
     const io = new IntersectionObserver(
       (entries, observer) => {
         entries.forEach((entry) => {
@@ -592,10 +199,8 @@
       },
       { threshold: 0.2, root: scrollInner }
     );
-
     images.forEach((img) => io.observe(img));
   } else {
-    // fallback: just show them
     images.forEach((img) => img.classList.add("visible"));
   }
 
@@ -604,20 +209,16 @@
      --------------------------- */
 
   const TYPE_SELECTOR = "[data-type-target]";
-  // Configuration
-  const baseCharDelay = 60; // ms per character (lower = faster)
-  const variance = 28; // random +/- ms
-  const elementStagger = 350; // ms between starting different elements
-  const caretForElements = false; // set true to show blinking caret after each element while typing
+  const baseCharDelay = 60; // ms per character
+  const variance = 28;
+  const elementStagger = 350;
+  const caretForElements = false;
 
-  // state
   let typingActive = true;
   let typingStarted = false;
-  let typingQueue = []; // array of {el, text, resolve}
+  let typingQueue = [];
 
-  // helper: safe text to display (converts line breaks)
   function normalizeText(t) {
-    // preserve \n as real line breaks
     return t.replace(/\r/g, "");
   }
 
@@ -628,7 +229,6 @@
       const txt = el.textContent.trim();
       return txt.length > 0;
     });
-
     filtered.forEach((el) => {
       const original = normalizeText(el.innerText || el.textContent || "");
       typingQueue.push({ el, original });
@@ -687,20 +287,14 @@
         const ch = text[index++];
         const node = makeCharNode(ch);
         wrap.appendChild(node);
-
-        requestAnimationFrame(() => {
-          node.classList.add("visible");
-        });
+        requestAnimationFrame(() => node.classList.add("visible"));
 
         const rnd = Math.floor((Math.random() - 0.5) * variance);
         const delay = Math.max(6, baseCharDelay + rnd);
-
         setTimeout(nextChar, delay);
       }
 
-      setTimeout(() => {
-        nextChar();
-      }, startDelay);
+      setTimeout(() => nextChar(), startDelay);
     });
   }
 
@@ -715,7 +309,6 @@
 
   function revealAllRemaining() {
     typingActive = false;
-    // for all typing-wrap elements, if not fully typed, append the rest from queue
     document.querySelectorAll(TYPE_SELECTOR).forEach((el) => {
       const wrap = el.querySelector(".typing-wrap");
       if (!wrap) return;
@@ -728,7 +321,6 @@
       }
     });
 
-    // also for any elements that haven't been prepared yet, simply set their innerText
     typingQueue.forEach(({ el, original }) => {
       if (!el.querySelector(".typing-wrap")) {
         el.innerText = original;
@@ -739,10 +331,7 @@
   async function runTypingSequence() {
     typingStarted = true;
     buildTypingQueue();
-
-    typingQueue.forEach(item => {
-      item.el.__originalText = item.original;
-    });
+    typingQueue.forEach(item => item.el.__originalText = item.original);
 
     for (let i = 0; i < typingQueue.length; i++) {
       const { el, original } = typingQueue[i];
@@ -750,34 +339,29 @@
       await typeElement(el, original, 0);
       await new Promise(res => setTimeout(res, elementStagger));
     }
+
     typingActive = false;
   }
 
-  // Robust DOM ready: if DOMContentLoaded already fired, run immediately
+  // Robust DOM ready: run even if script executed after DOMContentLoaded
   if (document.readyState === "loading") {
     window.addEventListener("DOMContentLoaded", () => {
-      setTimeout(() => {
-        runTypingSequence().catch(() => {});
-      }, 600);
+      setTimeout(() => runTypingSequence().catch(()=>{}), 600);
     });
   } else {
-    // DOM already ready
-    setTimeout(() => {
-      runTypingSequence().catch(() => {});
-    }, 600);
+    setTimeout(() => runTypingSequence().catch(()=>{}), 600);
   }
 
-  // Also allow click/touch anywhere to reveal instantly
-  ["click", "touchstart"].forEach(evt => {
-    document.addEventListener(evt, () => {
-      if (typingActive && typingStarted) {
-        revealAllRemaining();
-      }
-    }, { passive: true });
-  });
+  // Only reveal on explicit click/tap. Do NOT reveal on touchstart so users can scroll.
+  document.addEventListener("click", () => {
+    if (typingActive && typingStarted) revealAllRemaining();
+  }, { passive: true });
+
+  // If you prefer a two-finger tap or a long-press to reveal, I can add that instead.
 
   /* END typewriter */
-  </script>
+    </script>
+                  
 </body>
   </html>
         
