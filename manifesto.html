@@ -577,198 +577,234 @@
    </aside>
     
   </div>
-  <script>
-  document.documentElement.classList.remove('no-js');
+          <script>
+/* ====== Defensive debug + typewriter runner for the manifesto ======
+   Replace your current <script> with this. Then open DevTools (Console)
+   and look for "EMPTY DEBUG:" messages. If something still fails, copy
+   the first red error you see and paste it to me.
+==================================================================== */
 
-  // simple sleep utility
-  const sleep = (ms) => new Promise((res) => setTimeout(res, ms));
+(function () {
+  const LOG = (...args) => console.log("EMPTY DEBUG:", ...args);
+  const WARN = (...args) => console.warn("EMPTY DEBUG:", ...args);
+  const ERROR = (...args) => console.error("EMPTY DEBUG:", ...args);
 
-  // typewriter that writes into a supplied container element (creates its own text span + cursor)
+  LOG("Script loaded — preparing to run on DOMContentLoaded");
+
+  // safe sleep
+  const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+  // robust typewriter that appends into the target element via an inner span + cursor
   function typeWriterPromise({ element, fullText = "", speed = 80, startDelay = 0 }) {
     return new Promise((resolve) => {
-      if (!element) return resolve();
-
-      let index = 0;
-      fullText = String(fullText);
-      element.textContent = ""; // clear existing text content (we'll append our span)
-      const textSpan = document.createElement("span");
-      const cursor = document.createElement("span");
-      cursor.className = "typewriter-cursor";
-      element.appendChild(textSpan);
-      element.appendChild(cursor);
-
-      // protect against absurdly large speed values
-      speed = Math.max(8, Math.min(300, Number(speed) || 80));
-
-      function step() {
-        try {
-          if (index < fullText.length) {
-            textSpan.textContent = fullText.slice(0, index + 1);
-            index++;
-            setTimeout(step, speed);
-          } else {
-            // done typing
-            // leave cursor for a short moment so it reads naturally, then resolve
-            setTimeout(() => resolve(), 120);
-          }
-        } catch (err) {
-          // on any error, resolve so the outer loop continues
-          console.error("typeWriter error:", err);
-          resolve();
-        }
+      if (!element) {
+        WARN("typeWriter called with no element — resolving");
+        return resolve();
       }
+      try {
+        let idx = 0;
+        fullText = String(fullText);
+        element.textContent = ""; // clear visible contents
+        const span = document.createElement("span");
+        const cursor = document.createElement("span");
+        cursor.className = "typewriter-cursor";
+        element.appendChild(span);
+        element.appendChild(cursor);
 
-      setTimeout(step, startDelay);
+        speed = Math.max(8, Math.min(300, Number(speed) || 80));
+        function step() {
+          try {
+            if (idx < fullText.length) {
+              span.textContent = fullText.slice(0, idx + 1);
+              idx++;
+              setTimeout(step, speed);
+            } else {
+              setTimeout(() => resolve(), 90);
+            }
+          } catch (e) {
+            ERROR("typeWriter inner error:", e);
+            resolve();
+          }
+        }
+        setTimeout(step, startDelay);
+      } catch (e) {
+        ERROR("typeWriter outer error:", e);
+        resolve();
+      }
     });
   }
 
-  async function initDramaticNarrationAllParagraphs() {
-    const prologue = document.getElementById("prologue-line");
-    const closing = document.getElementById("closing-empty");
+  async function runNarration({ onProgress } = {}) {
+    LOG("runNarration start");
+    try {
+      // remove no-js if present
+      try { document.documentElement.classList.remove("no-js"); } catch (e) { WARN("couldn't remove no-js:", e); }
 
-    // collect paragraphs inside scroll-body, excluding the closing token
-    const allParas = Array.from(document.querySelectorAll(".scroll-body p"))
-      .filter((p) => p.id !== "closing-empty");
+      const prologue = document.getElementById("prologue-line");
+      const closing = document.getElementById("closing-empty");
+      const allParas = Array.from(document.querySelectorAll(".scroll-body p"))
+        .filter((p) => p.id !== "closing-empty");
 
-    // hide remaining paragraphs initially for fade-in effect
-    allParas.forEach((p) => {
-      p.classList.add("tw-hidden");
-    });
+      LOG("Found", { prologue: !!prologue, closing: !!closing, paragraphs: allParas.length });
 
-    // 1) Type the prologue slowly (if present)
-    if (prologue) {
-      const text = prologue.innerText.trim();
-      await typeWriterPromise({
-        element: prologue,
-        fullText: text,
-        speed: 90,
-        startDelay: 300
+      // defensive: ensure classes exist and are not blocking
+      allParas.forEach((p) => {
+        if (!p.classList.contains("tw-hidden")) p.classList.add("tw-hidden");
       });
-    }
 
-    // 2) reveal dramatic titles (The Miners / Custodians / etc.)
-    const dram = document.querySelectorAll(".dramatic");
-    dram.forEach((el, i) => {
-      setTimeout(() => el.classList.add("dramatic-visible"), 700 + i * 700);
-    });
+      // 1) prologue
+      if (prologue) {
+        const text = (prologue.innerText || prologue.textContent || "").trim();
+        LOG("Typing prologue:", text.slice(0, 60) + (text.length > 60 ? "…" : ""));
+        await typeWriterPromise({ element: prologue, fullText: text, speed: 90, startDelay: 200 });
+        if (onProgress) onProgress("prologue");
+      } else {
+        WARN("Prologue element missing (id prologue-line)");
+      }
 
-    // 3) Sequentially type each paragraph (with pacing)
-    const betweenParasDelay = 700; // ms after paragraph finishes before next starts
+      // 2) reveal dramatic titles
+      const dram = document.querySelectorAll(".dramatic");
+      dram.forEach((el, i) => {
+        setTimeout(() => {
+          try { el.classList.add("dramatic-visible"); }
+          catch(e){ WARN("dramatic reveal failed", e); }
+        }, 700 + i * 700);
+      });
 
-    for (let i = 0; i < allParas.length; i++) {
-      const p = allParas[i];
+      // 3) paragraphs
+      const betweenParasDelay = 700;
+      for (let i = 0; i < allParas.length; i++) {
+        const p = allParas[i];
+        try {
+          const originalHTML = p.innerHTML;
+          const plain = (p.innerText || p.textContent || "").replace(/\s+/g, " ").trim();
 
-      try {
-        // preserve original HTML so we can restore it afterwards
-        const originalHTML = p.innerHTML;
+          if (!plain) {
+            // reveal but keep original HTML
+            p.classList.remove("tw-hidden");
+            p.classList.add("tw-show");
+            p.innerHTML = originalHTML;
+            LOG("Paragraph", i, "empty text — revealed.");
+            await sleep(betweenParasDelay);
+            continue;
+          }
 
-        // compute plain text safely (innerText is robust)
-        const text = p.innerText.replace(/\s+/g, " ").trim();
-
-        // if empty text (images only etc.), just reveal and continue
-        if (!text) {
+          // type into a wrapper so we don't break markup
+          p.innerHTML = "";
+          const wrapper = document.createElement("span");
+          p.appendChild(wrapper);
           p.classList.remove("tw-hidden");
           p.classList.add("tw-show");
-          // restore original in case it was changed
+
+          const guessedSpeed = Math.max(20, Math.min(140, Math.floor(100 - Math.log(Math.max(1, plain.length)) * 2)));
+          LOG(`Typing paragraph ${i+1}/${allParas.length} (len=${plain.length}) speed=${guessedSpeed}`);
+          await typeWriterPromise({ element: wrapper, fullText: plain, speed: guessedSpeed, startDelay: 40 });
+
+          // fade & restore original HTML (keeps spans/em emphasis)
+          p.style.opacity = "0.01";
+          await sleep(180);
           p.innerHTML = originalHTML;
-          await sleep(betweenParasDelay);
-          continue;
+          p.style.transition = "opacity 380ms ease-out";
+          p.style.opacity = "";
+        } catch (e) {
+          ERROR("Error typing paragraph", i, e);
+          // reveal and continue
+          try { p.classList.remove("tw-hidden"); p.classList.add("tw-show"); } catch(_){}
         }
-
-        // prepare paragraph for typing: keep markup intact by typing into a child wrapper span
-        p.innerHTML = ""; // clear so typing span is visible and doesn't duplicate nodes
-        const typingWrapper = document.createElement("span");
-        p.appendChild(typingWrapper);
-        p.classList.remove("tw-hidden");
-        p.classList.add("tw-show");
-
-        // speed heuristics: longer paragraphs type slightly faster per character up to a cap
-        const guessedSpeed = Math.max(20, Math.min(140, Math.floor(100 - Math.log(Math.max(1, text.length)) * 2)));
-        await typeWriterPromise({
-          element: typingWrapper,
-          fullText: text,
-          speed: guessedSpeed,
-          startDelay: 60
-        });
-
-        // fade then restore original HTML to keep spans/emphasis
-        p.style.opacity = "0.01";
-        await sleep(200);
-        p.innerHTML = originalHTML;
-        p.style.transition = "opacity 380ms ease-out";
-        p.style.opacity = "";
-
-      } catch (err) {
-        // don't let one paragraph break the whole sequence
-        console.error("Paragraph error (continuing):", err);
-        p.classList.remove("tw-hidden");
-        p.classList.add("tw-show");
+        if (onProgress) onProgress("para", i);
+        await sleep(betweenParasDelay + 60);
       }
 
-      // wait a little before the next paragraph begins
-      await sleep(betweenParasDelay + 120);
-    }
-
-    // 4) finally type the closing $empty token after a pause
-    if (closing) {
-      try {
-        closing.classList.add("tw-hidden");
-        await sleep(1000);
-        closing.classList.remove("tw-hidden");
-        await typeWriterPromise({
-          element: closing,
-          fullText: closing.innerText.trim(),
-          speed: 220,
-          startDelay: 120
-        });
-      } catch (err) {
-        console.error("Closing token error:", err);
-        closing.classList.add("tw-show");
+      // 4) closing token
+      if (closing) {
+        try {
+          closing.classList.add("tw-hidden");
+          await sleep(850);
+          closing.classList.remove("tw-hidden");
+          await typeWriterPromise({ element: closing, fullText: (closing.innerText || closing.textContent || "").trim(), speed: 220, startDelay: 80 });
+          LOG("Finished closing token");
+        } catch (e) {
+          ERROR("Closing token failed:", e);
+          try { closing.classList.add("tw-show"); } catch(_){}
+        }
+      } else {
+        WARN("Closing token missing (id closing-empty)");
       }
+
+      LOG("runNarration complete");
+      return true;
+    } catch (e) {
+      ERROR("runNarration top-level error:", e);
+      return false;
     }
   }
 
-  // ===== IMAGE FADE-IN (keeps your logic) =====
-  const images = document.querySelectorAll(".manifesto-image");
-  if ("IntersectionObserver" in window) {
-    const io = new IntersectionObserver(
-      (entries, observer) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-            observer.unobserve(entry.target);
-          }
+  // Fallback mechanism: if main run doesn't complete within X ms, reveal everything
+  const FALLBACK_MS = 8000; // 8s
+  let narrationCompleted = false;
+  async function startWithFallback() {
+    LOG("Starting narration with fallback timeout", FALLBACK_MS, "ms");
+    narrationCompleted = false;
+
+    // start a race: runNarration vs fallback timeout
+    const runPromise = runNarration({
+      onProgress: (stage, i) => {
+        LOG("progress:", stage, i ?? "");
+      }
+    }).then((ok) => {
+      narrationCompleted = true;
+      LOG("Narration promise resolved:", ok);
+    }).catch((e) => {
+      narrationCompleted = true;
+      ERROR("Narration promise rejected:", e);
+    });
+
+    // fallback timer
+    const fallback = sleep(FALLBACK_MS).then(() => {
+      if (!narrationCompleted) {
+        WARN("Fallback triggered — revealing all content to avoid blank page");
+        document.querySelectorAll(".scroll-body p").forEach((p) => {
+          try { p.classList.add("tw-show"); p.classList.remove("tw-hidden"); } catch(_){}
         });
-      },
-      { threshold: 0.2 }
-    );
-    images.forEach((img) => io.observe(img));
+        document.querySelectorAll(".dramatic").forEach((d) => d.classList.add("dramatic-visible"));
+        document.querySelectorAll(".manifesto-image").forEach((img) => img.classList.add("visible"));
+      } else {
+        LOG("Fallback not needed — narrationCompleted = true");
+      }
+    });
+
+    // wait for both to finish
+    await Promise.all([runPromise, fallback]);
+  }
+
+  // Public helper so you can restart from console
+  window.emptyManifesto = {
+    restart: () => {
+      LOG("Manual restart requested (emptyManifesto.restart())");
+      startWithFallback();
+    },
+    debugLog: () => {
+      const prologue = !!document.getElementById("prologue-line");
+      const closing = !!document.getElementById("closing-empty");
+      const paras = document.querySelectorAll(".scroll-body p").length;
+      LOG("Status:", { prologue, closing, paras });
+    }
+  };
+
+  // run on DOMContentLoaded (safer / earlier)
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => {
+      LOG("DOMContentLoaded fired — launching startWithFallback");
+      startWithFallback();
+    });
   } else {
-    images.forEach((img) => img.classList.add("visible"));
+    LOG("Document already ready — launching startWithFallback immediately");
+    startWithFallback();
   }
 
-  // ===== ON LOAD: trigger the cinematic run (wrapped so errors don't halt everything) =====
-  window.addEventListener("load", () => {
-    try {
-      setTimeout(() => {
-        initDramaticNarrationAllParagraphs().catch((e) => {
-          console.error("Narration failed:", e);
-          document.querySelectorAll(".scroll-body p").forEach((p) => p.classList.add("tw-show"));
-          document.querySelectorAll(".dramatic").forEach((d) => d.classList.add("dramatic-visible"));
-          document.querySelectorAll(".manifesto-image").forEach((img) => img.classList.add("visible"));
-        });
-
-        // optional auto-scroll if you have that function
-        setTimeout(() => {
-          if (typeof autoScrollStep === "function") {
-            try { autoScrollStep(); } catch (e) { /* ignore */ }
-          }
-        }, 1400);
-      }, 1200);
-    } catch (err) {
-      console.error("Load handler error:", err);
-    }
-  });
-  </script>
+  // final console tip
+  LOG("If you open DevTools (Console) you should see these logs. If you see a red error, copy it and send it to me.");
+})();
+          </script>
 </body>
   </html>
