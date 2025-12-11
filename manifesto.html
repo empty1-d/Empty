@@ -411,7 +411,7 @@
     <div class="scroll-wrapper">
       <div class="scroll">
         <div class="scroll-inner" id="scroll-inner">
-          <div class="scroll-kicker">Empty / Manifesto</div>
+          <div class="scroll-kicker">空的</div>
           <h1 class="scroll-title">
             GENESIS OF<br />
             THE BLOCKCHAIN
@@ -578,53 +578,43 @@
     
   </div>
   <script>
-  // remove no-js so CSS fallback doesn't show raw content when JS is present
   document.documentElement.classList.remove('no-js');
 
-  // ---- helper: typewriter that returns a Promise ----
-  function typeWriterPromise({ element, fullText, speed = 80, startDelay = 0, deleteAfter = 0, deleteChars = 0 }) {
+  // simple sleep utility
+  const sleep = (ms) => new Promise((res) => setTimeout(res, ms));
+
+  // typewriter that writes into a supplied container element (creates its own text span + cursor)
+  function typeWriterPromise({ element, fullText = "", speed = 80, startDelay = 0 }) {
     return new Promise((resolve) => {
       if (!element) return resolve();
 
       let index = 0;
-      let deleting = false;
-      const originalText = fullText;
-
-      // clear and create text span + cursor
-      element.textContent = "";
+      fullText = String(fullText);
+      element.textContent = ""; // clear existing text content (we'll append our span)
       const textSpan = document.createElement("span");
       const cursor = document.createElement("span");
       cursor.className = "typewriter-cursor";
       element.appendChild(textSpan);
       element.appendChild(cursor);
 
+      // protect against absurdly large speed values
+      speed = Math.max(8, Math.min(300, Number(speed) || 80));
+
       function step() {
-        if (!deleting) {
-          if (index <= fullText.length) {
-            textSpan.textContent = fullText.slice(0, index);
+        try {
+          if (index < fullText.length) {
+            textSpan.textContent = fullText.slice(0, index + 1);
             index++;
             setTimeout(step, speed);
-          } else if (deleteChars > 0 && deleteAfter > 0) {
-            setTimeout(() => {
-              deleting = true;
-              step();
-            }, deleteAfter);
           } else {
-            // finished typing
-            resolve();
+            // done typing
+            // leave cursor for a short moment so it reads naturally, then resolve
+            setTimeout(() => resolve(), 120);
           }
-        } else {
-          if (index > fullText.length - deleteChars) {
-            index--;
-            textSpan.textContent = fullText.slice(0, index);
-            setTimeout(step, speed);
-          } else {
-            // retype cleanly if needed (fallback)
-            deleting = false;
-            index = 0;
-            fullText = originalText;
-            setTimeout(step, 200);
-          }
+        } catch (err) {
+          // on any error, resolve so the outer loop continues
+          console.error("typeWriter error:", err);
+          resolve();
         }
       }
 
@@ -632,7 +622,6 @@
     });
   }
 
-  // ---- main: type each paragraph sequentially ----
   async function initDramaticNarrationAllParagraphs() {
     const prologue = document.getElementById("prologue-line");
     const closing = document.getElementById("closing-empty");
@@ -642,91 +631,104 @@
       .filter((p) => p.id !== "closing-empty");
 
     // hide remaining paragraphs initially for fade-in effect
-    allParas.forEach((p) => p.classList.add("tw-hidden"));
-
-    // helper to extract plain text from HTML safely
-    const extractPlainTextFromHTML = (html) => {
-      const tmp = document.createElement("div");
-      tmp.innerHTML = html;
-      return tmp.textContent.replace(/\s+/g, " ").trim();
-    };
+    allParas.forEach((p) => {
+      p.classList.add("tw-hidden");
+    });
 
     // 1) Type the prologue slowly (if present)
     if (prologue) {
-      const text = prologue.textContent.trim();
+      const text = prologue.innerText.trim();
       await typeWriterPromise({
         element: prologue,
         fullText: text,
         speed: 90,
-        startDelay: 1100
+        startDelay: 300
       });
     }
 
     // 2) reveal dramatic titles (The Miners / Custodians / etc.)
     const dram = document.querySelectorAll(".dramatic");
     dram.forEach((el, i) => {
-      setTimeout(() => el.classList.add("dramatic-visible"), 900 + i * 900);
+      setTimeout(() => el.classList.add("dramatic-visible"), 700 + i * 700);
     });
 
     // 3) Sequentially type each paragraph (with pacing)
-    const betweenParasDelay = 900; // ms after paragraph finishes before next starts
+    const betweenParasDelay = 700; // ms after paragraph finishes before next starts
+
     for (let i = 0; i < allParas.length; i++) {
       const p = allParas[i];
 
-      // store original HTML so we can restore markup after typing
-      const originalHTML = p.innerHTML;
+      try {
+        // preserve original HTML so we can restore it afterwards
+        const originalHTML = p.innerHTML;
 
-      // create a temporary wrapper where typing will occur
-      p.innerHTML = "";
-      p.classList.remove("tw-hidden");
-      p.classList.add("tw-show");
+        // compute plain text safely (innerText is robust)
+        const text = p.innerText.replace(/\s+/g, " ").trim();
 
-      // extract plain text from the original HTML (so tags don't show literally)
-      const text = extractPlainTextFromHTML(originalHTML);
+        // if empty text (images only etc.), just reveal and continue
+        if (!text) {
+          p.classList.remove("tw-hidden");
+          p.classList.add("tw-show");
+          // restore original in case it was changed
+          p.innerHTML = originalHTML;
+          await sleep(betweenParasDelay);
+          continue;
+        }
 
-      // fallback: if text is empty, restore and continue
-      if (!text) {
-        p.innerHTML = originalHTML;
-        await new Promise((r) => setTimeout(r, betweenParasDelay));
-        continue;
-      }
+        // prepare paragraph for typing: keep markup intact by typing into a child wrapper span
+        p.innerHTML = ""; // clear so typing span is visible and doesn't duplicate nodes
+        const typingWrapper = document.createElement("span");
+        p.appendChild(typingWrapper);
+        p.classList.remove("tw-hidden");
+        p.classList.add("tw-show");
 
-      // type into the paragraph (adjust speed based on length)
-      const speedForThis = Math.max(40, Math.min(160, Math.floor(120 + text.length / 6)));
-      await typeWriterPromise({
-        element: p,
-        fullText: text,
-        speed: speedForThis,
-        startDelay: 110,
-      });
+        // speed heuristics: longer paragraphs type slightly faster per character up to a cap
+        const guessedSpeed = Math.max(20, Math.min(140, Math.floor(100 - Math.log(Math.max(1, text.length)) * 2)));
+        await typeWriterPromise({
+          element: typingWrapper,
+          fullText: text,
+          speed: guessedSpeed,
+          startDelay: 60
+        });
 
-      // after typing finishes, restore the original HTML (so spans, emphasis, etc. remain intact)
-      p.style.opacity = "0.01";
-      setTimeout(() => {
+        // fade then restore original HTML to keep spans/emphasis
+        p.style.opacity = "0.01";
+        await sleep(200);
         p.innerHTML = originalHTML;
         p.style.transition = "opacity 380ms ease-out";
         p.style.opacity = "";
-      }, 200);
+
+      } catch (err) {
+        // don't let one paragraph break the whole sequence
+        console.error("Paragraph error (continuing):", err);
+        p.classList.remove("tw-hidden");
+        p.classList.add("tw-show");
+      }
 
       // wait a little before the next paragraph begins
-      await new Promise((r) => setTimeout(r, betweenParasDelay + 700));
+      await sleep(betweenParasDelay + 120);
     }
 
     // 4) finally type the closing $empty token after a pause
     if (closing) {
-      closing.classList.add("tw-hidden");
-      await new Promise((r) => setTimeout(r, 1200)); // pause before the final reveal
-      closing.classList.remove("tw-hidden");
-      await typeWriterPromise({
-        element: closing,
-        fullText: closing.textContent.trim(),
-        speed: 220,
-        startDelay: 200
-      });
+      try {
+        closing.classList.add("tw-hidden");
+        await sleep(1000);
+        closing.classList.remove("tw-hidden");
+        await typeWriterPromise({
+          element: closing,
+          fullText: closing.innerText.trim(),
+          speed: 220,
+          startDelay: 120
+        });
+      } catch (err) {
+        console.error("Closing token error:", err);
+        closing.classList.add("tw-show");
+      }
     }
   }
 
-  // ===== IMAGE FADE-IN (no change) =====
+  // ===== IMAGE FADE-IN (keeps your logic) =====
   const images = document.querySelectorAll(".manifesto-image");
   if ("IntersectionObserver" in window) {
     const io = new IntersectionObserver(
@@ -745,26 +747,27 @@
     images.forEach((img) => img.classList.add("visible"));
   }
 
-  // ===== ON LOAD: trigger the cinematic run =====
+  // ===== ON LOAD: trigger the cinematic run (wrapped so errors don't halt everything) =====
   window.addEventListener("load", () => {
-    // gentle initial delay before narration begins
-    setTimeout(() => {
-      // start the paragraph-by-paragraph typewriter show
-      initDramaticNarrationAllParagraphs().catch((e) => {
-        // if something goes wrong, reveal everything to avoid a blank page
-        console.error("Narration failed:", e);
-        document.querySelectorAll(".scroll-body p").forEach((p) => p.classList.add("tw-show"));
-        document.querySelectorAll(".dramatic").forEach((d) => d.classList.add("dramatic-visible"));
-        document.querySelectorAll(".manifesto-image").forEach((img) => img.classList.add("visible"));
-      });
-
-      // delay auto-scroll slightly so it runs while text is appearing
+    try {
       setTimeout(() => {
-        if (typeof autoScrollStep === "function") {
-          autoScrollStep();
-        }
-      }, 1400);
-    }, 1800); // main intro pause before everything starts
+        initDramaticNarrationAllParagraphs().catch((e) => {
+          console.error("Narration failed:", e);
+          document.querySelectorAll(".scroll-body p").forEach((p) => p.classList.add("tw-show"));
+          document.querySelectorAll(".dramatic").forEach((d) => d.classList.add("dramatic-visible"));
+          document.querySelectorAll(".manifesto-image").forEach((img) => img.classList.add("visible"));
+        });
+
+        // optional auto-scroll if you have that function
+        setTimeout(() => {
+          if (typeof autoScrollStep === "function") {
+            try { autoScrollStep(); } catch (e) { /* ignore */ }
+          }
+        }, 1400);
+      }, 1200);
+    } catch (err) {
+      console.error("Load handler error:", err);
+    }
   });
   </script>
 </body>
