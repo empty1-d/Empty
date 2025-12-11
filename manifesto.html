@@ -711,4 +711,109 @@
           });
 
           // compute next delay with some variance for organic feel
-          const rnd = Math.floor((M
+          const rnd = Math.floor((Math.random() - 0.5) * variance);
+          const delay = Math.max(6, baseCharDelay + rnd);
+
+          // schedule next
+          setTimeout(nextChar, delay);
+        }
+
+        // start after startDelay
+        setTimeout(() => {
+          nextChar();
+        }, startDelay);
+      });
+    }
+
+    // reveal remaining characters instantly for a wrapper and remaining text
+    function revealRemainingForElement(wrap, remainingText) {
+      // append remainingText as visible chars synchronously
+      for (let i = 0; i < remainingText.length; i++) {
+        const ch = remainingText[i];
+        const node = makeCharNode(ch);
+        wrap.appendChild(node);
+        // force visible immediately
+        node.classList.add("visible");
+      }
+    }
+
+    // Reveal ALL remaining typing immediately (called on user interaction)
+    function revealAllRemaining() {
+      typingActive = false;
+      // for all typing-wrap elements, if not fully typed, append the rest from queue
+      document.querySelectorAll(TYPE_SELECTOR).forEach((el) => {
+        // if element has a typing-wrap, and its text is not full, fill it
+        const wrap = el.querySelector(".typing-wrap");
+        if (!wrap) return;
+        // compute current text already in DOM vs original from build queue
+        const original = el.__originalText || el.getAttribute("data-original-text") || "";
+        // Try to derive original from dataset or queued source
+        if (!original && el.dataset && el.dataset.originalText) {
+          // nothing
+        }
+        // If we stored original on element earlier, use it:
+        const full = el.__originalText || original;
+        if (!full) return;
+        // derive current text inside wrap
+        const currentChars = wrap.querySelectorAll(".typing-char").length;
+        const remaining = full.slice(currentChars);
+        if (remaining && remaining.length > 0) {
+          revealRemainingForElement(wrap, remaining);
+        }
+      });
+
+      // also for any elements that haven't been prepared yet, simply set their innerText (quick fallback)
+      typingQueue.forEach(({ el, original }) => {
+        if (!el.querySelector(".typing-wrap")) {
+          el.innerText = original;
+        }
+      });
+    }
+
+    // main runner: types all elements in sequence with stagger
+    async function runTypingSequence() {
+      buildTypingQueue();
+
+      // store original texts on elements so revealAllRemaining can access them
+      typingQueue.forEach(item => {
+        item.el.__originalText = item.original;
+      });
+
+      for (let i = 0; i < typingQueue.length; i++) {
+        const { el, original } = typingQueue[i];
+        // If typing has been cancelled (user interaction), break and reveal all
+        if (!typingActive) break;
+        // type this element (start immediately, but stagger gives spacing between elements)
+        await typeElement(el, original, 0);
+        // small pause between elements
+        await new Promise(res => setTimeout(res, elementStagger));
+      }
+      // finished
+      typingActive = false;
+    }
+
+    // Start typing on DOMContentLoaded
+    window.addEventListener("DOMContentLoaded", () => {
+      // small initial delay for cinematic effect
+      setTimeout(() => {
+        runTypingSequence().catch(() => {});
+      }, 600);
+    });
+
+    // Also allow click/touch anywhere to reveal instantly
+    ["click", "touchstart"].forEach(evt => {
+      document.addEventListener(evt, () => {
+        if (typingActive) {
+          revealAllRemaining();
+        }
+      }, { passive: true });
+    });
+
+    // ensure that if user scrolls or interacts before typing finishes we reveal text
+    // already hooked into scrollInner events above which call revealAllRemaining()
+
+    /* END typewriter */
+  </script>
+</body>
+  </html>
+        
