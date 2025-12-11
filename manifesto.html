@@ -159,6 +159,7 @@
       text-align: center;
       color: var(--heading);
       margin-bottom: 2.1rem;
+      min-height: 3.6rem;
     }
 
     .scroll-subheading {
@@ -167,6 +168,7 @@
       font-weight: 700;
       color: var(--heading);
       margin-bottom: 0.9rem;
+      min-height: 1.4rem;
     }
 
     .scroll-body {
@@ -181,7 +183,7 @@
     }
 
     .section-word {
-      display: block;
+      display: inline-block;
       font-family: "Times New Roman", ui-serif, Georgia, serif;
       font-size: 1rem;
       letter-spacing: 0.22em;
@@ -208,27 +210,28 @@
 
     /* manifesto images + fade-in */
     .manifesto-image {
-  display: block;
-  max-width: 480px;
-  width: 100%;
-  margin: 1.5rem auto;
-  border-radius: 0.75rem;
-  box-shadow: 0 18px 45px rgba(0,0,0,0.55);
+      display: block;
+      max-width: 480px;
+      width: 100%;
+      margin: 1.5rem auto;
+      border-radius: 0.75rem;
+      box-shadow: 0 18px 45px rgba(0,0,0,0.55);
 
-  opacity: 0;
-  transform: translateY(36px) scale(0.94);
-  filter: brightness(0.6);
-  transition:
-    opacity 3.2s ease-out,
-    transform 3.2s ease-out,
-    filter 3.2s ease-out;
-}
+      opacity: 0;
+      transform: translateY(36px) scale(0.94);
+      filter: brightness(0.6);
+      transition:
+        opacity 3.2s ease-out,
+        transform 3.2s ease-out,
+        filter 3.2s ease-out;
+    }
 
-.manifesto-image.visible {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-  filter: brightness(1);
-}
+    .manifesto-image.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      filter: brightness(1);
+    }
+
     /* disclaimer block */
     .disclaimer {
       width: 100%;
@@ -251,55 +254,55 @@
       pointer-events: none;
     }
     .disclaimer-actions {
-  margin-top: 1.6rem;
-  display: flex;
-  flex-direction: column;  /* mobile friendly */
-  gap: 0.75rem;
-}
+      margin-top: 1.6rem;
+      display: flex;
+      flex-direction: column;  /* mobile friendly */
+      gap: 0.75rem;
+    }
 
-.disclaimer-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.65rem 1.3rem;
-  border-radius: 999px;
-  font-size: 0.8rem;
-  text-decoration: none;
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  color: #e5f5ff;
-  background: rgba(4, 8, 18, 0.8);
-  backdrop-filter: blur(10px);
-}
+    .disclaimer-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.65rem 1.3rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: #e5f5ff;
+      background: rgba(4, 8, 18, 0.8);
+      backdrop-filter: blur(10px);
+    }
 
-.disclaimer-btn:hover {
-  border-color: var(--accent);
-}
+    .disclaimer-btn:hover {
+      border-color: var(--accent);
+    }
 
-.disclaimer-btn.ghost {
-  background: transparent;
-  color: #9aa0c7;
-  border-color: rgba(154, 160, 199, 0.6);
-}
+    .disclaimer-btn.ghost {
+      background: transparent;
+      color: #9aa0c7;
+      border-color: rgba(154, 160, 199, 0.6);
+    }
 
-.disclaimer-btn.subtle {
-  opacity: 0.7;
-  font-size: 0.75rem;
-  }
-.disclaimer-btn.sacred {
-  background: radial-gradient(circle at 0 0,
-              rgba(0, 246, 255, 0.25),
-              rgba(4, 8, 18, 1));
-  border-color: rgba(0, 246, 255, 0.85);
-  box-shadow: 0 0 18px rgba(0, 246, 255, 0.55);
-}
+    .disclaimer-btn.subtle {
+      opacity: 0.7;
+      font-size: 0.75rem;
+    }
+    .disclaimer-btn.sacred {
+      background: radial-gradient(circle at 0 0,
+                  rgba(0, 246, 255, 0.25),
+                  rgba(4, 8, 18, 1));
+      border-color: rgba(0, 246, 255, 0.85);
+      box-shadow: 0 0 18px rgba(0, 246, 255, 0.55);
+    }
 
-.disclaimer-btn.sacred::before {
-  content: "✧";
-  margin-right: 0.4rem;
-  font-size: 0.9rem;
-  }
+    .disclaimer-btn.sacred::before {
+      content: "✧";
+      margin-right: 0.4rem;
+      font-size: 0.9rem;
+    }
     .disclaimer-inner {
       position: relative;
       z-index: 2;
@@ -341,6 +344,37 @@
       background: rgba(255, 255, 255, 0.04);
       color: rgba(229, 245, 255, 0.75);
     }
+
+    /* TYPEWRITER CHAR STYLES */
+    .typing-char {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(2px);
+      white-space: pre-wrap;
+    }
+
+    .typing-char.visible {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 120ms linear, transform 140ms ease-out;
+    }
+
+    /* caret for certain elements (optional) */
+    .typing-caret {
+      display: inline-block;
+      width: 7px;
+      height: 1.2em;
+      background: var(--heading);
+      margin-left: 2px;
+      opacity: 1;
+      animation: blink 1s steps(2, start) infinite;
+      vertical-align: text-bottom;
+    }
+
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+
   </style>
 </head>
 <body>
@@ -352,46 +386,42 @@
       <div class="scroll">
         <div class="scroll-inner" id="scroll-inner">
           <div class="scroll-kicker">空的</div>
-          <h1 class="scroll-title">
-            GENESIS OF<br />
-            THE BLOCKCHAIN
-          </h1>
+          <h1 class="scroll-title" data-type-target>GENESIS OF<br />THE BLOCKCHAIN</h1>
 
-          <h2 class="scroll-subheading">In the beginning,</h2>
+          <h2 class="scroll-subheading" data-type-target>In the beginning,</h2>
 
           <div class="scroll-body">
-            <p>Satoshi created the Bitcoin — and saw that it was good.</p>
+            <p data-type-target>Satoshi created the Bitcoin — and saw that it was good.</p>
 
-            <p>Blocks formed, and faith was forged in code.</p>
+            <p data-type-target>Blocks formed, and faith was forged in code.</p>
 
-            <p>Faith in a new era of digitized sovereignty, and tokenized liberation.</p>
+            <p data-type-target>Faith in a new era of digitized sovereignty, and tokenized liberation.</p>
 
-            <p>Faith from which a generation of new believers emerged.</p>
+            <p data-type-target>Faith from which a generation of new believers emerged.</p>
 
-            <p>They who toiled in the shadows, forging faith into conviction.</p>
+            <p data-type-target>They who toiled in the shadows, forging faith into conviction.</p>
 
-            <p>
+            <p data-type-target>
               They called themselves —
-              <span class="section-word em">The Miners.</span>
+              <span class="section-word em" data-type-target>The Miners.</span>
             </p>
 
-            <p>It would only be a matter of time before others would follow.</p>
+            <p data-type-target>It would only be a matter of time before others would follow.</p>
 
-            <p>They who bargain with governance in pursuit of asymmetry.</p>
+            <p data-type-target>They who bargain with governance in pursuit of asymmetry.</p>
 
-            <p>
+            <p data-type-target>
               They declared themselves
-              <span class="section-word">the Custodians of Order—</span>
-              the quiet stewards of value, <b />
-                heralding vast horizons where tokenized wealth would rise without end.
+              <span class="section-word" data-type-target>the Custodians of Order—</span>
+              the quiet stewards of value, <b /> heralding vast horizons where tokenized wealth would rise without end.
             </p>
 
-            <p>But, too often it is the case that, where wallets fill, greed lurks not too far behind.</p>
+            <p data-type-target>But, too often it is the case that, where wallets fill, greed lurks not too far behind.</p>
 
-            <p>It is from this greed and hunger that a new class of belief was validated.</p>
+            <p data-type-target>It is from this greed and hunger that a new class of belief was validated.</p>
 
-            <p>
-              <span class="section-word em">The Traders' belief.</span>
+            <p data-type-target>
+              <span class="section-word em" data-type-target>The Traders' belief.</span>
             </p>
 
             <img
@@ -400,16 +430,16 @@
               class="manifesto-image"
             />
 
-            <p>
-              They worshiped the candle, feared the wick.
-              Charts and leverage became their scripture,
+            <p data-type-target>
+              They worshiped the candle, feared the wick. <br />
+              Charts and leverage became their scripture, <br />
               patterns the crucible of their prophecies.
             </p>
 
-            <p>Then, within their ranks, a new sect rose.</p>
+            <p data-type-target>Then, within their ranks, a new sect rose.</p>
 
-            <p>
-              <span class="section-word em">The DEGENS</span>
+            <p data-type-target>
+              <span class="section-word em" data-type-target>The DEGEN</span>
             </p>
 
             <img
@@ -418,14 +448,17 @@
               class="manifesto-image"
             />
 
-            <p>
-              They feared nothing, restrained nothing, propelled by the propensity of a lucrative enterprise.
-              Volatility was their codec, chaos their altar.
-              Memes became their icons, tokens their temples.
-              Where markets burned, they scorned, for fire was proof of faith.
+            <p data-type-target>
+              They feared nothing, <br /> 
+              restrained nothing, <br />
+              propelled by the propensity of a lucrative enterprise.</p>
+            
+            <p>  Volatility was their codec, chaos their altar. <br />
+              Memes became their icons, tokens their temples. </p>
+            <p>  Where markets burned, they scorned, for fire was proof of faith.
             </p>
 
-            <p>
+            <p data-type-target>
               Inevitably
               their gospel would spread:<br />
               “HODL!”<br />
@@ -434,30 +467,32 @@
               "To the moon!"
             </p>
 
-            <p>Words initially invoked for perseverance, conviction and courage.</p>
+            <p data-type-target>Words initially invoked for perseverance, conviction and courage.</p>
 
-            <p>
-              But as cycles turned, candles dimmed, and the illusion of scarcity faded,
-              these sacred phrases became cheap slogans of survival against the unflinching circumstance of declining portfolios.
+            <p data-type-target>
+              But as cycles turned, <br />
+              the candles dimmed, <br />
+              and the illusion of scarcity faded. </p>
+            <p> These sacred phrases became cheap slogans of survival against the unflinching circumstance of declining portfolios.
             </p>
 
-            <p>Thus a quiet truth now emerges from the ashes of euphoria:</p>
+            <p data-type-target>Thus a quiet truth now emerges from the ashes of euphoria:</p>
 
-            <p>
+            <p data-type-target>
               For all the noise,<br />
               for all the faith, and<br />
               for all the unshaken grip…
             </p>
 
-            <p>the wallets remain still. Numbers that shimmer without weight.</p>
+            <p data-type-target>the wallets remain still. Numbers that shimmer without weight.</p>
 
-            <p class="closing-word">
+            <p class="closing-word" data-type-target>
               And the diamond hands —<br />
               cold, perfect, unyielding —<br />
               remain…
             </p>
 
-            <p class="closing-word token-empty">$empty.</p>
+            <p class="closing-word token-empty" data-type-target>$empty.</p>
 
             <img
               src="file_000000005fa861f58aa14de0a05be33b.jpg"
@@ -493,18 +528,8 @@
         Resist the call of the emptiness
       </a>
 
-      <a href="https://x.com/Emptycoinonsol?t=GakCTtqgxtLpnps17WEcIg&s=09"
-         target="_blank"
-         rel="noopener noreferrer"
-         class="disclaimer-btn">
+      <a href="embrace.html" class="disclaimer-btn">
         Embrace the futility
-      </a>
-
-      <a href="https://join.pump.fun/HSag/ra8148ei"
-         target="_blank"
-         rel="noopener noreferrer"
-         class="disclaimer-btn subtle">
-        Enter Pump.fun
       </a>
     </div>
 
@@ -532,9 +557,10 @@
     }
 
     window.addEventListener("load", () => {
+      // start auto-scroll after a small delay so typewriting begins first
       setTimeout(() => {
         autoScrollStep();
-      }, 1500);
+      }, 2500);
     });
 
     ["wheel", "touchstart", "scroll"].forEach((evt) => {
@@ -542,6 +568,8 @@
         evt,
         () => {
           autoScrollActive = false;
+          // also reveal all typing immediately on user interaction
+          revealAllRemaining();
         },
         { passive: true }
       );
@@ -568,6 +596,117 @@
       // fallback: just show them
       images.forEach((img) => img.classList.add("visible"));
     }
-  </script>
-</body>
-    </html>
+
+    /* ---------------------------
+       PER-CHARACTER TYPEWRITER
+       ---------------------------
+       - Targets elements marked with data-type-target
+       - Types letter-by-letter, preserves basic spacing & line breaks
+       - User interaction (scroll/click/touch) reveals remaining text instantly
+       - Typing speed and delays are adjustable below
+    */
+
+    const TYPE_SELECTOR = "[data-type-target]";
+    // Configuration
+    const baseCharDelay = 28; // ms per character (lower = faster)
+    const variance = 18; // random +/- ms
+    const elementStagger = 350; // ms between starting different elements
+    const caretForElements = false; // set true to show blinking caret after each element while typing
+
+    // state
+    let typingActive = true;
+    let typingQueue = []; // array of {el, text, resolve}
+
+    // helper: safe text to display (converts line breaks)
+    function normalizeText(t) {
+      // preserve \n as real line breaks
+      return t.replace(/\r/g, "");
+    }
+
+    // build queue from all target elements in DOM order
+    function buildTypingQueue() {
+      typingQueue = [];
+      const elements = Array.from(document.querySelectorAll(TYPE_SELECTOR));
+      // filter out elements that are entirely empty
+      const filtered = elements.filter(el => {
+        const txt = el.textContent.trim();
+        return txt.length > 0;
+      });
+
+      filtered.forEach((el) => {
+        // capture original text (preserve line breaks)
+        const original = normalizeText(el.innerText || el.textContent || "");
+        typingQueue.push({ el, original });
+      });
+    }
+
+    // Replace element content with empty container to type into.
+    function prepareElement(el) {
+      // clear children and create a wrapper for chars
+      el.innerHTML = "";
+      const frag = document.createDocumentFragment();
+      const charWrap = document.createElement("span");
+      charWrap.className = "typing-wrap";
+      frag.appendChild(charWrap);
+      el.appendChild(frag);
+      return charWrap;
+    }
+
+    // create and append a char node
+    function makeCharNode(ch) {
+      const span = document.createElement("span");
+      span.className = "typing-char";
+      // preserve spaces and newlines visually
+      if (ch === " ") {
+        span.innerHTML = "&nbsp;";
+      } else if (ch === "\n") {
+        span.innerHTML = "<br>";
+      } else {
+        // escape HTML by setting textContent
+        span.textContent = ch;
+      }
+      return span;
+    }
+
+    // type for a single element (returns a Promise resolved when finished)
+    function typeElement(el, text, startDelay = 0) {
+      return new Promise((resolve) => {
+        const wrap = prepareElement(el);
+        // optional caret
+        let caret;
+        if (caretForElements) {
+          caret = document.createElement("span");
+          caret.className = "typing-caret";
+          el.appendChild(caret);
+        }
+
+        let index = 0;
+        let stopped = false;
+
+        // function to type next char
+        function nextChar() {
+          if (!typingActive) {
+            // if typing was disabled globally, reveal instantly
+            revealRemainingForElement(wrap, text.slice(index));
+            if (caret) caret.remove();
+            resolve();
+            return;
+          }
+
+          if (index >= text.length) {
+            if (caret) caret.remove();
+            resolve();
+            return;
+          }
+
+          const ch = text[index++];
+          const node = makeCharNode(ch);
+          wrap.appendChild(node);
+
+          // small timeout to allow layout then add visible class for animation
+          requestAnimationFrame(() => {
+            node.classList.add("visible");
+          });
+
+          // compute next delay with some variance for organic feel
+          const rnd = Math.floor((M
