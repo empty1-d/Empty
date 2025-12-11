@@ -633,8 +633,8 @@
   await typeWriterPromise({
     element: prologue,
     fullText: text,
-    speed: 100,       // slow, tweak to taste
-    startDelay: 1200  // wait before beginning
+    speed: 90,       // slow, tweak to taste
+    startDelay: 1100  // wait before beginning
     // no deleteAfter / deleteChars here
   });
     }
@@ -673,7 +673,7 @@
         element: p,
         fullText: text,
         speed: speedForThis,
-        startDelay: 120, // tiny pause before each para begins
+        startDelay: 110, // tiny pause before each para begins
       });
 
       // after typing finishes, restore the original HTML (so spans, emphasis, etc. remain intact)
@@ -741,7 +741,7 @@
         if (typeof autoScrollStep === "function") {
           autoScrollStep();
         }
-      }, 1500);
+      }, 1400);
     }, 1800); // main intro pause before everything starts
   });
 </script>
