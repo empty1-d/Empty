@@ -17,7 +17,7 @@
     header{display:flex;align-items:center;justify-content:space-between;gap:20px}
     .mark{display:flex;gap:14px;align-items:center}
     .logo{width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,#0b6b5a,#8f2f21);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:24px}
-    h1{font-family: "Times New Roman",serif;font-size:28px;letter-spacing:0.12em;margin:0}
+    h1{font-family:"Times New Roman",serif;font-size:28px;letter-spacing:0.12em;margin:0}
     .subtitle{color:var(--muted);font-size:13px;margin-top:6px}
     .grid{display:grid;grid-template-columns:1fr 380px;gap:22px;margin-top:22px}
     @media (max-width:900px){.grid{grid-template-columns:1fr}}
@@ -25,16 +25,26 @@
     .manifesto{line-height:1.62;font-size:16px;color:var(--ink)}
     .muted{color:var(--muted);font-size:14px}
     .hero-image{width:100%;height:340px;object-fit:cover;border-radius:10px;margin-top:12px}
-    .cta{margin-top:14px;display:flex;gap:10px}
-    .btn{padding:10px 12px;border-radius:999px;background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--ink);font-weight:600;cursor:pointer}
+    .cta{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap}
+    .btn{
+      padding:10px 12px;
+      border-radius:999px;
+      background:transparent;
+      border:1px solid rgba(255,255,255,0.06);
+      color:var(--ink);
+      font-weight:600;
+      cursor:pointer;
+      text-decoration:none;
+    }
+    .btn[type="text"]{cursor:copy}
     .small{margin-top:14px;color:var(--muted);font-size:13px}
-    pre{white-space:pre-wrap;font-family:inherit}
     footer{margin-top:22px;color:var(--muted);font-size:13px;text-align:center}
     .trio{display:flex;gap:12px;margin-top:12px}
     .tile{flex:1;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:12px;border-radius:10px}
     .ritual{font-style:italic;color:var(--muted);margin-top:10px;opacity:0.6}
   </style>
 </head>
+
 <body>
   <div class="site">
     <header>
@@ -46,55 +56,83 @@
         </div>
       </div>
       <nav class="muted">English · Español · 中文</nav>
-    </header><section class="grid">
-  <main class="panel">
-    <div class="manifesto">
-      <div class="prelude muted">Before the chain, the world strained under the weight of borrowed conviction and over‑inflated trust. Fiat burned with the glow of printed certainty; debt swelled; markets rose on fumes. A ledger of obligation stacked upon whispers of baseless faith. When belief faltered, trustlessness emerged.</div>
+    </header>
 
-      <div class="manifesto" style="margin-top:10px;font-size:17px;line-height:1.6">
+    <section class="grid">
+      <main class="panel">
+        <div class="manifesto">
+          <div class="muted">
+            Before the chain, the world strained under the weight of borrowed conviction and over-inflated trust.
+            Fiat burned with the glow of printed certainty; debt swelled; markets rose on fumes.
+            A ledger of obligation stacked upon whispers of baseless faith.
+            When belief faltered, trustlessness emerged.
+          </div>
 
-Candles flicker. Cycles breathe. Liquidity wanders. <br>Conviction fractures — hope dissolves — the emptiness persists. <br><br><span class="muted">空的 · El vacío · Empty</span>
+          <div style="margin-top:10px;font-size:17px;line-height:1.6">
+            Candles flicker. Cycles breathe. Liquidity wanders.<br>
+            Conviction fractures — hope dissolves — the emptiness persists.<br><br>
+            <span class="muted">空的 · El vacío · Empty</span>
+          </div>
 
-</div><div class="ritual">Ritual language appears in every post: English / Español / 中文 — a trinity of echoes.</div>
+          <div class="ritual">
+            Ritual language appears in every post: English / Español / 中文 — a trinity of echoes.
+          </div>
 
-      <div class="cta">
-        <button class="btn">Read full manifesto</button>
-        <button class="btn">Join the ritual (Telegram)</button>
-        <button class="btn">Token & Contract: DcZUdoSNM1DQJdNdTvnA22skuj8K8V33MpAr9wL3pump</button>
-      </div>
+          <div class="cta">
+            <a class="btn" href="manifesto.html">Read full manifesto</a>
+            <input
+              class="btn"
+              type="text"
+              value="DcZUdoSNM1DQJdNdTvnA22skuj8K8V33MpAr9wL3pump"
+              readonly
+              onclick="this.select(); document.execCommand('copy');"
+            />
+          </div>
 
-      <div class="small">This page is an archive of what remains when meaning collapses. If you proceed, you do so without illusion.</div>
-    </div>
-  </main>
+          <div class="small">
+            This page is an archive of what remains when meaning collapses.
+            If you proceed, you do so without illusion.
+          </div>
+        </div>
+      </main>
 
-  <aside>
-    <div class="panel">
-      <img src="-3ukaae.jpg" alt="Slashed Yin Yang" class="hero-image"/>
-      <div style="margin-top:12px;font-weight:700">Emblems</div>
-      <div class="trio">
-        <div class="tile">The Dishes — cycle & scale</div>
-        <div class="tile">The Hands — what we offer & what remains</div>
-        <div class="tile">The Slashed Yin — the split between ritual & market</div>
-      </div>
+      <aside>
+        <div class="panel">
+          <img src="-3ukaae.jpg" alt="Slashed Yin Yang" class="hero-image"/>
+          <div style="margin-top:12px;font-weight:700">Emblems</div>
 
-      <div class="muted" style="margin-top:12px">Pinned ritual: "They took the Bullrun. They mocked our conviction. We tokenize the emptiness. Embrace the futility. 空的 · El vacío"</div>
-    </div>
+          <div class="trio">
+            <div class="tile">The Dishes — cycle & scale</div>
+            <div class="tile">The Hands — what we offer & what remains</div>
+            <div class="tile">The Slashed Yin — the split between ritual & market</div>
+          </div>
 
-    <div style="height:12px"></div>
-    <div class="panel">
-      <div style="font-weight:700">Where to watch</div>
-      <div style="margin-top:8px" class="muted">X / Pump.fun — timelines where ritual and liquidity converse. Use what you must; understand that nothing here will save you.</div>
+          <div class="muted" style="margin-top:12px">
+            Pinned ritual: “They took the Bullrun. They purged our conviction.
+            We tokenize the emptiness. Embrace the futility. 空的 · El vacío”
+          </div>
+        </div>
 
-      <div style="margin-top:12px;display:flex;gap:8px">
-        <a class="btn" href="https://x.com/Emptycoinonsol" target="_blank">Open X</a>
-        <a class="btn" href="https://pump.fun" target="_blank">Open Pump.fun</a>
-      </div>
-    </div>
-  </aside>
-</section>
+        <div style="height:12px"></div>
 
-<footer>Empty · Embrace the Futility — Conviction fractures · Hope dissolves · The emptiness persists</footer>
+        <div class="panel">
+          <div style="font-weight:700">Where to watch</div>
+          <div class="muted" style="margin-top:8px">
+            X / Pump.fun 
+            Use what you must; understand that nothing here will save you.
+          </div>
 
+          <div style="margin-top:12px;display:flex;gap:8px">
+            <a class="btn" href="https://x.com/Emptycoinonsol" target="_blank">Open X</a>
+            <a class="btn" href="https://pump.fun" target="_blank">Open Pump.fun</a>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <footer>
+      Empty · Embrace the Futility — Conviction fractures · Hope dissolves · The emptiness persists
+    </footer>
   </div>
 </body>
   </html>
