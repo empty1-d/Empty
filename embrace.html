@@ -3,209 +3,222 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>EMPTY · Embrace the Futility</title>
-  <meta name="description" content="Empty — a ritual, a manifesto, a meme. Embrace the futility. Not financial advice." />
+  <title>Ø</title>
   <style>
-    :root{
-      --bg:#05060a; --panel:#071018; --muted:#9ea6ab; --ink:#e9f6ff; --accent:#8a1f1c;
+    :root {
+      --bg: #030303;
+      --ink: #777;
+      --highlight: #bbb;
+      --dim: #222;
+      --glitch-speed: 0.2s;
     }
-    *{box-sizing:border-box}
-    html,body{
-      height:100%;
-      margin:0;
-      font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial;
-      background:linear-gradient(180deg,#020309 0%,#04040a 65%,#010207 100%);
-      color:var(--ink)
+
+    * { box-sizing: border-box; cursor: crosshair; }
+
+    /* The Grain / Static Overlay */
+    body::before {
+      content: "";
+      position: fixed;
+      top: -100%; left: -100%; width: 300%; height: 300%;
+      background: url('https://upload.wikimedia.org/wikipedia/commons/5/5c/Rough_white_noise.png');
+      opacity: 0.04;
+      pointer-events: none;
+      animation: grain 8s steps(10) infinite;
+      z-index: 100;
     }
-    .site{max-width:1100px;margin:34px auto;padding:28px}
-    header{display:flex;align-items:center;justify-content:space-between;gap:20px}
-    .mark{display:flex;gap:14px;align-items:center}
-    .logo{
-      width:64px;height:64px;border-radius:12px;
-      background:linear-gradient(135deg,#0b6b5a,#8f2f21);
-      display:flex;align-items:center;justify-content:center;
-      font-weight:700;font-size:24px
+
+    @keyframes grain {
+      0%, 100% { transform:translate(0, 0); }
+      10% { transform:translate(-5%, -10%); }
+      30% { transform:translate(-15%, 5%); }
+      50% { transform:translate(-5%, -5%); }
+      70% { transform:translate(-15%, 15%); }
+      90% { transform:translate(10%, 5%); }
     }
-    h1{font-family:"Times New Roman",serif;font-size:28px;letter-spacing:0.12em;margin:0}
-    .subtitle{color:var(--muted);font-size:13px;margin-top:6px}
-    .grid{display:grid;grid-template-columns:1fr 380px;gap:22px;margin-top:22px}
-    @media (max-width:900px){.grid{grid-template-columns:1fr}}
-    .panel{
-      background:var(--panel);
-      border-radius:14px;
-      padding:18px;
-      border:1px solid rgba(255,255,255,0.04)
+
+    /* Scanlines */
+    body::after {
+      content: " ";
+      position: fixed;
+      top: 0; left: 0; bottom: 0; right: 0;
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.2) 50%), 
+                  linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02));
+      background-size: 100% 3px, 3px 100%;
+      pointer-events: none;
+      z-index: 101;
     }
-    .manifesto{line-height:1.62;font-size:16px}
-    .muted{color:var(--muted);font-size:14px}
-    .cta{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap}
-    .btn{
-      padding:10px 12px;border-radius:999px;
-      background:transparent;border:1px solid rgba(255,255,255,0.06);
-      color:var(--ink);font-weight:600;cursor:pointer;text-decoration:none
+
+    body {
+      background-color: var(--bg);
+      color: var(--ink);
+      font-family: "Courier New", Courier, monospace;
+      margin: 0;
+      padding: 60px 20px;
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+      overflow-x: hidden;
     }
-    .btn[type="text"]{cursor:copy}
-    .small{margin-top:14px;color:var(--muted);font-size:13px}
-    footer{margin-top:22px;color:var(--muted);font-size:13px;text-align:center}
-    .ritual{font-style:italic;color:var(--muted);margin-top:10px;opacity:0.6}
-    .hero-image{width:100%;height:340px;object-fit:cover;border-radius:10px;margin-top:12px}
-    .trio{display:flex;gap:12px;margin-top:12px}
-    .tile{flex:1;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:12px;border-radius:10px}
+
+    .terminal { max-width: 500px; width: 100%; position: relative; z-index: 10; }
+
+    header { margin-bottom: 60px; }
+
+    h1 {
+      font-size: 20px;
+      font-weight: normal;
+      letter-spacing: 12px;
+      color: var(--highlight);
+      margin: 0;
+      text-shadow: 0 0 5px rgba(255,255,255,0.1);
+    }
+
+    .manifesto { line-height: 2; font-size: 13px; margin-bottom: 80px; }
+    
+    .contract-area {
+      margin: 40px 0;
+      border: 1px solid var(--dim);
+      padding: 20px;
+      text-align: center;
+      transition: border 0.5s;
+    }
+    .contract-area:hover { border-color: #444; }
+
+    #ca {
+      font-size: 11px;
+      word-break: break-all;
+      color: var(--highlight);
+      background: none;
+      border: none;
+      width: 100%;
+      outline: none;
+      text-align: center;
+      font-family: inherit;
+    }
+
+    .input-ritual {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--dim);
+      color: var(--highlight);
+      font-family: inherit;
+      padding: 10px 0;
+      outline: none;
+      text-align: center;
+    }
+
+    .links {
+      margin-top: 80px;
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+    }
+
+    a { color: #333; text-decoration: none; font-size: 11px; letter-spacing: 2px; }
+    a:hover { color: var(--highlight); }
+
+    .trinity {
+      display: flex;
+      justify-content: space-between;
+      font-size: 9px;
+      color: #1a1a1a;
+      margin-top: 120px;
+      letter-spacing: 3px;
+    }
+
+    ::placeholder { color: #151515; }
+
+    /* Screen Shake on Error */
+    .shake { animation: shake 0.2s ease-in-out; }
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(5px); }
+      50% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+      100% { transform: translateX(0); }
+    }
   </style>
 </head>
 
 <body>
-  <div class="site">
+  <div class="terminal" id="main-content">
     <header>
-      <div class="mark">
-        <div class="logo">Ø</div>
-        <div>
-          <h1>EMPTY</h1>
-          <div class="subtitle">Embrace the Futility • Conviction fractures · Hope dissolves</div>
-        </div>
-      </div>
-      <nav class="muted">English · Español · 中文</nav>
+      <h1>EMPTY</h1>
+      <p style="font-size: 9px; color: #333; margin-top: 5px;">VER 0.0.0 // NO_VALUE_DETECTED</p>
     </header>
 
-    <section class="grid">
-      <main class="panel">
-        <div class="manifesto">
-
-          <div class="muted">
-          Since the chain, the world buckles under the weight of inflated narratives.Where meaning collapsed, emptiness emerged.
-          </div>
-
-          <div style="margin-top:10px;font-size:17px;line-height:1.6">
-            Candles flicker. Cycles breathe. Liquidity wanders.<br>
-            Conviction fractures — hope dissolves — the emptiness persists.<br><br>
-            <span class="muted">空的 · El vacío · Empty</span>
-          </div>
-
-          <div class="ritual">
-            Ritual language appears in every post: English / Español / 中文 — a trinity of echoes.
-          </div>
-
-          <div class="cta">
-  <a class="btn" href="manifesto.html">Read full manifesto</a>
-
-  <div style="display:flex;flex-direction:column;gap:6px">
-    <div class="muted" style="font-size:12px;letter-spacing:0.12em">
-      CONTRACT
+    <div class="manifesto">
+      <p id="typewriter">The liquidity of meaning has dried up.</p>
+      <p style="color: #444;">Conviction is a ghost. <br>The chain is the ritual.</p>
     </div>
 
-    <input
-      class="btn"
-      type="text"
-      value="DcZUdoSNM1DQJdNdTvnA22skuj8K8V33MpAr9wL3pump"
-      readonly
-      onclick="this.select(); document.execCommand('copy');"
-    />
-  </div>
-          </div>
+    <div class="contract-area">
+      <input 
+        id="ca" 
+        value="DcZUdoSNM1DQJdNdTvnA22skuj8K8V33MpAr9wL3pump" 
+        readonly 
+        onclick="copyCA()"
+      />
+    </div>
 
-          <div class="small">
-            This page is an archive of what remains when meaning collapses.
-            If you proceed, you do so without illusion.
-          </div>
+    <div style="margin-top: 100px; text-align: center;">
+      <input 
+        id="embraceInput" 
+        type="text" 
+        class="input-ritual" 
+        placeholder="concede?" 
+        autocomplete="off"
+      />
+    </div>
 
-          <!-- RITUAL PROMPT -->
-          <div style="margin-top:22px">
-            <div style="font-weight:700;margin-bottom:6px">
-              Do you wish to embrace the Futility?
-            </div>
+    <nav class="links">
+      <a href="https://x.com/Emptycoinonsol" target="_blank">ECHO</a>
+      <a href="https://pump.fun" target="_blank">VOID</a>
+    </nav>
 
-            <input
-              id="embraceInput"
-              type="text"
-              placeholder="type yes"
-              style="
-                width:100%;
-                padding:10px 12px;
-                border-radius:999px;
-                background:transparent;
-                border:1px solid rgba(255,255,255,0.08);
-                color:var(--ink);
-                font-size:14px;
-                outline:none;
-              "
-            />
-
-            <div
-              id="embraceHint"
-              class="muted"
-              style="margin-top:8px;font-size:13px;opacity:0.6"
-            >
-              Only one answer proceeds.
-            </div>
-          </div>
-
-        </div>
-      </main>
-
-      <aside>
-        <div class="panel">
-          <img src="-3ukaae.jpg" alt="Slashed Yin Yang" class="hero-image"/>
-          <div style="margin-top:12px;font-weight:700">Emblems</div>
-
-          <div class="trio">
-            <div class="tile">The Dishes — cycle & scale</div>
-            <div class="tile">The Hands — what we offer & what remains</div>
-            <div class="tile">The Slashed Yin — the split between ritual & market</div>
-          </div>
-
-          <div class="muted" style="margin-top:12px">
-            Pinned : “They took the Bullrun. They purged our conviction.
-            We tokenize the emptiness. Embrace the futility. 空的 · El vacío”
-          </div>
-        </div>
-
-        <div style="height:12px"></div>
-
-        <div class="panel">
-          <div style="font-weight:700">Where to watch</div>
-          <div class="muted" style="margin-top:8px">
-            X / Pump.fun — nothing here will save you.
-          </div>
-
-          <div style="margin-top:12px;display:flex;gap:8px">
-            <a class="btn" href="https://x.com/Emptycoinonsol" target="_blank">Open X</a>
-            <a class="btn" href="https://pump.fun" target="_blank">Open Pump.fun</a>
-          </div>
-        </div>
-      </aside>
-    </section>
-
-    <footer>
-      Empty · Embrace the Futility — Conviction fractures · Hope dissolves · The emptiness persists
-    </footer>
+    <div class="trinity">
+      <span>EMPTY</span>
+      <span>VACÍO</span>
+      <span>空</span>
+    </div>
   </div>
 
-  <!-- SCRIPT -->
   <script>
     const input = document.getElementById("embraceInput");
+    const terminal = document.getElementById("main-content");
 
-    if (input) {
-      input.addEventListener("keydown", function (e) {
-        if (e.key === "Enter") {
-          const value = input.value.trim().toLowerCase();
-
-          if (value === "yes") {
-            const text =
-              "I wish to embrace the Futility.";
-            const url =
-              "https://twitter.com/intent/tweet?text=" +
-              encodeURIComponent(text);
-
-            window.open(url, "_blank");
-            input.value = "";
-          } else {
-            input.value = "";
-            document.getElementById("embraceHint").textContent =
-              "That is not acceptance.";
-          }
-        }
-      });
+    function copyCA() {
+      const copyText = document.getElementById("ca");
+      copyText.select();
+      document.execCommand('copy');
+      copyText.value = "COPIED TO NULL";
+      setTimeout(() => {
+        copyText.value = "DcZUdoSNM1DQJdNdTvnA22skuj8K8V33MpAr9wL3pump";
+      }, 1000);
     }
+
+    input.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") {
+        const value = input.value.trim().toLowerCase();
+        if (value === "yes" || value === "concede") {
+          window.open("https://twitter.com/intent/tweet?text=" + encodeURIComponent("I have conceded to the emptiness. Ø"), "_blank");
+          input.value = "";
+        } else {
+          input.value = "";
+          terminal.classList.add("shake");
+          setTimeout(() => terminal.classList.remove("shake"), 200);
+        }
+      }
+    });
+
+    // Random visual "pop" or flicker
+    setInterval(() => {
+      if(Math.random() > 0.99) {
+        document.body.style.filter = "invert(1)";
+        setTimeout(() => { document.body.style.filter = "invert(0)"; }, 30);
+      }
+    }, 100);
   </script>
 </body>
-            </html>
+</html>
