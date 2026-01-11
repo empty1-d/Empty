@@ -2,428 +2,254 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Genesis of the Blockchain</title>
+  <title>LOG_000_GENESIS</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     :root {
-      --bg: #04060d;
-      --bg2: #060814;
-      --accent: #00f6ff;
-      --scroll-bg: #f5e4c5;
-      --scroll-shadow: rgba(0, 0, 0, 0.65);
-      --text-main: #3e2a17;
-      --heading: #2a1a10;
+      --bg: #050505;
+      --accent: #ff0000;
+      --ink: #888;
+      --highlight: #fff;
+      --dim: #1a1a1a;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; cursor: crosshair; }
 
     body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Courier New", Courier, monospace;
       min-height: 100vh;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-        sans-serif;
-      background: radial-gradient(circle at top, #0b1020 0%, var(--bg) 40%, var(--bg2) 100%);
-      color: var(--text-main);
       display: flex;
       justify-content: center;
-      padding: 1.5rem;
+      padding: 40px 20px;
+      overflow-x: hidden;
     }
 
-    .page-shell {
+    /* Grain Overlay */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: url('https://upload.wikimedia.org/wikipedia/commons/5/5c/Rough_white_noise.png');
+      opacity: 0.04;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    .container {
       width: 100%;
-      max-width: 1120px;
+      max-width: 1000px;
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 40px;
+    }
+
+    @media (max-width: 880px) {
+      .container { grid-template-columns: 1fr; }
+    }
+
+    .main-panel {
+      border: 1px solid var(--dim);
+      background: #000;
+      height: 85vh;
       display: flex;
       flex-direction: column;
-      gap: 2rem;
-      align-items: center;
+      position: relative;
     }
 
-    @media (min-width: 880px) {
-      .page-shell {
-        flex-direction: row;
-        align-items: flex-start;
-      }
+    .panel-header {
+      padding: 10px 20px;
+      border-bottom: 1px solid var(--dim);
+      font-size: 10px;
+      display: flex;
+      justify-content: space-between;
+      color: #333;
     }
 
-    .back-link {
-      position: fixed;
-      top: 1.4rem;
-      right: 1.5rem;
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      color: var(--accent);
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      opacity: 0.8;
-      z-index: 20;
+    .content-scroll {
+      padding: 40px;
+      overflow-y: auto;
+      scroll-behavior: smooth;
     }
 
-    .back-link::before {
-      content: "←";
-      font-size: 0.9rem;
-    }
+    .content-scroll::-webkit-scrollbar { width: 2px; }
+    .content-scroll::-webkit-scrollbar-thumb { background: var(--dim); }
 
-    .back-link:hover {
-      opacity: 1;
-      text-decoration: underline;
-    }
-
-    .scroll-wrapper {
-      width: min(90vw, 420px);
-      height: 80vh;
+    /* Redacted Graphic Blocks */
+    .graphic-block {
+      width: 100%;
+      height: 220px;
+      background: repeating-linear-gradient(45deg, #000, #000 10px, #080808 10px, #080808 11px);
+      border: 1px solid var(--dim);
+      margin: 30px 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      filter: drop-shadow(0 26px 40px var(--scroll-shadow));
-    }
-
-    .scroll {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      border-radius: 18px;
-      background: radial-gradient(circle at top, #fff5df 0%, var(--scroll-bg) 40%, #f0ddba 100%);
-      overflow: hidden;
-      border: 1px solid rgba(161, 126, 78, 0.75);
-    }
-
-    .scroll::before,
-    .scroll::after {
-      content: "";
-      position: absolute;
-      left: 6%;
-      width: 88%;
-      height: 18px;
-      border-radius: 999px;
-      background: linear-gradient(90deg, #b78b4a, #f6e0b8, #b78b4a);
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.35);
-      z-index: 3;
-    }
-
-    .scroll::before { top: -9px; }
-    .scroll::after {
-      bottom: -9px;
-      box-shadow: 0 -3px 8px rgba(0, 0, 0, 0.35);
-    }
-
-    .scroll-inner {
-      position: relative;
-      z-index: 2;
-      height: 100%;
-      padding: 3.3rem 1.85rem 2.6rem;
-      overflow-y: auto;
-      scroll-behavior: smooth;
-      background-image:
-        radial-gradient(circle at 0 0, rgba(255,255,255,0.35) 0, transparent 55%),
-        radial-gradient(circle at 100% 100%, rgba(204,175,126,0.25) 0, transparent 55%);
-    }
-
-    .scroll-inner::-webkit-scrollbar { width: 4px; }
-    .scroll-inner::-webkit-scrollbar-track { background: transparent; }
-    .scroll-inner::-webkit-scrollbar-thumb {
-      background: rgba(141, 107, 60, 0.6);
-      border-radius: 999px;
-    }
-
-    .manifesto-image {
-      display: block;
-      max-width: 480px;
-      width: 100%;
-      margin: 1.5rem auto;
-      border-radius: 0.75rem;
-      box-shadow: 0 18px 45px rgba(0,0,0,0.55);
-    }
-
-    .scroll-kicker {
-      font-family: "Times New Roman", serif;
-      font-size: 0.8rem;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      margin-bottom: 1.1rem;
-      color: #7a5832;
-    }
-
-    .scroll-title {
-      font-family: "Times New Roman", serif;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      font-size: 1.4rem;
-      line-height: 1.5;
-      text-align: center;
-      color: var(--heading);
-      margin-bottom: 2.1rem;
-    }
-
-    .scroll-subheading {
-      font-family: "Times New Roman", serif;
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--heading);
-      margin-bottom: 0.9rem;
-    }
-
-    .scroll-body {
-      font-family: Georgia, serif;
-      font-size: 0.9rem;
-      line-height: 1.7;
-      color: var(--text-main);
-    }
-
-    .scroll-body p + p {
-      margin-top: 0.8rem;
-    }
-
-    .section-word {
-      display: inline-block;
-      font-family: "Times New Roman", serif;
-      font-size: 1rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      margin-top: 0.4rem;
-      color: #25140c;
-    }
-
-    .section-word.em { font-size: 1.05rem; }
-
-    .closing-word {
-      margin-top: 1.2rem;
-      font-style: italic;
-    }
-
-    .token-empty {
-      font-family: "Courier New", monospace;
-      letter-spacing: 0.18em;
+      font-size: 10px;
+      letter-spacing: 3px;
+      color: #222;
       text-transform: uppercase;
     }
 
+    .graphic-block.small { height: 100px; }
+
+    h1 {
+      font-size: 22px;
+      color: var(--highlight);
+      letter-spacing: 10px;
+      margin-bottom: 40px;
+      text-transform: uppercase;
+      border-left: 3px solid var(--accent);
+      padding-left: 20px;
+    }
+
+    .text-block { margin-bottom: 25px; line-height: 1.8; font-size: 14px; }
+    
+    .kicker { color: var(--accent); font-size: 11px; margin-bottom: 10px; display: block; }
+
+    .token-empty { color: var(--highlight); font-weight: bold; font-size: 18px; }
+
+    /* Aside Styling */
     aside.disclaimer {
-      width: 100%;
-      max-width: 420px;
-      background: radial-gradient(circle at top left, #071624 0%, #02040a 60%, #010307 100%);
-      border-radius: 1.25rem;
-      padding: 1.5rem 1.4rem 1.6rem;
-      border: 1px solid rgba(0, 246, 255, 0.2);
-      color: #e5f5ff;
-      position: relative;
-      overflow: hidden;
+      padding: 25px;
+      border: 1px solid var(--dim);
+      background: #030303;
+      align-self: start;
     }
 
     .disclaimer-title {
-      font-size: 0.85rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
+      font-size: 11px;
       color: var(--accent);
-      margin-bottom: 0.75rem;
+      margin-bottom: 20px;
+      letter-spacing: 2px;
     }
 
-    .disclaimer-actions {
-      margin-top: 1.6rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-
-    .disclaimer-btn {
-      display: inline-flex;
-      justify-content: center;
-      padding: 0.65rem 1.3rem;
-      border-radius: 999px;
-      font-size: 0.8rem;
+    .btn {
+      display: block;
+      padding: 15px;
+      border: 1px solid var(--dim);
+      color: var(--ink);
       text-decoration: none;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      color: #e5f5ff;
-      background: rgba(4, 8, 18, 0.8);
-      backdrop-filter: blur(10px);
+      text-align: center;
+      margin-top: 15px;
+      font-size: 11px;
+      letter-spacing: 2px;
+      transition: all 0.2s;
     }
 
-    .disclaimer-btn.ghost {
-      background: transparent;
-      color: #9aa0c7;
-      border-color: rgba(154, 160, 199, 0.6);
+    .btn:hover { border-color: var(--highlight); color: var(--highlight); }
+    .btn.solid { background: var(--accent); color: white; border: none; }
+
+    .redacted-text {
+      background: #111;
+      color: #111;
+      padding: 0 4px;
     }
 
   </style>
 </head>
 <body>
 
-  <a href="index.html" class="back-link">Prelude</a>
+  <div class="container">
+    <div class="main-panel">
+      <div class="panel-header">
+        <span>LOG_TYPE: GENESIS</span>
+        <span>ENCRYPTION: NONE</span>
+      </div>
 
-  <div class="page-shell">
-    <div class="scroll-wrapper">
-      <div class="scroll">
-        <div class="scroll-inner" id="scroll-inner">
+      <div class="content-scroll" id="scroll-inner">
+        <span class="kicker">空的</span>
+        <h1>GENESIS OF THE BLOCKCHAIN</h1>
 
-          <div class="scroll-kicker">空的</div>
-          <h1 class="scroll-title">GENESIS OF<br>THE BLOCKCHAIN</h1>
-
-          <h2 class="scroll-subheading">In the beginning,</h2>
-
-          <div class="scroll-body">
-            <p>Satoshi created the Bitcoin — and saw that it was good.</p>
-            <p>Blocks formed, and faith was forged in code.</p>
-            <p>Faith in a new era of digitized sovereignty, and tokenized liberation.</p>
-            <p>Faith from which a generation of new believers emerged.</p>
-            <p>They who toiled in the shadows, forging faith into conviction.</p>
-            <p>They called themselves — <span class="section-word em">The Miners.</span></p>
-
-            <p>It would only be a matter of time before others would follow.</p>
-            <p>They who bargain with governance in pursuit of asymmetry.</p>
-
-            <p>
-              They declared themselves
-              <span class="section-word">The Custodians of Order—</span>
-              the quiet stewards of value,<br>
-              heralding vast horizons<br>
-              where tokenized wealth would rise without end.
-            </p>
-
-            <p>But, too often it is the case that, where wallets fill, greed lurks not too far behind.</p>
-            <p>It is from this greed and hunger that a new class of belief was validated.</p>
-
-            <p><span class="section-word em">The Traders' belief.</span></p>
-
-            <img src="Failed-double-bottom-pattern-1024x502.jpg" class="manifesto-image">
-
-            <p>
-              They worshiped the candle, feared the wick.<br>
-              Charts and leverage became their scripture,<br>
-              patterns the crucible of their prophecies.
-            </p>
-
-            <p>Then, within their ranks, a new sect rose.</p>
-
-            <p><span class="section-word em">The DEGEN</span></p>
-
-            <img src="avatars-000302542401-bjpp2n-t500x500.jpg" class="manifesto-image">
-
-            <p>
-              They feared nothing,<br>
-              restrained nothing,<br>
-              propelled by the propensity of a lucrative enterprise.
-            </p>
-
-            <p>Volatility was their codec, chaos their altar.<br>
-            Memes became their icons, tokens their temples.</p>
-
-            <p>Where markets burned, they scorned, for fire was proof of faith.</p>
-
-            <p>
-              Inevitably their gospel would spread:<br>
-              “HODL!”<br>
-              "Buy the dip!"<br>
-              “Diamond hands!"<br>
-              "To the moon!"
-            </p>
-
-            <p>Words initially invoked for perseverance, conviction and courage.</p>
-
-            <p>
-              But as cycles turned,<br>
-              the candles dimmed,<br>
-              and the illusion of scarcity faded.
-            </p>
-
-            <p>
-              These sacred phrases became cheap slogans of survival
-              against the unflinching circumstance of declining portfolios.
-            </p>
-
-            <p>Thus a quiet truth now emerges from the ashes of euphoria:</p>
-
-            <p>
-              For all the noise,<br>
-              for all the faith,<br>
-              and for all the unshaken grip…
-            </p>
-
-            <p>the wallets remain still. Numbers that shimmer without weight.</p>
-
-            <p class="closing-word">
-              And the diamond hands —<br>
-              cold, perfect, unyielding —<br>
-              remain…
-            </p>
-
-            <p class="closing-word token-empty">$empty.</p>
-
-            <img src="file_000000005fa861f58aa14de0a05be33b.jpg" class="manifesto-image">
-
-          </div>
+        <div class="text-block">
+          <strong>In the beginning,</strong>
+          <p>Satoshi created the Bitcoin — and saw that it was good. Blocks formed, and faith was forged in code. Faith in a new era of digitized sovereignty, and tokenized liberation.</p>
         </div>
+
+        <div class="text-block">
+          <p>Faith from which a generation of new believers emerged. They who toiled in the shadows, forging faith into conviction. They called themselves — <strong>The Miners.</strong></p>
+        </div>
+
+        <div class="graphic-block">FAILED_DOUBLE_BOTTOM_PATTERN.VOID</div>
+
+        <div class="text-block">
+          <p>It would only be a matter of time before others would follow. They who bargain with governance in pursuit of asymmetry. They declared themselves <strong>The Custodians of Order</strong>— the quiet stewards of value.</p>
+        </div>
+
+        <div class="text-block">
+          <p>But, too often it is the case that, where wallets fill, greed lurks not too far behind. It is from this greed and hunger that a new class of belief was validated: <strong>The Traders' belief.</strong></p>
+        </div>
+
+        <div class="graphic-block">Worship_the_candle.jpg_CORRUPT</div>
+
+        <div class="text-block">
+          <p>They worshiped the candle, feared the wick. Charts and leverage became their scripture, patterns the crucible of their prophecies. Then, within their ranks, a new sect rose: <strong>The DEGEN.</strong></p>
+        </div>
+
+        <div class="text-block">
+          <p>They feared nothing, restrained nothing, propelled by the propensity of a lucrative enterprise. Volatility was their codec, chaos their altar. Memes became their icons, tokens their temples.</p>
+        </div>
+
+        <div class="text-block">
+          <p>Inevitably their gospel would spread: “HODL!” "Buy the dip!" “Diamond hands!" "To the moon!" Words initially invoked for perseverance, conviction and courage.</p>
+        </div>
+
+        <div class="graphic-block small">DIAMOND_HANDS_SCAN.LOG</div>
+
+        <div class="text-block">
+          <p>But as cycles turned, the candles dimmed, and the illusion of scarcity faded. These sacred phrases became cheap slogans of survival against the unflinching circumstance of declining portfolios.</p>
+        </div>
+
+        <div class="text-block">
+          <p>Thus a quiet truth now emerges from the ashes of euphoria: For all the noise, for all the faith, and for all the unshaken grip… the wallets remain still. Numbers that shimmer without weight.</p>
+        </div>
+
+        <div class="text-block" style="margin-top: 60px;">
+          <p>And the diamond hands — cold, perfect, unyielding — remain…</p>
+          <p class="token-empty">$EMPTY.</p>
+        </div>
+
+        <div class="graphic-block">END_OF_FILE.NULL</div>
       </div>
     </div>
 
     <aside class="disclaimer">
-      <div class="disclaimer-title">EMPTY / DISCLAIMER</div>
-
-      <p>
-        Fair warning — you may feel an urge to HODL, buy the dip,
-        or even diamond hands <span class="token">$emptycoin</span>.
+      <div class="disclaimer-title">EMPTY / AUTOPSY</div>
+      <p style="font-size: 12px; line-height: 1.6;">
+        Fair warning — you may feel an urge to HODL, buy the dip, or even diamond hands $emptycoin.
+      </p>
+      <p style="font-size: 11px; color: #444; margin-top: 15px;">
+        Meme tokens are inherently speculative. People do strange things when they believe in something.
       </p>
 
-      <p>
-        Our take: meme tokens are inherently speculative in nature,
-        so it's always wise to DYOR.
-      </p>
-
-      <p>On the other hand… people do strange things when they believe in something.</p>
-     
-      
-      <p>So,
-      </p>
-
-    
-      <div class="disclaimer-actions">
-        <a href="resist.html" class="disclaimer-btn ghost">Resist the call of the emptiness</a>
-        <a href="embrace.html" class="disclaimer-btn">Embrace the futility</a>
+      <div style="margin-top: 40px;">
+        <a href="resist.html" class="btn">Resist the Call</a>
+        <a href="embrace.html" class="btn solid">Embrace the Futility</a>
       </div>
     </aside>
-
   </div>
 
-  <!-- Simple Auto-Scroll Only -->
   <script>
     const scrollInner = document.getElementById("scroll-inner");
+    let speed = 0.4;
     let autoScrollActive = true;
-    const speed = 0.35; // adjust speed here
 
-    function autoScrollStep() {
-      if (!autoScrollActive) return;
-      const maxScroll = scrollInner.scrollHeight - scrollInner.clientHeight;
-      if (scrollInner.scrollTop >= maxScroll) {
-        autoScrollActive = false;
-        return;
+    function autoScroll() {
+      if (autoScrollActive) {
+        scrollInner.scrollTop += speed;
+        if (scrollInner.scrollTop + scrollInner.clientHeight >= scrollInner.scrollHeight) {
+          autoScrollActive = false;
+        }
+        requestAnimationFrame(autoScroll);
       }
-      scrollInner.scrollTop += speed;
-      requestAnimationFrame(autoScrollStep);
     }
 
-    function startAutoScroll() {
-      setTimeout(() => {
-        if (autoScrollActive) requestAnimationFrame(autoScrollStep);
-      }, 1200);
-    }
+    scrollInner.addEventListener("mousedown", () => autoScrollActive = false);
+    scrollInner.addEventListener("wheel", () => autoScrollActive = false);
 
-    if (document.readyState === "complete") {
-      startAutoScroll();
-    } else {
-      window.addEventListener("load", startAutoScroll);
-    }
-
-    ["touchstart", "wheel", "scroll"].forEach(evt => {
-      scrollInner.addEventListener(evt, () => {
-        autoScrollActive = false;
-      }, { passive: true });
-    });
+    setTimeout(autoScroll, 1500);
   </script>
 
 </body>
-  </html>
+        </html>
