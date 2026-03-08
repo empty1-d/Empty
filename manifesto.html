@@ -9,7 +9,7 @@
       --bg: #050505;
       --accent: #ff0000;
       --ink: #888;
-      --highlight: #fff;
+      --highlight: #eee;
       --dim: #1a1a1a;
     }
 
@@ -18,7 +18,7 @@
     body {
       background: var(--bg);
       color: var(--ink);
-      font-family: "Courier New", Courier, monospace;
+      font-family: "Georgia", serif; 
       min-height: 100vh;
       display: flex;
       justify-content: center;
@@ -26,7 +26,6 @@
       overflow-x: hidden;
     }
 
-    /* Grain Overlay */
     body::before {
       content: "";
       position: fixed;
@@ -52,15 +51,16 @@
     .main-panel {
       border: 1px solid var(--dim);
       background: #000;
-      height: 85vh;
+      height: 90vh;
       display: flex;
       flex-direction: column;
       position: relative;
     }
 
     .panel-header {
-      padding: 10px 20px;
+      padding: 12px 20px;
       border-bottom: 1px solid var(--dim);
+      font-family: "Courier New", monospace;
       font-size: 10px;
       display: flex;
       justify-content: space-between;
@@ -68,61 +68,91 @@
     }
 
     .content-scroll {
-      padding: 40px;
+      padding: 60px;
       overflow-y: auto;
-      scroll-behavior: smooth;
+      text-align: justify;
     }
 
     .content-scroll::-webkit-scrollbar { width: 2px; }
     .content-scroll::-webkit-scrollbar-thumb { background: var(--dim); }
 
-    /* Redacted Graphic Blocks */
+    h1 {
+      font-family: "Courier New", monospace;
+      font-size: 22px;
+      color: var(--highlight);
+      letter-spacing: 10px;
+      margin-bottom: 40px;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    .kicker { 
+      color: var(--accent); 
+      font-family: "Courier New", monospace;
+      font-size: 11px; 
+      margin-bottom: 10px; 
+      display: block; 
+      text-align: center;
+    }
+
+    /* Verse Structure */
+    .verse {
+      margin-bottom: 20px;
+      line-height: 1.8;
+      font-size: 16px;
+    }
+
+    .v-num {
+      font-family: "Courier New", monospace;
+      font-size: 10px;
+      color: var(--accent);
+      font-weight: bold;
+      margin-right: 10px;
+      vertical-align: top;
+    }
+
+    /* Original Drop Cap */
+    .verse:first-of-type::first-letter {
+      float: left;
+      font-size: 50px;
+      line-height: 40px;
+      padding-top: 4px;
+      padding-right: 8px;
+      color: var(--highlight);
+    }
+
     .graphic-block {
       width: 100%;
-      height: 220px;
+      height: 180px;
       background: repeating-linear-gradient(45deg, #000, #000 10px, #080808 10px, #080808 11px);
       border: 1px solid var(--dim);
       margin: 30px 0;
       display: flex;
       align-items: center;
       justify-content: center;
+      font-family: "Courier New", monospace;
       font-size: 10px;
       letter-spacing: 3px;
       color: #222;
       text-transform: uppercase;
     }
 
-    .graphic-block.small { height: 100px; }
-
-    h1 {
-      font-size: 22px;
-      color: var(--highlight);
-      letter-spacing: 10px;
-      margin-bottom: 40px;
-      text-transform: uppercase;
-      border-left: 3px solid var(--accent);
-      padding-left: 20px;
+    .token-empty { 
+      color: var(--highlight); 
+      font-weight: bold; 
+      font-size: 24px; 
+      font-family: "Courier New", monospace;
+      text-align: center;
+      display: block;
+      margin-top: 40px;
     }
 
-    .text-block { margin-bottom: 25px; line-height: 1.8; font-size: 14px; }
-    
-    .kicker { color: var(--accent); font-size: 11px; margin-bottom: 10px; display: block; }
-
-    .token-empty { color: var(--highlight); font-weight: bold; font-size: 18px; }
-
-    /* Aside Styling */
     aside.disclaimer {
       padding: 25px;
       border: 1px solid var(--dim);
       background: #030303;
       align-self: start;
-    }
-
-    .disclaimer-title {
-      font-size: 11px;
-      color: var(--accent);
-      margin-bottom: 20px;
-      letter-spacing: 2px;
+      font-family: "Courier New", monospace;
     }
 
     .btn {
@@ -134,18 +164,11 @@
       text-align: center;
       margin-top: 15px;
       font-size: 11px;
-      letter-spacing: 2px;
-      transition: all 0.2s;
+      transition: 0.2s;
     }
 
     .btn:hover { border-color: var(--highlight); color: var(--highlight); }
     .btn.solid { background: var(--accent); color: white; border: none; }
-
-    .redacted-text {
-      background: #111;
-      color: #111;
-      padding: 0 4px;
-    }
 
   </style>
 </head>
@@ -162,79 +185,81 @@
         <span class="kicker">空的</span>
         <h1>GENESIS OF THE BLOCKCHAIN</h1>
 
-        <div class="text-block">
-          <strong>In the beginning,</strong>
-          <p>Satoshi created the Bitcoin — and saw that it was good. Blocks formed, and faith was forged in code. Faith in a new era of digitized sovereignty, and tokenized liberation.</p>
+        <div class="verse">
+          <span class="v-num">1</span>
+          In the beginning, Satoshi created the Bitcoin — and saw that it was good. Blocks formed, and faith was forged in code. Faith in a new era of digitized sovereignty, and tokenized liberation.
         </div>
 
-        <div class="text-block">
-          <p>Faith from which a generation of new believers emerged. They who toiled in the shadows, forging faith into conviction. They called themselves — <strong>The Miners.</strong></p>
+        <div class="verse">
+          <span class="v-num">2</span>
+          Faith from which a generation of new believers emerged. They who toiled in the shadows, forging faith into conviction. They called themselves — <strong>The Miners.</strong>
         </div>
 
         <div class="graphic-block">FAILED_DOUBLE_BOTTOM_PATTERN.VOID</div>
 
-        <div class="text-block">
-          <p>It would only be a matter of time before others would follow. They who bargain with governance in pursuit of asymmetry. They declared themselves <strong>The Custodians of Order</strong>— the quiet stewards of value. </p> 
-        <p>Heralding vast horizons</p>
-          <p>Where tokenized wealth would rise without bound.</p>
+        <div class="verse">
+          <span class="v-num">3</span>
+          It would only be a matter of time before others would follow. They who bargain with governance in pursuit of asymmetry. They declared themselves <strong>The Custodians of Order</strong> — the quiet stewards of value. Heralding vast horizons where tokenized wealth would rise without bound.
         </div>
 
-        <div class="text-block">
-          <p>But, too often it is the case that, where wallets fill, greed lurks not too far behind. It is from this greed and hunger that a new class of belief was validated: <strong>The Traders' belief.</strong></p>
+        <div class="verse">
+          <span class="v-num">4</span>
+          But, too often it is the case that, where wallets fill, greed lurks not too far behind. It is from this greed and hunger that a new class of belief was validated: <strong>The Traders' belief.</strong>
         </div>
 
         <div class="graphic-block">Worship_the_candle.jpg_CORRUPT</div>
 
-        <div class="text-block">
-          <p>They worshiped the candle, feared the wick. Charts and leverage became their scripture, patterns the crucible of their prophecies. Then, within their ranks, a new sect rose: <strong>The DEGEN.</strong></p>
+        <div class="verse">
+          <span class="v-num">5</span>
+          They worshiped the candle, feared the wick. Charts and leverage became their scripture, patterns the crucible of their prophecies. Then, within their ranks, a new sect rose: <strong>The DEGEN.</strong>
         </div>
 
-        <div class="text-block">
-          <p>They feared nothing, restrained nothing, propelled by the propensity of a lucrative enterprise. Volatility was their codec, chaos their altar. Memes became their icons, tokens their temples.</p>
+        <div class="verse">
+          <span class="v-num">6</span>
+          They feared nothing, restrained nothing, propelled by the propensity of a lucrative enterprise. Volatility was their codec, chaos their altar. Memes became their icons, tokens their temples.
         </div>
 
-        <div class="text-block">
-          <p>Inevitably their gospel would spread:</p> 
-          <p>“HODL!”</p>
-          <p>"Buy the dip!"</p> 
-         <p> “Diamond hands!"</p> 
-          <p>"To the moon!" </p>
-          <p> Words initially invoked for perseverance, conviction and courage.</p>
+        <div class="verse">
+          <span class="v-num">7</span>
+          Inevitably their gospel would spread: “HODL!” “Buy the dip!” “Diamond hands!” “To the moon!” Words initially invoked for perseverance, conviction and courage.
         </div>
 
-        <div class="graphic-block small">DIAMOND_HANDS_SCAN.LOG</div>
+        <div class="graphic-block">DIAMOND_HANDS_SCAN.LOG</div>
 
-        <div class="text-block">
-          <p>But as cycles turned, the candles dimmed, and the illusion of scarcity faded. These sacred phrases became cheap slogans of survival against the unflinching circumstance of declining portfolios.</p>
+        <div class="verse">
+          <span class="v-num">8</span>
+          But as cycles turned, the candles dimmed, and the illusion of scarcity faded. These sacred phrases became cheap slogans of survival against the unflinching circumstance of declining portfolios.
         </div>
 
-        <div class="text-block">
-          <p>Thus a quiet truth now emerges from the ashes of euphoria: For all the noise, for all the faith, and for all the unshaken grip… the wallets remain still. Numbers that shimmer without weight.</p>
+        <div class="verse">
+          <span class="v-num">9</span>
+          Thus a quiet truth now emerges from the ashes of euphoria: For all the noise, for all the faith, and for all the unshaken grip… the wallets remain still. Numbers that shimmer without weight.
         </div>
 
-        <div class="text-block" style="margin-top: 60px;">
-          <p>And the diamond hands — cold, perfect, unyielding — remain…</p>
-          <p class="token-empty">$EMPTY.</p>
+        <div class="verse">
+          <span class="v-num">10</span>
+          And the diamond hands — cold, perfect, unyielding — remain…
         </div>
 
-        <div class="graphic-block">END_OF_FILE.NULL</div>
+        <span class="token-empty">$EMPTY.</span>
+
+        <div class="graphic-block" style="border:none;">END_OF_FILE.NULL</div>
       </div>
     </div>
 
     <aside class="disclaimer">
-      <div class="disclaimer-title">EMPTY / AUTOPSY</div>
+      <div style="color:var(--accent); margin-bottom: 20px;">EMPTY / AUTOPSY</div>
       <p style="font-size: 12px; line-height: 1.6;">
-        EmptyCoin- /IPA/ ɛmti kɔɪn
+        EmptyCoin- /IPA/ ɛmti kɔɪn<br>
         defn. antimeme 
-        
       </p>
       <p style="font-size: 11px; color: #444; margin-top: 15px;">
         Meme tokens are inherently speculative. People do strange things when they believe in something.
       </p>
 
       <div style="margin-top: 40px;">
-        <a href="resist.html" class="btn">Resist the Call</a>
-        <a href="embrace.html" class="btn solid">Embrace the Futility</a>
+        <a href="#" class="btn">Resist the Call</a>
+        <a href="#" class="btn solid">Embrace the Futility</a>
       </div>
     </aside>
   </div>
@@ -253,12 +278,9 @@
         requestAnimationFrame(autoScroll);
       }
     }
-
     scrollInner.addEventListener("mousedown", () => autoScrollActive = false);
-    scrollInner.addEventListener("wheel", () => autoScrollActive = false);
-
     setTimeout(autoScroll, 1500);
   </script>
 
 </body>
-        </html>
+  </html>
