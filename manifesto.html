@@ -4,32 +4,37 @@
   <meta charset="UTF-8" />
   <title>LOG_000_GENESIS</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <style>
     :root {
       --bg: #050505;
       --accent: #ff0000;
-      --ink: #888;
+      --ink: #9a9a9a;
       --highlight: #eee;
       --dim: #1a1a1a;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; cursor: crosshair; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      cursor: crosshair;
+    }
 
     body {
       background: var(--bg);
       color: var(--ink);
-      font-family: "Georgia", serif; 
+      font-family: "Georgia", serif;
       min-height: 100vh;
       display: flex;
       justify-content: center;
       padding: 40px 20px;
-      overflow-x: hidden;
     }
 
     body::before {
       content: "";
       position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
+      inset: 0;
       background: url('https://upload.wikimedia.org/wikipedia/commons/5/5c/Rough_white_noise.png');
       opacity: 0.04;
       pointer-events: none;
@@ -42,16 +47,19 @@
       display: grid;
       grid-template-columns: 1fr 320px;
       gap: 40px;
+      align-items: start;
     }
 
     @media (max-width: 880px) {
-      .container { grid-template-columns: 1fr; }
+      .container {
+        grid-template-columns: 1fr;
+      }
     }
 
     .main-panel {
       border: 1px solid var(--dim);
       background: #000;
-      height: 90vh;
+      min-height: 90vh;
       display: flex;
       flex-direction: column;
       position: relative;
@@ -68,13 +76,13 @@
     }
 
     .content-scroll {
-      padding: 60px;
-      overflow-y: auto;
+      padding: 40px 32px;
+      max-width: 70ch;
+      margin: 0 auto;
       text-align: justify;
+      line-height: 1.75;
+      font-size: 15.5px;
     }
-
-    .content-scroll::-webkit-scrollbar { width: 2px; }
-    .content-scroll::-webkit-scrollbar-thumb { background: var(--dim); }
 
     h1 {
       font-family: "Courier New", monospace;
@@ -86,32 +94,19 @@
       text-align: center;
     }
 
-    .kicker { 
-      color: var(--accent); 
+    .kicker {
+      color: var(--accent);
       font-family: "Courier New", monospace;
-      font-size: 11px; 
-      margin-bottom: 10px; 
-      display: block; 
+      font-size: 11px;
+      margin-bottom: 10px;
+      display: block;
       text-align: center;
     }
 
-    /* Verse Structure */
     .verse {
       margin-bottom: 20px;
-      line-height: 1.8;
-      font-size: 16px;
     }
 
-    .v-num {
-      font-family: "Courier New", monospace;
-      font-size: 10px;
-      color: var(--accent);
-      font-weight: bold;
-      margin-right: 10px;
-      vertical-align: top;
-    }
-
-    /* Original Drop Cap */
     .verse:first-of-type::first-letter {
       float: left;
       font-size: 50px;
@@ -121,10 +116,24 @@
       color: var(--highlight);
     }
 
+    .v-num {
+      font-family: "Courier New", monospace;
+      font-size: 10px;
+      color: var(--accent);
+      font-weight: bold;
+      margin-right: 10px;
+    }
+
     .graphic-block {
       width: 100%;
       height: 180px;
-      background: repeating-linear-gradient(45deg, #000, #000 10px, #080808 10px, #080808 11px);
+      background: repeating-linear-gradient(
+        45deg,
+        #000,
+        #000 10px,
+        #080808 10px,
+        #080808 11px
+      );
       border: 1px solid var(--dim);
       margin: 30px 0;
       display: flex;
@@ -134,13 +143,19 @@
       font-size: 10px;
       letter-spacing: 3px;
       color: #222;
-      text-transform: uppercase;
+      opacity: 0.7;
+      animation: flicker 4s infinite;
     }
 
-    .token-empty { 
-      color: var(--highlight); 
-      font-weight: bold; 
-      font-size: 24px; 
+    @keyframes flicker {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 0.7; }
+    }
+
+    .token-empty {
+      color: var(--highlight);
+      font-weight: bold;
+      font-size: 24px;
       font-family: "Courier New", monospace;
       text-align: center;
       display: block;
@@ -151,8 +166,9 @@
       padding: 25px;
       border: 1px solid var(--dim);
       background: #030303;
-      align-self: start;
       font-family: "Courier New", monospace;
+      position: sticky;
+      top: 20px;
     }
 
     .btn {
@@ -167,120 +183,121 @@
       transition: 0.2s;
     }
 
-    .btn:hover { border-color: var(--highlight); color: var(--highlight); }
-    .btn.solid { background: var(--accent); color: white; border: none; }
+    .btn:hover {
+      border-color: var(--highlight);
+      color: var(--highlight);
+    }
 
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn.solid {
+      background: var(--accent);
+      color: white;
+      border: none;
+    }
   </style>
 </head>
+
 <body>
 
-  <div class="container">
-    <div class="main-panel">
-      <div class="panel-header">
-        <span>LOG_TYPE: GENESIS</span>
-        <span>ENCRYPTION: NONE</span>
-      </div>
+<div class="container">
 
-      <div class="content-scroll" id="scroll-inner">
-        <span class="kicker">空的</span>
-        <h1>GENESIS OF THE BLOCKCHAIN</h1>
-
-        <div class="verse">
-          <span class="v-num">1</span>
-          In the beginning, Satoshi created the Bitcoin — and saw that it was good. Blocks formed, and faith was forged in code. Faith in a new era of digitized sovereignty, and tokenized liberation.
-        </div>
-
-        <div class="verse">
-          <span class="v-num">2</span>
-          Faith from which a generation of new believers emerged. They who toiled in the shadows, forging faith into conviction. They called themselves — <strong>The Miners.</strong>
-        </div>
-
-        <div class="graphic-block">FAILED_DOUBLE_BOTTOM_PATTERN.VOID</div>
-
-        <div class="verse">
-          <span class="v-num">3</span>
-          It would only be a matter of time before others would follow. They who bargain with governance in pursuit of asymmetry. They declared themselves <strong>The Custodians of Order</strong> — the quiet stewards of value. Heralding vast horizons where tokenized wealth would rise without bound.
-        </div>
-
-        <div class="verse">
-          <span class="v-num">4</span>
-          But, too often it is the case that, where wallets fill, greed lurks not too far behind. It is from this greed and hunger that a new class of belief was validated: <strong>The Traders' belief.</strong>
-        </div>
-
-        <div class="graphic-block">Worship_the_candle.jpg_CORRUPT</div>
-
-        <div class="verse">
-          <span class="v-num">5</span>
-          They worshiped the candle, feared the wick. Charts and leverage became their scripture, patterns the crucible of their prophecies. Then, within their ranks, a new sect rose: <strong>The DEGEN.</strong>
-        </div>
-
-        <div class="verse">
-          <span class="v-num">6</span>
-          They feared nothing, restrained nothing, propelled by the propensity of a lucrative enterprise. Volatility was their codec, chaos their altar. Memes became their icons, tokens their temples.
-        </div>
-
-        <div class="verse">
-          <span class="v-num">7</span>
-          Inevitably their gospel would spread: “HODL!” “Buy the dip!” “Diamond hands!” “To the moon!” Words initially invoked for perseverance, conviction and courage.
-        </div>
-
-        <div class="graphic-block">DIAMOND_HANDS_SCAN.LOG</div>
-
-        <div class="verse">
-          <span class="v-num">8</span>
-          But as cycles turned, the candles dimmed, and the illusion of scarcity faded. These sacred phrases became cheap slogans of survival against the unflinching circumstance of declining portfolios.
-        </div>
-
-        <div class="verse">
-          <span class="v-num">9</span>
-          Thus a quiet truth now emerges from the ashes of euphoria: For all the noise, for all the faith, and for all the unshaken grip… the wallets remain still. Numbers that shimmer without weight.
-        </div>
-
-        <div class="verse">
-          <span class="v-num">10</span>
-          And the diamond hands — cold, perfect, unyielding — remain…
-        </div>
-
-        <span class="token-empty">$EMPTY.</span>
-
-        <div class="graphic-block" style="border:none;">END_OF_FILE.NULL</div>
-      </div>
+  <div class="main-panel">
+    <div class="panel-header">
+      <span>LOG_TYPE: GENESIS</span>
+      <span>ENCRYPTION: NONE</span>
     </div>
 
-    <aside class="disclaimer">
-      <div style="color:var(--accent); margin-bottom: 20px;">EMPTY / AUTOPSY</div>
-      <p style="font-size: 12px; line-height: 1.6;">
-        EmptyCoin- /IPA/ ɛmti kɔɪn<br>
-        defn. antimeme 
-      </p>
-      <p style="font-size: 11px; color: #444; margin-top: 15px;">
-        Meme tokens are inherently speculative. People do strange things when they believe in something.
-      </p>
+    <div class="content-scroll">
 
-      <div style="margin-top: 40px;">
-        <a href="#" class="btn">Resist the Call</a>
-        <a href="#" class="btn solid">Embrace the Futility</a>
+      <span class="kicker">空的</span>
+
+      <h1>GENESIS OF THE BLOCKCHAIN</h1>
+
+      <div class="verse">
+        <span class="v-num">1</span>
+        In the beginning, Satoshi created the Bitcoin — and saw that it was good. Blocks formed, and faith was forged in code. Faith in a new era of digitized sovereignty, and tokenized liberation.
       </div>
-    </aside>
+
+      <div class="verse">
+        <span class="v-num">2</span>
+        Faith from which a generation of new believers emerged. They who toiled in the shadows, forging faith into conviction. They called themselves — <strong>The Miners.</strong>
+      </div>
+
+      <div class="graphic-block">FAILED_DOUBLE_BOTTOM_PATTERN.VOID</div>
+
+      <div class="verse">
+        <span class="v-num">3</span>
+        It would only be a matter of time before others would follow. They who bargain with governance in pursuit of asymmetry. They declared themselves <strong>The Custodians of Order</strong>.
+      </div>
+
+      <div class="verse">
+        <span class="v-num">4</span>
+        But where wallets fill, greed follows. From this emerged a new belief: <strong>The Traders' belief.</strong>
+      </div>
+
+      <div class="graphic-block">WORSHIP_THE_CANDLE.jpg_CORRUPT</div>
+
+      <div class="verse">
+        <span class="v-num">5</span>
+        They worshiped the candle, feared the wick. Charts became scripture. Patterns became prophecy. Then came <strong>The DEGEN.</strong>
+      </div>
+
+      <div class="verse">
+        <span class="v-num">6</span>
+        Volatility was their codec. Chaos their altar. Memes their icons. Tokens their temples.
+      </div>
+
+      <div class="verse">
+        <span class="v-num">7</span>
+        “HODL.” “Buy the dip.” “Diamond hands.” Words once meant for conviction, now repeated for survival.
+      </div>
+
+      <div class="graphic-block">DIAMOND_HANDS_SCAN.LOG</div>
+
+      <div class="verse">
+        <span class="v-num">8</span>
+        As cycles turned, the candles dimmed. The illusion of scarcity faded.
+      </div>
+
+      <div class="verse">
+        <span class="v-num">9</span>
+        What remained was noise. And behind it, still wallets. Still numbers. Still nothing.
+      </div>
+
+      <div class="verse">
+        <span class="v-num">10</span>
+        And the diamond hands — cold, perfect, unyielding — remain…
+      </div>
+
+      <span class="token-empty">$EMPTY.</span>
+
+      <div class="graphic-block" style="border:none;">END_OF_FILE.NULL</div>
+
+    </div>
   </div>
 
-  <script>
-    const scrollInner = document.getElementById("scroll-inner");
-    let speed = 0.4;
-    let autoScrollActive = true;
+  <aside class="disclaimer">
+    <div style="color:var(--accent); margin-bottom: 20px;">EMPTY / AUTOPSY</div>
 
-    function autoScroll() {
-      if (autoScrollActive) {
-        scrollInner.scrollTop += speed;
-        if (scrollInner.scrollTop + scrollInner.clientHeight >= scrollInner.scrollHeight) {
-          autoScrollActive = false;
-        }
-        requestAnimationFrame(autoScroll);
-      }
-    }
-    scrollInner.addEventListener("mousedown", () => autoScrollActive = false);
-    setTimeout(autoScroll, 1500);
-  </script>
+    <p style="font-size: 12px; line-height: 1.6;">
+      EmptyCoin- /IPA/ ɛmti kɔɪn<br>
+      defn. antimeme
+    </p>
+
+    <p style="font-size: 11px; color: #444; margin-top: 15px;">
+      Meme tokens are inherently speculative. People do strange things when they believe in something.
+    </p>
+
+    <div style="margin-top: 40px;">
+      <a href="resist.html" class="btn">Resist the Call</a>
+      <a href="embrace.html" class="btn solid">Embrace the Futility</a>
+    </div>
+  </aside>
+
+</div>
 
 </body>
-  </html>
+</html>
